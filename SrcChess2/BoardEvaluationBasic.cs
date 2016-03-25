@@ -15,13 +15,21 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.Knight]                                 = 300;
             s_piPiecePoint[(int)ChessBoard.PieceE.Bishop]                                 = 325;
             s_piPiecePoint[(int)ChessBoard.PieceE.Queen]                                  = 900;
+            s_piPiecePoint[(int)ChessBoard.PieceE.Chancellor] = 800;
+            s_piPiecePoint[(int)ChessBoard.PieceE.Archbishop] = 700;
+            s_piPiecePoint[(int)ChessBoard.PieceE.EmpoweredQueen] = 400;
             s_piPiecePoint[(int)ChessBoard.PieceE.King]                                   = 1000000;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black)]       = -100;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Rook | ChessBoard.PieceE.Black)]       = -500;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Knight | ChessBoard.PieceE.Black)]     = -300;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Bishop | ChessBoard.PieceE.Black)]     = -325;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Queen | ChessBoard.PieceE.Black)]      = -900;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black)] = -800;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black)] = -700;
+            s_piPiecePoint[(int)ChessBoard.PieceE.EmpoweredQueen]                         = -400;
             s_piPiecePoint[(int)(ChessBoard.PieceE.King | ChessBoard.PieceE.Black)]       = -1000000;
+
+
         }
 
         /// <summary>

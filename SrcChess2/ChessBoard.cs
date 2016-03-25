@@ -77,6 +77,13 @@ namespace SrcChess2 {
             Black     = 8,
             /// <summary>White piece</summary>
             White     = 0,
+
+            // empowered queen
+            EmpoweredQueen = 9,
+
+            Chancellor = 10,
+
+            Archbishop = 11
         }
         
         /// <summary>List of valid pawn promotion</summary>
@@ -214,6 +221,11 @@ namespace SrcChess2 {
         static private int[][]                      s_ppiCaseBlackPawnCanAttackFrom;
         /// <summary>Possible board positions a white pawn can attack from each board position</summary>
         static private int[][]                      s_ppiCaseWhitePawnCanAttackFrom;
+
+        static private int[][][]                    s_pppiCaseMoveDiagKnight;
+
+        static private int[][][]                    s_pppiCaseMoveLineKnight;
+
 
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
