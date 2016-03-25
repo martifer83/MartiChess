@@ -3001,7 +3001,7 @@
             Etablished the value of each type of piece for board evaluation.
             </summary>
         </member>
-        <member name="M:SrcChess2.ChessBoard.FillMoves(System.Int32,System.Collections.Generic.List{System.Int32[]},System.Int32[],System.Boolean)">
+        <member name="M:SrcChess2.ChessBoard.FillMoves(System.Int32,System.Collections.Generic.List{System.Int32[]},System.Int32[],System.Boolean,System.Boolean)">
             <summary>
             Fill the possible move array using the specified delta
             </summary>

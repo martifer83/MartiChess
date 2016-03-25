@@ -308,21 +308,36 @@ namespace SrcChess2 {
             s_ppiCaseMoveKing                   = new int[64][];
             s_ppiCaseWhitePawnCanAttackFrom     = new int[64][];
             s_ppiCaseBlackPawnCanAttackFrom     = new int[64][];
+            s_pppiCaseMoveLineKnight            = new int[64][][];
+            s_pppiCaseMoveDiagKnight            = new int[64][][];
             for (int iPos = 0; iPos < 64; iPos++) {
-                FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 0,  -1, 1,  0, -1,  0, 1,  1, -1,  1, 0,  1, 1 }, true);
+                FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 0,  -1, 1,  0, -1,  0, 1,  1, -1,  1, 0,  1, 1 }, true, false);
                 s_pppiCaseMoveDiagLine[iPos] = arrMove.ToArray();
-                FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 1,  1, -1,  1, 1 }, true);
+                FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 1,  1, -1,  1, 1 }, true, false);
                 s_pppiCaseMoveDiagonal[iPos] = arrMove.ToArray();                
-                FillMoves(iPos, arrMove, new int[] { -1, 0,  1, 0,  0, -1,  0, 1 }, true);
+                FillMoves(iPos, arrMove, new int[] { -1, 0,  1, 0,  0, -1,  0, 1 }, true, false);
                 s_pppiCaseMoveLine[iPos]     = arrMove.ToArray();
-                FillMoves(iPos, arrMove, new int[] { 1, 2,  1, -2,  2, -1,  2, 1,  -1, 2,  -1, -2,  -2, -1,  -2, 1}, false);
+                FillMoves(iPos, arrMove, new int[] { 1, 2,  1, -2,  2, -1,  2, 1,  -1, 2,  -1, -2,  -2, -1,  -2, 1}, false, false);
                 s_ppiCaseMoveKnight[iPos]    = arrMove[0];
-                FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 0,  -1, 1,  0, -1,  0, 1,  1, -1,  1, 0,  1, 1 }, false);
+                FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 0,  -1, 1,  0, -1,  0, 1,  1, -1,  1, 0,  1, 1 }, false, false);
                 s_ppiCaseMoveKing[iPos]      = arrMove[0];
-                FillMoves(iPos, arrMove, new int[] { -1, -1, 1, -1 }, false);
+                FillMoves(iPos, arrMove, new int[] { -1, -1, 1, -1 }, false, false);
                 s_ppiCaseWhitePawnCanAttackFrom[iPos] = arrMove[0];
-                FillMoves(iPos, arrMove, new int[] { -1, 1,  1, 1 }, false);
+                FillMoves(iPos, arrMove, new int[] { -1, 1,  1, 1 }, false, false);
                 s_ppiCaseBlackPawnCanAttackFrom[iPos] = arrMove[0];
+
+                // added
+                // chancellor
+                FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false);
+                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
+
+                s_pppiCaseMoveLineKnight[iPos] = arrMove.ToArray();
+
+                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, true, false);
+                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
+
+                //s_pppiCaseMoveDiagKnight[iPos] = arrMove.ToArray();
+
             }
         }
 
@@ -333,7 +348,7 @@ namespace SrcChess2 {
         /// <param name="arrMove">      Array of move to fill</param>
         /// <param name="arrDelta">     List of delta</param>
         /// <param name="bRepeat">      true to repeat, false to do it once</param>
-        static private void FillMoves(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat) {
+        static private void FillMoves(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray) {
             int         iColPos;
             int         iRowPos;
             int         iColIndex;
@@ -343,8 +358,8 @@ namespace SrcChess2 {
             int         iPosOfs;
             int         iNewPos;
             List<int>   arrMoveOnLine;
-
-            arrMove.Clear();
+            if(!concatArray)
+                arrMove.Clear();
             arrMoveOnLine   = new List<int>(8);
             iColPos         = iStartPos & 7;
             iRowPos         = iStartPos >> 3;
