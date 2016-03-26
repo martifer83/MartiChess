@@ -3118,6 +3118,11 @@
             Reset the board to the initial configuration
             </summary>
         </member>
+        <member name="M:SrcChess2.ChessBoard.ResetBoardMarti">
+            <summary>
+            Reset the board to the initial configuration
+            </summary>
+        </member>
         <member name="M:SrcChess2.ChessBoard.SaveBoard(System.IO.BinaryWriter)">
             <summary>
             Save the content of the board into the specified binary writer

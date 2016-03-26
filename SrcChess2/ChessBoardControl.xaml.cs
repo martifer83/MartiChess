@@ -392,6 +392,8 @@ namespace SrcChess2 {
                     iPos--;
                 }
             }
+           
+
         }
 
         /// <summary>

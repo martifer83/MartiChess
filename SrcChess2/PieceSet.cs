@@ -35,7 +35,25 @@ namespace SrcChess2 {
             /// <summary>White Queen</summary>
             White_Queen     = 10,
             /// <summary>White King</summary>
-            White_King      = 11
+            White_King      = 11,
+            // new pieces
+            Black_Chancellor = 12,
+
+            Black_Archbishop = 13,
+
+            Black_EmpoweredQueen = 14,
+
+            White_Chancellor = 15,
+
+            White_Archbishop = 16,
+
+            White_EmpoweredQueen = 17
+
+
+    
+
+
+
         };
 
         
@@ -77,7 +95,20 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.King | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_King;
                 break;
-            case ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black:
+
+            case ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Chancellor;
+                break;
+                case ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Archbishop;
+                    break;
+                case ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_EmpoweredQueen;
+                    break;
+
+
+
+                case ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Pawn;
                 break;
             case ChessBoard.PieceE.Knight | ChessBoard.PieceE.Black:
@@ -95,7 +126,17 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.King | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_King;
                 break;
-            default:
+            case ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Chancellor;
+                break;
+                case ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Archbishop;
+                break;
+                case ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.Black:
+                    eRetVal = ChessPiece.Black_EmpoweredQueen;
+                    break;
+
+                default:
                 eRetVal = ChessPiece.None;
                 break;
             }

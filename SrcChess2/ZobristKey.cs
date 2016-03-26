@@ -20,8 +20,8 @@ namespace SrcChess2 {
             long    lPart4;
             
             rnd            = new Random(0);
-            s_pi64RndTable = new Int64[64 * 16];
-            for (int i = 0; i < 64 * 16; i++) {
+            s_pi64RndTable = new Int64[64 * 32];  //
+            for (int i = 0; i < 64 * 32; i++) {
                 lPart1            = (long)rnd.Next(65536);
                 lPart2            = (long)rnd.Next(65536);
                 lPart3            = (long)rnd.Next(65536);
@@ -83,7 +83,28 @@ namespace SrcChess2 {
             long    lRetVal = 0;
             
             for (int iIndex = 0; iIndex < 64; iIndex++) {
-                lRetVal ^= s_pi64RndTable[(iIndex << 4) + (int)peBoard[iIndex]];
+                int randTable = (iIndex << 4);
+                int board = (int)peBoard[iIndex];
+                int suma = randTable + board;
+                lRetVal ^= s_pi64RndTable[suma];
+                if(suma > 1024)
+                {
+                    int merda = 0;
+                }
+
+
+                if (iIndex == 62)
+                {
+                    int hola = 9;
+                }
+                if (iIndex == 63)
+                {
+                    int hola = 9;
+                }
+                if (iIndex == 64)
+                {
+                    int hola = 9;
+                }
             }
             return(lRetVal);
         }

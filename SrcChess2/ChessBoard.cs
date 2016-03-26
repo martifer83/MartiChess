@@ -39,19 +39,19 @@ namespace SrcChess2 {
             /// <summary>Not used</summary>
             NotUsed2    = 8,
             /// <summary>Pawn</summary>
-            BlackPawn   = 9,
+            BlackPawn   = 17,
             /// <summary>Knight</summary>
-            BlackKnight = 10,
+            BlackKnight = 18,
             /// <summary>Bishop</summary>
-            BlackBishop = 11,
+            BlackBishop = 19,
             /// <summary>Rook</summary>
-            BlackRook   = 12,
+            BlackRook   = 20,
             /// <summary>Queen</summary>
-            BlackQueen  = 13,
+            BlackQueen  = 21,
             /// <summary>King</summary>
-            BlackKing   = 14,
+            BlackKing   = 22,
             /// <summary>Not used</summary>
-            NotUsed3    = 15,
+            NotUsed3    = 23,
         }
         
         /// <summary>Value of each piece on the board. Each piece is a combination of piece value and color (0 for white, 8 for black)</summary>
@@ -72,9 +72,9 @@ namespace SrcChess2 {
             /// <summary>King</summary>
             King      = 6,
             /// <summary>Mask to find the piece</summary>
-            PieceMask = 7,
+            PieceMask = 15,
             /// <summary>Piece is black</summary>
-            Black     = 8,
+            Black     = 16,
             /// <summary>White piece</summary>
             White     = 0,
 
@@ -400,7 +400,7 @@ namespace SrcChess2 {
         private ChessBoard(SearchEngineAlphaBeta searchEngineAlphaBeta, SearchEngineMinMax searchEngineMinMax) {
             m_pBoard                    = new PieceE[64];
             m_book                      = new Book();
-            m_piPiecesCount             = new int[16];
+            m_piPiecesCount             = new int[32]; // important set to 32
             m_rnd                       = new Random((int)DateTime.Now.Ticks);
             m_rndRep                    = new Random(0);
             m_stackPossibleEnPassantAt  = new Stack<int>(256);
@@ -410,7 +410,7 @@ namespace SrcChess2 {
             m_moveStack                 = new MovePosStack();
             m_searchEngineAlphaBeta     = searchEngineAlphaBeta;
             m_searchEngineMinMax        = searchEngineMinMax;
-            ResetBoard();
+            ResetBoardMarti();
         }
 
         /// <summary>
@@ -420,6 +420,8 @@ namespace SrcChess2 {
             m_trace                 = trace;
             m_searchEngineAlphaBeta = new SearchEngineAlphaBeta(trace, m_rnd, m_rndRep);
             m_searchEngineMinMax    = new SearchEngineMinMax(trace, m_rnd, m_rndRep);
+
+            int hola = 9;
         }
 
         /// <summary>
@@ -703,6 +705,9 @@ namespace SrcChess2 {
 
             Array.Clear(m_piPiecesCount, 0, m_piPiecesCount.Length);
             for (int iIndex = 0; iIndex < 64; iIndex++) {
+               
+
+         
                 ePiece = m_pBoard[iIndex];
                 switch(ePiece) {
                 case PieceE.King | PieceE.White:
@@ -771,6 +776,42 @@ namespace SrcChess2 {
             m_pBoard[7*8+3]                                         = PieceE.King   | PieceE.Black;
             m_pBoard[4]                                             = PieceE.Queen  | PieceE.White;
             m_pBoard[7*8+4]                                         = PieceE.Queen  | PieceE.Black;
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
+        }
+
+        /// <summary>
+        /// Reset the board to the initial configuration
+        /// </summary>
+        public void ResetBoardMarti()
+        {
+            for (int iIndex = 0; iIndex < 64; iIndex++)
+            {
+                m_pBoard[iIndex] = PieceE.None;
+            }
+            for (int iIndex = 0; iIndex < 8; iIndex++)
+            {
+                m_pBoard[8 + iIndex] = PieceE.Pawn | PieceE.White;
+                m_pBoard[48 + iIndex] = PieceE.Pawn | PieceE.Black;
+            }
+            m_pBoard[0]                                = PieceE.Chancellor | PieceE.White;
+            m_pBoard[7 * 8]                            = PieceE.Rook | PieceE.Black;
+            m_pBoard[7]                                = PieceE.Rook | PieceE.White;
+            m_pBoard[7 * 8 + 7]                        = PieceE.Chancellor | PieceE.Black;
+            m_pBoard[1]                                = PieceE.Knight | PieceE.White;
+            m_pBoard[7 * 8 + 1]                        = PieceE.Knight | PieceE.Black;
+            m_pBoard[6]                                = PieceE.Knight | PieceE.White;
+            m_pBoard[7 * 8 + 6]                        = PieceE.Knight | PieceE.Black;
+            m_pBoard[2]                                = PieceE.Bishop | PieceE.White;
+            m_pBoard[7 * 8 + 2]                        = PieceE.Bishop | PieceE.Black;
+            m_pBoard[5]                                = PieceE.Bishop | PieceE.White;
+            m_pBoard[7 * 8 + 5]                        = PieceE.Bishop | PieceE.Black;
+            m_pBoard[3]                                = PieceE.King | PieceE.White;
+            m_pBoard[7 * 8 + 3]                        = PieceE.King | PieceE.Black;
+            m_pBoard[4]                                = PieceE.Queen | PieceE.White;
+            m_pBoard[7 * 8 + 4]                        = PieceE.Queen | PieceE.Black;
             ResetInitialBoardInfo(PlayerColorE.White,
                                   true /*Standard board*/,
                                   BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
@@ -1539,7 +1580,8 @@ namespace SrcChess2 {
             PieceE  eEnemyBishop;
             PieceE  eEnemyKnight;
             PieceE  eEnemyPawn;
-                                          
+            PieceE eEnemyChancellor;
+
             eColor          = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen     = PieceE.Queen  | eColor;
             eEnemyRook      = PieceE.Rook   | eColor;
@@ -1547,12 +1589,14 @@ namespace SrcChess2 {
             eEnemyBishop    = PieceE.Bishop | eColor;
             eEnemyKnight    = PieceE.Knight | eColor;
             eEnemyPawn      = PieceE.Pawn   | eColor;
+            eEnemyChancellor = PieceE.Chancellor | eColor;
             iRetVal         = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);
             iRetVal        += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos],     eEnemyQueen, eEnemyRook);
             iRetVal        += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos],      eEnemyKing);
             iRetVal        += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos],    eEnemyKnight);
             iRetVal        += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyPawn);
-            return(iRetVal);
+            iRetVal        += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineKnight[iPos], eEnemyChancellor, eEnemyChancellor);
+            return (iRetVal);
         }
 
         /// <summary>
@@ -1905,6 +1949,9 @@ namespace SrcChess2 {
                         break;
                     case PieceE.King:
                         EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveKing[iIndex], arrMovePos);
+                        break;
+                    case PieceE.Chancellor:
+                        EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveLineKnight[iIndex], arrMovePos);
                         break;
                     }
                 }
