@@ -54,7 +54,13 @@ namespace SrcChess2 {
             case ChessPiece.Black_King:
                 strRetVal   = "black king";
                 break;
-            case ChessPiece.White_Pawn:
+            case ChessPiece.Black_Chancellor:
+                strRetVal = "black chancellor";
+                break;
+            case ChessPiece.Black_Archbishop:
+                strRetVal = "black archbishop";
+                break;
+                case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
                 break;
             case ChessPiece.White_Rook:
@@ -72,7 +78,14 @@ namespace SrcChess2 {
             case ChessPiece.White_King:
                 strRetVal   = "white king";
                 break;
-            default:
+            case ChessPiece.White_Chancellor:
+                strRetVal = "white chancellor";
+                break;
+            case ChessPiece.White_Archbishop:
+                strRetVal = "white archbishop";
+                break;
+
+                default:
                 strRetVal   = null;
                 break;
             }
@@ -89,6 +102,7 @@ namespace SrcChess2 {
             string      strUriName;
 
             strUriName          = "piecesets/" + m_strBasePath + "/" + NameFromChessPiece(ePiece) + ".xaml";
+           // strUriName = "piecesets/leipzig/white rook.xaml";
             uri                 = new Uri(strUriName, UriKind.Relative);
             userControlRetVal   = App.LoadComponent(uri) as UserControl;
             return(userControlRetVal);
