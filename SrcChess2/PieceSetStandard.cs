@@ -60,6 +60,9 @@ namespace SrcChess2 {
             case ChessPiece.Black_Archbishop:
                 strRetVal = "black archbishop";
                 break;
+                case ChessPiece.Black_EmpoweredQueen:
+                    strRetVal = "black empoweredqueen";
+                    break;
                 case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
                 break;
@@ -84,7 +87,9 @@ namespace SrcChess2 {
             case ChessPiece.White_Archbishop:
                 strRetVal = "white archbishop";
                 break;
-
+                case ChessPiece.White_EmpoweredQueen:
+                    strRetVal = "white empoweredqueen";
+                    break;
                 default:
                 strRetVal   = null;
                 break;

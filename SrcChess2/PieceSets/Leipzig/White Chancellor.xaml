@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+  <Viewbox Stretch="Uniform">
+    <Grid Width="12.7050700187683" Height="17.3339805603027">
+      <Canvas Name="svg3346" Width="45" Height="45">
+    <Canvas.RenderTransform>
+      <TranslateTransform X="0" Y="0"/>
+    </Canvas.RenderTransform>
+    <Canvas.Resources/>
+    <!--Unknown tag: metadata-->
+    <!--Unknown tag: sodipodi:namedview-->
+    <Image xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="image3354" Canvas.Left="0" Canvas.Top="0" Source="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJ TUUH2wQFEDIckyS78AAABQRJREFUWIXtmF9oU1ccx7/33N6T3OT2hLJaoU2KsJgNstU/MAozKlM3 HGXVIWIpfSh29mF2w71YysTSUXD4OnQy2mL7NFLnYHsIGMX/wtKwkuxhxcpQXEqlU2hs06b589vD eiVK0uSmiX1YP3Afcu73/O7nnpxz7uUC66yzzkq8BUBea4msWCyWHxhjcQCNepvZbP4GAHHOe9bO bAU0Tfvd6XSSoihzABwAWoQQi6dOnSIhxJ9r7ZcVVVVHjh07lti6dWsSAAGg4eFhCgQCpGlaSgjx myzLXgAnAGhra7sMY2yoqalpMR6PUzAYpFAoRDrBYHDy/Pnz1NTUlLJarQlJktKyLPsA1Kyls5Nz Hrtx4wbl4O/MH36/n+x2e5IxlgDw6VoIK2az+a/Ozs7EhQsXqL+/P5t0Olvj8ePHiTGWkmW5/bUa M8ZO2O32BZ/PRwCosbEx12hnpbe3lyoqKhIA3n9dzm9wzucuX75MPT09BICuXLliSJqIaOfOnaSq 6j8ALGU3NplM3+/YsWOBiGhycpKCwWBOsb6+vrTf7896bmZmhjZs2JDknH9dbue3ZVlOjI+PFzSa Lpcr7fV6c55vaWkhzvkCyrkdqqr6U2tra7wQ4UuXLpHVak3H47njoVCIampqlgB8Vi7nd2VZTj54 8CCvcCAQIFVVl2w2W94b3Lx5MwkhAmUxtlgsvxw9enQpn8T169fJarXGZVm+uGnTprl8+Y6ODmKM pQCIUjvbZVlOjo2N0eDgICWTyawCQ0NDpChKgjH2OYCv9uzZM59P2uv1UmVlZRzAR6WW7ti+ffvc 2bNnCQDdunXrpQvPz89Te3v7kqIoMQAfA4CmaT/39fVlfcBkEolEqK6uLgWgt9TSX+7evXv+2bNn NDIyQk+fPqXnz58TEdHDhw/J6XQuWCyWEIA3l/Ma53xxYmIinzMRETkcDlJV9cdSS39QXV0d06cF AKqvr088evSIqqqqFs1m80UAih5WVfW7Q4cO5Z3POk6nk4QQY6WWZpqmjW/ZsiXW1taWBEBHjhxJ ud3umMlkOpcZlGW5TQixGIlECnWmbdu2kdVqnS61NABUAfgCwLdYfndWVfUagIqMzGHO+dLdu3cL FiYiOnDgADHGkgBYOcR16vDfy06mcDPnPO7z+QwJExF1dXXR8kDYjEhU5I+8RGT50HmHc+4dHR3l +/fvN1gKUJQXy6ESwGyh/Vb1twghhs+cOaM0Nzevpoxhj9VIv0dE7q6urqJrmEymovqtRnrvrl27 0pzzVZR4gaFvJVIRF2gE0A/ABaDe4XCki6iB2tra9OPHj9nU1BQD0ADgj0L7Gl2IAFANYJ/b7cb0 9DRisVhR/9bMzAybmpoCgHN4eXGXhYMAKBwOG97iMgmHw/p2d9CogNHpYZIk6VebzfZhQ0MDPB6P 0eu94M6dOwiHw5idnfUT0ScA4kUXWwGTJEk+SZJoYGBgVaOsMzAwQJIkkSRJPgAFbyVGRvqqEGKv y+Va3Lhx45Lxe87OkydP+P37983RaPQagH2F9DGyEOtqa2tx8uRJMwBzUYY5OH36NKLRaF0pa+rc 9ng8JZkWr+LxeAjA7UJFin64dHd3Q5Ik2Gy2lH5IkoTu7u6ickYoZp8GANy7dw8AEI1GBzOaO/V2 o7lycRMACSGSQgj9u/TNlTKF5nJkcmJk99gH4PArbaMArubJFJp7NbPOOv8b/gVWL6nEczzysAAA AABJRU5ErkJggg== " Width="45" Height="45" Stretch="Fill"/>
+  </Canvas></Grid>
+  </Viewbox>
+</UserControl>
