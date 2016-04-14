@@ -243,6 +243,8 @@ namespace SrcChess2 {
 
         static private int[][]                      s_ppiCaseMoveTiger;
 
+        static private int[][]                      s_ppiCaseMoveElephant;
+
 
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
@@ -328,6 +330,7 @@ namespace SrcChess2 {
             s_pppiCaseMoveLineKnight            = new int[64][][];
             s_pppiCaseMoveDiagKnight            = new int[64][][];
             s_ppiCaseMoveTiger                  = new int[64][];
+            s_ppiCaseMoveElephant               = new int[64][];
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 0,  -1, 1,  0, -1,  0, 1,  1, -1,  1, 0,  1, 1 }, true, false);
                 s_pppiCaseMoveDiagLine[iPos] = arrMove.ToArray();
@@ -343,6 +346,8 @@ namespace SrcChess2 {
                 s_ppiCaseWhitePawnCanAttackFrom[iPos] = arrMove[0];
                 FillMoves(iPos, arrMove, new int[] { -1, 1,  1, 1 }, false, false);
                 s_ppiCaseBlackPawnCanAttackFrom[iPos] = arrMove[0];
+
+
 
                 // added
                 // chancellor
@@ -361,6 +366,10 @@ namespace SrcChess2 {
 
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1,    -2, -2, -2, 2, 2, -2, 2, 2 }, false, false);
                 s_ppiCaseMoveTiger[iPos] = arrMove[0];
+
+                // Elephant
+                FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1, -2, 0, 2, 0, 0, -2, 0, 2, -2, 0, 3, 0, 0, -3, 0, 3 }, false, false);
+                s_ppiCaseMoveElephant[iPos] = arrMove[0];
 
 
             }
@@ -453,6 +462,11 @@ namespace SrcChess2 {
             m_searchEngineMinMax        = searchEngineMinMax;
             //ResetBoardMarti();
             ResetBoardMartiVsClassic();
+
+            byte[] team = new byte[8];
+            team[0] = 9;
+
+
             //ResetBoard();
         }
 
@@ -2469,6 +2483,100 @@ namespace SrcChess2 {
             }
             return(strRetVal);
         }
+
+        //added functions
+
+        /// <summary>
+        /// Reset the board to the initial configuration
+        /// </summary>
+        public void ResetBoardGeneric(PieceE[] teamW, PieceE[] teamB)
+        {
+            for (int iIndex = 0; iIndex < 64; iIndex++)
+            {
+                m_pBoard[iIndex] = PieceE.None;
+            }
+            for (int iIndex = 0; iIndex < 8; iIndex++)
+            {
+                m_pBoard[8 + iIndex] = PieceE.Pawn | PieceE.White;
+                m_pBoard[48 + iIndex] = PieceE.Pawn | PieceE.Black;
+            }
+            m_pBoard[0] = teamW[0] | PieceE.White;
+            m_pBoard[7 * 8] = teamB[0] | PieceE.Black;
+            m_pBoard[7] = teamW[1] | PieceE.White;
+            m_pBoard[7 * 8 + 7] = teamB[1] | PieceE.Black;
+            m_pBoard[1] = teamW[2] | PieceE.White;
+            m_pBoard[7 * 8 + 1] = teamB[2] | PieceE.Black;
+            m_pBoard[6] = teamW[3] | PieceE.White;
+            m_pBoard[7 * 8 + 6] = teamB[3] | PieceE.Black;
+            m_pBoard[2] = teamW[4] | PieceE.White;
+            m_pBoard[7 * 8 + 2] = teamB[4] | PieceE.Black;
+            m_pBoard[5] = teamW[5] | PieceE.White;
+            m_pBoard[7 * 8 + 5] = teamB[5] | PieceE.Black;
+            m_pBoard[3] = teamW[6] | PieceE.White;
+            m_pBoard[7 * 8 + 3] = teamB[6] | PieceE.Black;
+            m_pBoard[4] = teamW[7] | PieceE.White;
+            m_pBoard[7 * 8 + 4] = teamB[7] | PieceE.Black;
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
+        }
+
+
+        public PieceE[] TeamC()
+        {
+
+            PieceE[] teamC = new PieceE[8];
+            teamC[0] = PieceE.Rook;
+            teamC[1] = PieceE.Knight;
+            teamC[2] = PieceE.Bishop;
+            teamC[3] = PieceE.King;
+            teamC[4] = PieceE.Queen;
+            teamC[5] = PieceE.Bishop;
+            teamC[6] = PieceE.Knight;
+            teamC[7] = PieceE.Rook;
+
+            return teamC;
+
+        }
+
+        public PieceE[] TeamM()
+        {
+
+            PieceE[] teamC = new PieceE[8];
+            teamC[0] = PieceE.Chancellor;
+            teamC[1] = PieceE.Knight;
+            teamC[2] = PieceE.Bishop;
+            teamC[3] = PieceE.King;
+            teamC[4] = PieceE.Queen;
+            teamC[5] = PieceE.Archbishop;
+            teamC[6] = PieceE.Knight;
+            teamC[7] = PieceE.Rook;
+
+            return teamC;
+
+        }
+
+        public PieceE[] TeamA()
+        {
+
+            PieceE[] teamC = new PieceE[8];
+            teamC[0] = PieceE.Elephant;
+            teamC[1] = PieceE.Knight;
+            teamC[2] = PieceE.Tiger;
+            teamC[3] = PieceE.King;
+            teamC[4] = PieceE.Chancellor;
+            teamC[5] = PieceE.Tiger;
+            teamC[6] = PieceE.Knight;
+            teamC[7] = PieceE.Elephant;
+
+            return teamC;
+
+        }
+
+
+
+
     } // Class ChessBoard
 
     /// <summary>Chess exception</summary>
