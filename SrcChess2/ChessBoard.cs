@@ -502,7 +502,7 @@ namespace SrcChess2 {
             
        
 
-            ResetBoardGeneric(TeamA(), TeamC());
+            ResetBoardGeneric(TeamAmazon(), TeamC());
 
             //ResetBoard();
         }
