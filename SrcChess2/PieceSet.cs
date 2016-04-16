@@ -47,10 +47,42 @@ namespace SrcChess2 {
 
             White_Archbishop = 16,
 
-            White_EmpoweredQueen = 17
+            White_EmpoweredQueen = 17,
+
+            White_Tiger = 18,
 
 
-    
+            White_Elephant = 19,
+
+
+            Black_Tiger = 20,
+
+
+            Black_Elephant = 21,
+
+            Black_Amazon =22,
+
+            Black_Ferz =23,
+
+            Black_Wazir = 24,
+
+            Black_CrazyHorse = 25,
+
+            White_Amazon = 26,
+
+            White_Ferz = 27,
+
+            White_Wazir = 28,
+
+            White_CrazyHorse = 29,
+
+
+
+
+
+
+
+
 
 
 
@@ -99,29 +131,37 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_Chancellor;
                 break;
-                case ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.White:
-                    eRetVal = ChessPiece.White_Archbishop;
-                    break;
-                case ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.White:
-                    eRetVal = ChessPiece.White_EmpoweredQueen;
-                    break;
+            case ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Archbishop;
+                break;
+            case ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_EmpoweredQueen;
+                break;
+            case ChessBoard.PieceE.Tiger | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Tiger;
+                break;
+            case ChessBoard.PieceE.Elephant | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Elephant;
+                break;
+            case ChessBoard.PieceE.Amazon | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Amazon;
+                break;
+            case ChessBoard.PieceE.Ferz | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Ferz;
+                break;
+            case ChessBoard.PieceE.Wazir | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Wazir;
+                break;
+            case ChessBoard.PieceE.CrazyHorse | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_CrazyHorse;
+                break;
 
 
 
                 case ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Pawn;
                 break;
-            case ChessBoard.PieceE.Knight | ChessBoard.PieceE.Black:
-                eRetVal = ChessPiece.Black_Knight;
-                break;
-            case ChessBoard.PieceE.Bishop | ChessBoard.PieceE.Black:
-                eRetVal = ChessPiece.Black_Bishop;
-                break;
-            case ChessBoard.PieceE.Rook | ChessBoard.PieceE.Black:
-                eRetVal = ChessPiece.Black_Rook;
-                break;
-            case ChessBoard.PieceE.Queen | ChessBoard.PieceE.Black:
-                eRetVal = ChessPiece.Black_Queen;
+            
                 break;
             case ChessBoard.PieceE.King | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_King;
@@ -129,12 +169,19 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Chancellor;
                 break;
-                case ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black:
+            case ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Archbishop;
                 break;
-                case ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.Black:
-                    eRetVal = ChessPiece.Black_EmpoweredQueen;
-                    break;
+            case ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_EmpoweredQueen;
+                break;
+            case ChessBoard.PieceE.Tiger | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Tiger;
+                break;
+            case ChessBoard.PieceE.Elephant | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Elephant;
+                break;
+            
 
                 default:
                 eRetVal = ChessPiece.None;
