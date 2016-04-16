@@ -60,9 +60,31 @@ namespace SrcChess2 {
             case ChessPiece.Black_Archbishop:
                 strRetVal = "black archbishop";
                 break;
-                case ChessPiece.Black_EmpoweredQueen:
-                    strRetVal = "black empoweredqueen";
-                    break;
+            case ChessPiece.Black_EmpoweredQueen:
+                strRetVal = "black empoweredqueen";
+                break;
+            case ChessPiece.Black_Tiger:
+                strRetVal = "Black tiger";
+                break;
+            case ChessPiece.Black_Elephant:
+                strRetVal = "black elephant";
+                break;
+            case ChessPiece.Black_Ferz:
+                strRetVal = "black ferz";
+                break;
+            case ChessPiece.Black_Wazir:
+                strRetVal = "black wazir";
+                break;
+            case ChessPiece.Black_Amazon:
+                strRetVal = "black amazon";
+                break;
+            case ChessPiece.Black_CrazyHorse:
+                strRetVal = "black crazyhorse";
+                break;
+
+
+
+
                 case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
                 break;
@@ -87,9 +109,28 @@ namespace SrcChess2 {
             case ChessPiece.White_Archbishop:
                 strRetVal = "white archbishop";
                 break;
-                case ChessPiece.White_EmpoweredQueen:
-                    strRetVal = "white empoweredqueen";
-                    break;
+            case ChessPiece.White_EmpoweredQueen:
+                strRetVal = "white empoweredqueen";
+                break;
+            case ChessPiece.White_Tiger:
+                strRetVal = "white tiger";
+                break;
+            case ChessPiece.White_Elephant:
+                strRetVal = "white elephant";
+                break;
+            case ChessPiece.White_Ferz:
+                strRetVal ="white ferz";
+                break;
+            case ChessPiece.White_Wazir:
+                strRetVal = "white wazir";
+                break;
+            case ChessPiece.White_Amazon:
+                strRetVal = "white amazon";
+                break;
+            case ChessPiece.White_CrazyHorse:
+                strRetVal = "white crazyhorse";
+                break;
+
                 default:
                 strRetVal   = null;
                 break;
