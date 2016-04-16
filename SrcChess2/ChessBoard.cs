@@ -89,13 +89,22 @@ namespace SrcChess2 {
             
             Elephant = 13,
 
+            WildHorse = 14,
+
             //Empowered
 
-           // EmpoweredKnight =14,
-           // EmpoweredBishop = 15,
-           // EmpoweredRook = 16,
+            EmpoweredKnight = 15,
+            EmpoweredBishop = 16,
+            EmpoweredRook = 17,
 
+            //  Amazons
+            Amazon = 18,
 
+            Ferz = 19,
+
+            Wazir = 20,
+
+            CrazyHorse = 21,
 
 
 
