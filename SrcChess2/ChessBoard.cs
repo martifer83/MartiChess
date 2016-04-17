@@ -72,9 +72,9 @@ namespace SrcChess2 {
             /// <summary>King</summary>
             King      = 6,
             /// <summary>Mask to find the piece</summary>
-            PieceMask = 15,
+            PieceMask = 31,
             /// <summary>Piece is black</summary>
-            Black     = 16,
+            Black     = 32,
             /// <summary>White piece</summary>
             White     = 0,
 
@@ -459,7 +459,7 @@ namespace SrcChess2 {
         private ChessBoard(SearchEngineAlphaBeta searchEngineAlphaBeta, SearchEngineMinMax searchEngineMinMax) {
             m_pBoard                    = new PieceE[64];
             m_book                      = new Book();
-            m_piPiecesCount             = new int[32]; // important set to 32
+            m_piPiecesCount             = new int[64]; // important set to 32
             m_rnd                       = new Random((int)DateTime.Now.Ticks);
             m_rndRep                    = new Random(0);
             m_stackPossibleEnPassantAt  = new Stack<int>(256);
