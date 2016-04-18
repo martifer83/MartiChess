@@ -72,7 +72,7 @@ namespace SrcChess2 {
             /// <summary>King</summary>
             King      = 6,
             /// <summary>Mask to find the piece</summary>
-            PieceMask = 16,
+            PieceMask = 31,
             /// <summary>Piece is black</summary>
             Black     = 32,
             /// <summary>White piece</summary>
@@ -105,6 +105,8 @@ namespace SrcChess2 {
            Wazir =20,
 
            CrazyHorse = 21,
+
+           AmazonPawn =22
 
 
 
@@ -256,13 +258,16 @@ namespace SrcChess2 {
         static private int[][]                      s_ppiCaseMoveTiger;
 
         static private int[][]                      s_ppiCaseMoveElephant;
-        static private int[][][]                     s_pppiCaseMoveDiagLineKnight;
+        static private int[][][]                    s_pppiCaseMoveDiagLineKnight;
 
-        static private int[][]                     s_ppiCaseMoveFerz;
+        static private int[][]                      s_ppiCaseMoveFerz;
 
-        static private int[][]                     s_ppiCaseMoveWazir;
+        static private int[][]                      s_ppiCaseMoveWazir;
 
         static private int[][]                      s_ppiCaseMoveCrazyHorse;
+
+        static private int[][]                      s_ppiCaseWhiteAmazonPawnCanAttackFrom;
+        static private int[][]                      s_ppiCaseBlackAmazonPawnCanAttackFrom;
 
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
@@ -350,6 +355,11 @@ namespace SrcChess2 {
             s_ppiCaseMoveTiger                  = new int[64][];
             s_ppiCaseMoveElephant               = new int[64][];
             s_pppiCaseMoveDiagLineKnight        = new int[64][][];
+            s_ppiCaseMoveFerz                   = new int[64][];
+            s_ppiCaseMoveWazir                  = new int[64][];
+            s_ppiCaseMoveCrazyHorse             = new int[64][];
+            s_ppiCaseWhiteAmazonPawnCanAttackFrom = new int[64][];
+            s_ppiCaseBlackAmazonPawnCanAttackFrom = new int[64][];
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1,  -1, 0,  -1, 1,  0, -1,  0, 1,  1, -1,  1, 0,  1, 1 }, true, false);
                 s_pppiCaseMoveDiagLine[iPos] = arrMove.ToArray();
@@ -408,6 +418,11 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1}, false, false);
                 s_ppiCaseMoveCrazyHorse[iPos] = arrMove[0];
 
+                // amazon pawn
+                FillMoves(iPos, arrMove, new int[] { -1, -1, 1, -1,1,0 }, false, false);
+                s_ppiCaseWhiteAmazonPawnCanAttackFrom[iPos] = arrMove[0];
+                FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1,-1,0 }, false, false);
+                s_ppiCaseBlackAmazonPawnCanAttackFrom[iPos] = arrMove[0];
 
             }
         }
@@ -502,7 +517,7 @@ namespace SrcChess2 {
             
        
 
-            ResetBoardGeneric(TeamAmazon(), TeamC());
+            ResetBoardGeneric(TeamAmazon(), TeamC(), false,true);
 
             //ResetBoard();
         }
@@ -1719,6 +1734,7 @@ namespace SrcChess2 {
             PieceE eEnemyFerz;
             PieceE eEnemyWazir;
             PieceE eEnemyCrazyHorse;
+            PieceE eEnemyAmazonPawn;
 
             eColor          = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen     = PieceE.Queen  | eColor;
@@ -1735,7 +1751,8 @@ namespace SrcChess2 {
             eEnemyAmazon = PieceE.Amazon | eColor;
              eEnemyFerz =  PieceE.Ferz | eColor; 
              eEnemyWazir = PieceE.Wazir | eColor; 
-             eEnemyCrazyHorse = PieceE.CrazyHorse | eColor; ;
+             eEnemyCrazyHorse = PieceE.CrazyHorse | eColor;
+            eEnemyAmazonPawn = PieceE.AmazonPawn | eColor;
 
             iRetVal         = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);
             iRetVal        += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos],     eEnemyQueen, eEnemyRook);
@@ -1748,9 +1765,10 @@ namespace SrcChess2 {
             iRetVal        += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveTiger[iPos], eEnemyTiger);
             iRetVal        += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyElephant);
             iRetVal        += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyAmazon,eEnemyAmazon);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveWazir[iPos], eEnemyWazir );
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCrazyHorse[iPos], eEnemyAmazon);
+            iRetVal        += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
+            iRetVal         += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveWazir[iPos], eEnemyWazir );
+            iRetVal         += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCrazyHorse[iPos], eEnemyAmazon);
+            iRetVal         += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyAmazonPawn);
 
             return (iRetVal);
         }
@@ -2114,6 +2132,82 @@ namespace SrcChess2 {
         }
 
         /// <summary>
+        /// Enumerates the move a specified pawn can do
+        /// </summary>
+        /// <param name="ePlayerColor">     Color doing the the move</param>
+        /// <param name="iStartPos">        Pawn position</param>
+        /// <param name="arrMovePos">       List of move</param>
+        private void EnumAmazonPawnMove(PlayerColorE ePlayerColor, int iStartPos, List<MovePosS> arrMovePos)
+        {
+            int iDir;
+            int iNewPos;
+            int iNewColPos;
+            int iRowPos;
+            bool bCanMove2Case;
+
+            iRowPos = (iStartPos >> 3);
+            bCanMove2Case = (ePlayerColor == PlayerColorE.Black) ? (iRowPos == 6) : (iRowPos == 1);
+            iDir = (ePlayerColor == PlayerColorE.Black) ? -8 : 8;
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                if (m_pBoard[iNewPos] == PieceE.None)
+                {
+                    iRowPos = (iNewPos >> 3);
+                    if (iRowPos == 0 || iRowPos == 7)
+                    {
+                        AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                    }
+                    else {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                    }
+                    if (bCanMove2Case && m_pBoard[iNewPos + iDir] == PieceE.None)
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos + iDir, MoveTypeE.Normal, arrMovePos);
+                    }
+                }
+            }
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                iNewColPos = iNewPos & 7;
+                iRowPos = (iNewPos >> 3);
+                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None)
+                {
+                    if (((m_pBoard[iNewPos - 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
+                    {
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, MoveTypeE.Normal, arrMovePos);
+                        }
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+                }
+                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None)
+                {
+                    if (((m_pBoard[iNewPos + 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
+                    {
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, MoveTypeE.Normal, arrMovePos);
+                        }
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Enumerates the en passant move
         /// </summary>
         /// <param name="ePlayerColor">     Color doing the the move</param>
@@ -2329,6 +2423,9 @@ namespace SrcChess2 {
                     case PieceE.CrazyHorse:
                         EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveCrazyHorse[iIndex], arrMovePos, ePiece);
                         break;
+                    case PieceE.AmazonPawn:
+                            EnumPawnMove(ePlayerColor, iIndex, arrMovePos);
+                            break;
 
 
                     }
@@ -2585,16 +2682,31 @@ namespace SrcChess2 {
         /// <summary>
         /// Reset the board to the initial configuration
         /// </summary>
-        public void ResetBoardGeneric(PieceE[] teamW, PieceE[] teamB)
+        public void ResetBoardGeneric(PieceE[] teamW, PieceE[] teamB, Boolean normalPawnT1, Boolean normalPawnT2)
         {
+            PieceE pawnT1, pawnT2;
+
+
+            if (normalPawnT1)
+                pawnT1 = PieceE.Pawn;
+            else
+
+                pawnT1 = PieceE.AmazonPawn;
+
+            if (normalPawnT2)
+                pawnT2 = PieceE.Pawn;
+            else
+
+                pawnT2 = PieceE.AmazonPawn;
+
             for (int iIndex = 0; iIndex < 64; iIndex++)
             {
                 m_pBoard[iIndex] = PieceE.None;
             }
             for (int iIndex = 0; iIndex < 8; iIndex++)
             {
-                m_pBoard[8 + iIndex] = PieceE.Pawn | PieceE.White;
-                m_pBoard[48 + iIndex] = PieceE.Pawn | PieceE.Black;
+                m_pBoard[8 + iIndex] = pawnT1 | PieceE.White;
+                m_pBoard[48 + iIndex] = pawnT2 | PieceE.Black;
             }
             m_pBoard[0] =           teamW[0] | PieceE.White;
             m_pBoard[7 * 8] =        teamB[0] | PieceE.Black;

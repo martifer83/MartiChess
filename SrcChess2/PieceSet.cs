@@ -76,6 +76,10 @@ namespace SrcChess2 {
 
             White_CrazyHorse = 29,
 
+            Black_AmazonPawn = 30,
+
+            White_AmazonPawn = 31,
+
 
 
 
@@ -155,6 +159,9 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.CrazyHorse | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_CrazyHorse;
                 break;
+            case ChessBoard.PieceE.AmazonPawn | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_AmazonPawn;
+                break;
 
 
 
@@ -202,6 +209,9 @@ namespace SrcChess2 {
                 break;
             case ChessBoard.PieceE.CrazyHorse | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_CrazyHorse;
+                break;
+            case ChessBoard.PieceE.AmazonPawn | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_AmazonPawn;
                 break;
 
                 default:
