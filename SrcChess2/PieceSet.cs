@@ -80,6 +80,10 @@ namespace SrcChess2 {
 
             White_AmazonPawn = 31,
 
+            Black_Gaja = 32,
+
+            White_Gaja = 33,
+
 
 
 
@@ -162,6 +166,9 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.AmazonPawn | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_AmazonPawn;
                 break;
+                case ChessBoard.PieceE.Gaja | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Gaja;
+                    break;
 
 
 
@@ -213,6 +220,9 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.AmazonPawn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_AmazonPawn;
                 break;
+                case ChessBoard.PieceE.Gaja | ChessBoard.PieceE.Black:
+                    eRetVal = ChessPiece.Black_Gaja;
+                    break;
 
                 default:
                 eRetVal = ChessPiece.None;

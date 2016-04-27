@@ -1796,7 +1796,18 @@ namespace SrcChess2 {
                             if (tMove.StartPos == 255) {
                                 System.Console.Beep();
                             } else {
-                                OnMoveSelected(new MoveSelectedEventArgs(tMove));
+                                ePiece = m_board[iPos];
+                               /* if (ePiece != SrcChess2.ChessBoard.PieceE.None && m_board[tMove.StartPos] == SrcChess2.ChessBoard.PieceE.Tiger)
+                                {
+                                    if(tMove.Type == SrcChess2.ChessBoard.MoveTypeE.PieceEaten)
+                                        tMove.StartPos = tMove.EndPos;
+                                    OnMoveSelected(new MoveSelectedEventArgs(tMove));
+
+                                }
+                                else*/
+                                    OnMoveSelected(new MoveSelectedEventArgs(tMove));
+
+
                             }
                         }
                     }

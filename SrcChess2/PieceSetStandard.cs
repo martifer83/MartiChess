@@ -84,6 +84,9 @@ namespace SrcChess2 {
             case ChessPiece.Black_AmazonPawn:
                 strRetVal = "black amazonpawn";
                 break;
+                case ChessPiece.Black_Gaja:
+                    strRetVal = "black gaja";
+                    break;
 
 
 
@@ -136,6 +139,9 @@ namespace SrcChess2 {
             case ChessPiece.White_AmazonPawn:
                 strRetVal = "white amazonpawn";
                 break;
+                case ChessPiece.White_Gaja:
+                    strRetVal = "white gaja";
+                    break;
 
                 default:
                 strRetVal   = null;
