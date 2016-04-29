@@ -84,12 +84,15 @@ namespace SrcChess2 {
 
             White_Gaja = 33,
 
+            
+            Black_EmpoweredKnight = 34,
+            White_EmpoweredKnight = 35,
 
+            Black_EmpoweredBishop = 36,
+            White_EmpoweredBishop = 37,
 
-
-
-
-
+            Black_EmpoweredRook = 38,
+            White_EmpoweredRook = 39,
 
 
 
@@ -220,9 +223,27 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.AmazonPawn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_AmazonPawn;
                 break;
-                case ChessBoard.PieceE.Gaja | ChessBoard.PieceE.Black:
-                    eRetVal = ChessPiece.Black_Gaja;
-                    break;
+            case ChessBoard.PieceE.Gaja | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Gaja;
+                break;
+            case ChessBoard.PieceE.EmpoweredKnight | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_EmpoweredKnight;
+                break;
+            case ChessBoard.PieceE.EmpoweredKnight | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_EmpoweredKnight;
+                break;
+            case ChessBoard.PieceE.EmpoweredBishop | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_EmpoweredBishop;
+                break;
+            case ChessBoard.PieceE.EmpoweredBishop | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_EmpoweredBishop;
+                break;
+            case ChessBoard.PieceE.EmpoweredRook | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_EmpoweredRook;
+                break;
+            case ChessBoard.PieceE.EmpoweredRook | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_EmpoweredRook;
+                break;
 
                 default:
                 eRetVal = ChessPiece.None;

@@ -87,9 +87,15 @@ namespace SrcChess2 {
                 case ChessPiece.Black_Gaja:
                     strRetVal = "black gaja";
                     break;
-
-
-
+                case ChessPiece.Black_EmpoweredKnight:
+                    strRetVal = "black empoweredknight";
+                    break;
+                case ChessPiece.Black_EmpoweredBishop:
+                    strRetVal = "black empoweredbishop";
+                    break;
+                case ChessPiece.Black_EmpoweredRook:
+                    strRetVal = "black empoweredrook";
+                    break;
 
                 case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
@@ -141,6 +147,15 @@ namespace SrcChess2 {
                 break;
                 case ChessPiece.White_Gaja:
                     strRetVal = "white gaja";
+                    break;
+                case ChessPiece.White_EmpoweredKnight:
+                    strRetVal = "white empoweredknight";
+                    break;
+                case ChessPiece.White_EmpoweredBishop:
+                    strRetVal = "white empoweredbishop";
+                    break;
+                case ChessPiece.White_EmpoweredRook:
+                    strRetVal = "white empoweredrook";
                     break;
 
                 default:

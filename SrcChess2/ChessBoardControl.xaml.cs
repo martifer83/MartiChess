@@ -1554,6 +1554,7 @@ namespace SrcChess2 {
             int[]       arrPosToUpdate;
 
             RefreshCell(movePos.StartPos);
+            RefreshCell(8);
             RefreshCell(movePos.EndPos);
             if (bFlash) {
                 FlashCell(movePos.EndPos);
@@ -1580,6 +1581,26 @@ namespace SrcChess2 {
         /// </returns>
         public ChessBoard.MoveResultE DoMove(ChessBoard.MovePosS movePos, bool bFlash, int iPermCount, int iDepth, int iCacheHit) {
             ChessBoard.MoveResultE eRetVal;
+            // interessant
+            if (movePos.Type == ChessBoard.MoveTypeE.PieceEaten && (m_board[movePos.StartPos] == (ChessBoard.PieceE.Tiger | ChessBoard.PieceE.White) || m_board[movePos.StartPos] == (ChessBoard.PieceE.Tiger | ChessBoard.PieceE.Black)))
+            {
+                movePos.StartPos = movePos.EndPos;
+            }
+
+            //elph forçar moviment i borrar els dos peces
+            if (movePos.Type == ChessBoard.MoveTypeE.PieceEaten && (m_board[movePos.StartPos] == (ChessBoard.PieceE.Elephant | ChessBoard.PieceE.White) || m_board[movePos.StartPos] == (ChessBoard.PieceE.Elephant | ChessBoard.PieceE.Black)))
+            {
+
+                byte[] arr = ChessBoard.MaxPosElephant(movePos.StartPos, movePos.EndPos);
+                movePos.EndPos = arr[2];
+                //movePos.Type = MoveTypeE.Normal;
+                
+               // m_board[arr[0]] = ChessBoard.PieceE.None;
+                 //m_board[arr[1]] = ChessBoard.PieceE.None;
+                ChessBoard.m_pBoard[arr[0]] = ChessBoard.PieceE.None;
+                ChessBoard.m_pBoard[arr[1]] = ChessBoard.PieceE.None;
+
+            }
 
             if (m_iFlashing == 0) { 
                 ShowBeforeMove(movePos, bFlash);
