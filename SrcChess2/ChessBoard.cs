@@ -112,7 +112,15 @@ namespace SrcChess2 {
 
             Gaja = 23,
 
+            // jungle
 
+            Lion = 24,
+
+            Zebra = 25,
+
+            Camel = 26,
+
+            Giraffe = 27,
 
 
 
@@ -274,6 +282,9 @@ namespace SrcChess2 {
         static private int[][] s_ppiCaseBlackAmazonPawnCanAttackFrom;
 
         static private int[][] s_ppiCaseMoveGaja;
+
+        /// <summary>Possible knight moves for each board position</summary>
+        static private int[][] s_ppiCaseMoveLion;
 
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
@@ -542,9 +553,9 @@ namespace SrcChess2 {
 
 
             //ResetBoardTest2();
-            //ResetBoardTestElephant();
-            ResetBoardTestEmpowered();
-            //ResetBoardGeneric(TeamChaturanga(), TeamAnimals(), true, true);
+            //ResetBoardTestElephant2();
+            //ResetBoardTestEmpowered();
+            ResetBoardGeneric(TeamAnimals(), TeamC(), true, true);
 
             //ResetBoard();
         }
@@ -1323,7 +1334,7 @@ namespace SrcChess2 {
                 default:
                     // Normal
                     // PawnPromotionTo???
-                    eOldPiece = m_pBoard[movePos.EndPos];
+                    eOldPiece = m_pBoard[movePos.EndPos];   /// pete endpos 249
                     switch (movePos.Type & MoveTypeE.MoveTypeMask) {
                         case MoveTypeE.PawnPromotionToQueen:
                             m_piPiecesCount[(int)ePiece]--;
@@ -2599,22 +2610,37 @@ namespace SrcChess2 {
             bBlackToMove = (ePlayerColor == PlayerColorE.Black);
             for (int iIndex = 0; iIndex < 64; iIndex++) {
                 ePiece = m_pBoard[iIndex];
-
-               
-
-               
-
-
-
-
+                int j;
+                if (bBlackToMove)
+                     j = 0;
 
                 if (ePiece != PieceE.None && ((ePiece & PieceE.Black) != 0) == bBlackToMove) {
 
-                    if (ePiece == PieceE.EmpoweredKnight)
+                    if (bBlackToMove)
+                        j = 0;
+
+                    if ((ePiece & PieceE.PieceMask) == (PieceE.EmpoweredKnight))
                     {
 
                         int[] arr = CheckAdjacent(iIndex, 8);
                         ePiece = KnightAdjacent(arr,(int)ePlayerColor); // review
+                       // ePiece = PieceE.Chancellor;
+                    }
+
+                   
+
+                    if (ePiece == PieceE.EmpoweredBishop)
+                    {
+
+                        int[] arr = CheckAdjacent(iIndex, 8);
+                        ePiece = BishopAdjacent(arr, (int)ePlayerColor); // review
+                    }
+
+                    if (ePiece == PieceE.EmpoweredRook)
+                    {
+
+                        int[] arr = CheckAdjacent(iIndex, 8);
+                        ePiece = RookAdjacent(arr, (int)ePlayerColor); // review
                     }
 
 
@@ -2675,7 +2701,17 @@ namespace SrcChess2 {
                         case PieceE.Gaja:
                             EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveGaja[iIndex], arrMovePos, ePiece);
                             break;
-                       
+                        case PieceE.EmpoweredBishop:
+                            EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveDiagonal[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.EmpoweredRook:
+                            EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveLine[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.EmpoweredKnight:
+                            EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveKnight[iIndex], arrMovePos, ePiece);
+                            break;
+
+
 
                     }
                 }
@@ -3056,10 +3092,54 @@ namespace SrcChess2 {
             m_pBoard[56] = PieceE.Pawn | PieceE.Black;
             m_pBoard[55] = PieceE.Pawn | PieceE.Black;
 
+            m_pBoard[61] = PieceE.EmpoweredKnight | PieceE.Black;
+            m_pBoard[62] = PieceE.EmpoweredRook | PieceE.Black;
+
             m_pBoard[63] = PieceE.King | PieceE.Black;
+
+            m_pBoard[16] = PieceE.Pawn ;
+            m_pBoard[24] = PieceE.Pawn ;
+        }
+
+        public void ResetBoardTestElephant2()
+        {
+
+            m_pBoard[5] = PieceE.King | PieceE.White;
+            m_pBoard[63] = PieceE.King | PieceE.Black;
+
+            m_pBoard[56] = PieceE.Elephant | PieceE.Black;
+            m_pBoard[48] = PieceE.Pawn | PieceE.White;
+            m_pBoard[40] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[32] = PieceE.Queen | PieceE.White;
+
+
+
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
         }
 
 
+        public void ResetBoardTestKing()
+        {
+
+            m_pBoard[47] = PieceE.King | PieceE.White;
+            m_pBoard[63] = PieceE.King | PieceE.Black;
+            m_pBoard[45] = PieceE.Queen | PieceE.White;
+
+            m_pBoard[11] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[12] = PieceE.Pawn | PieceE.White;
+            m_pBoard[13] = PieceE.Pawn | PieceE.Black;
+
+
+
+
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
+        }
 
 
         public PieceE[] TeamC()
@@ -3100,18 +3180,36 @@ namespace SrcChess2 {
         {
 
             PieceE[] teamC = new PieceE[8];
-            teamC[0] = PieceE.Rook;
+            teamC[0] = PieceE.Elephant;
             teamC[1] = PieceE.Knight;
             teamC[2] = PieceE.Tiger;
             teamC[3] = PieceE.King;
             teamC[4] = PieceE.Chancellor;
             teamC[5] = PieceE.Tiger;
             teamC[6] = PieceE.Knight;
-            teamC[7] = PieceE.Rook;
+            teamC[7] = PieceE.Elephant;
 
             return teamC;
 
         }
+
+        public PieceE[] TeamEmpowered()
+        {
+
+            PieceE[] teamC = new PieceE[8];
+            teamC[0] = PieceE.EmpoweredRook;
+            teamC[1] = PieceE.EmpoweredKnight;
+            teamC[2] = PieceE.EmpoweredBishop;
+            teamC[3] = PieceE.King;
+            teamC[4] = PieceE.EmpoweredQueen;
+            teamC[5] = PieceE.EmpoweredBishop;
+            teamC[6] = PieceE.EmpoweredKnight;
+            teamC[7] = PieceE.EmpoweredRook;
+
+            return teamC;
+
+        }
+
 
         public PieceE[] TeamAmazon()
         {
@@ -3189,7 +3287,7 @@ namespace SrcChess2 {
             if (p / dim != dim - 1)
             {
                 u = p + dim;
-                Console.WriteLine(u);
+                //Console.WriteLine(u);
                 arr[0] = u;
             }
             else {
@@ -3199,7 +3297,7 @@ namespace SrcChess2 {
             if (p % dim != dim)
             {
                 l = p + 1;
-                Console.WriteLine(l);
+                //Console.WriteLine(l);
                 arr[1] = l;
             }
             else {
@@ -3209,7 +3307,7 @@ namespace SrcChess2 {
             if (p / dim != 0)
             {
                 d = p - dim;
-                Console.WriteLine(d);
+                //Console.WriteLine(d);
                 arr[2] = d;
             }
             else {
@@ -3221,7 +3319,7 @@ namespace SrcChess2 {
             if (p % dim != 0)
             {
                 r = p - 1;
-                Console.WriteLine(r);
+               // Console.WriteLine(r);
                 arr[3] = r;
             }
             else {
@@ -3234,7 +3332,14 @@ namespace SrcChess2 {
 
         private PieceE KnightAdjacent(int[] arr, int color)
         {
-
+            if(color != 1)
+            {
+                string hello = "";
+            }
+            else
+            {
+                string hello2 = "";
+            }
             bool biFound = false;
             bool roFound = false;
 
@@ -3242,9 +3347,9 @@ namespace SrcChess2 {
             {
                 if (arr[i] != -1)
                 {
-                    if (m_pBoard[arr[i]] == PieceE.EmpoweredBishop)
+                    if (m_pBoard[arr[i]] == ( color !=1 ? PieceE.EmpoweredBishop :PieceE.EmpoweredBishop|PieceE.Black))
                     biFound = true;
-                    if (m_pBoard[arr[i]] == PieceE.EmpoweredRook)
+                    if (m_pBoard[arr[i]] == (color != 1 ? PieceE.EmpoweredRook : PieceE.EmpoweredRook | PieceE.Black))
                         roFound = true;
                 }
             }
@@ -3260,6 +3365,66 @@ namespace SrcChess2 {
             return PieceE.Knight;
 
         }
+
+
+        private PieceE BishopAdjacent(int[] arr, int color)
+        {
+
+            bool knFound = false;
+            bool roFound = false;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (arr[i] != -1)
+                {
+                    if (m_pBoard[arr[i]] == PieceE.EmpoweredKnight)
+                        knFound = true;
+                    if (m_pBoard[arr[i]] == PieceE.EmpoweredRook)
+                        roFound = true;
+                }
+            }
+
+            if (knFound && roFound)
+                return PieceE.Amazon;
+
+            if (!knFound && roFound)
+                return PieceE.Queen;
+            if (knFound && !roFound)
+                return PieceE.Archbishop;
+            // otherwise
+            return PieceE.Bishop;
+
+        }
+
+        private PieceE RookAdjacent(int[] arr, int color)
+        {
+
+            bool biFound = false;
+            bool knFound = false;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (arr[i] != -1)
+                {
+                    if (m_pBoard[arr[i]] == PieceE.EmpoweredBishop)
+                        biFound = true;
+                    if (m_pBoard[arr[i]] == PieceE.EmpoweredKnight)
+                        knFound = true;
+                }
+            }
+
+            if (biFound && knFound)
+                return PieceE.Amazon;
+
+            if (!biFound &&knFound)
+                return PieceE.Chancellor;
+            if (biFound && !knFound)
+                return PieceE.Queen;
+            // otherwise
+            return PieceE.Rook;
+
+        }
+
 
 
 

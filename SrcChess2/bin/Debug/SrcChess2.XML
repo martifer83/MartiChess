@@ -2905,6 +2905,9 @@
         <member name="F:SrcChess2.ChessBoard.s_ppiCaseWhitePawnCanAttackFrom">
             <summary>Possible board positions a white pawn can attack from each board position</summary>
         </member>
+        <member name="F:SrcChess2.ChessBoard.s_ppiCaseMoveLion">
+            <summary>Possible knight moves for each board position</summary>
+        </member>
         <member name="F:SrcChess2.ChessBoard.m_pBoard">
             <summary>Chess board</summary>
             63 62 61 60 59 58 57 56

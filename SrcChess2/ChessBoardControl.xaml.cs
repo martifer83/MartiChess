@@ -1553,12 +1553,38 @@ namespace SrcChess2 {
         private void ShowAfterMove(ChessBoard.MovePosS movePos, bool bFlash) {
             int[]       arrPosToUpdate;
 
-            RefreshCell(movePos.StartPos);
-            RefreshCell(8);
-            RefreshCell(movePos.EndPos);
-            if (bFlash) {
-                FlashCell(movePos.EndPos);
+            if (movePos.Type == ChessBoard.MoveTypeE.PieceEaten && (m_board[movePos.EndPos] == (ChessBoard.PieceE.Elephant | ChessBoard.PieceE.White) || m_board[movePos.EndPos] == (ChessBoard.PieceE.Elephant | ChessBoard.PieceE.Black)))
+            {
+
+                byte[] arr = ChessBoard.MaxPosElephant(movePos.StartPos, movePos.EndPos);
+                
+
+                RefreshCell(movePos.StartPos);
+                RefreshCell(arr[0]);
+                RefreshCell(arr[1]);
+                RefreshCell(movePos.EndPos);
+                if (bFlash)
+                {
+                    FlashCell(arr[0]);
+                    FlashCell(arr[1]);
+                    FlashCell(movePos.EndPos);
+                }
+
             }
+            else
+            {
+                RefreshCell(movePos.StartPos);
+                RefreshCell(movePos.EndPos);
+                if (bFlash)
+                {
+                    FlashCell(movePos.EndPos);
+                }
+            }
+               
+
+
+
+            //
             arrPosToUpdate = GetPosToUpdate(movePos);
             foreach (int iPos in arrPosToUpdate) {
                 if (bFlash) {

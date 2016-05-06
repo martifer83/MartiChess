@@ -18,6 +18,9 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.Chancellor]                             = 850;
             s_piPiecePoint[(int)ChessBoard.PieceE.Archbishop]                             = 700;
             s_piPiecePoint[(int)ChessBoard.PieceE.EmpoweredQueen]                         = 400;
+            s_piPiecePoint[(int)ChessBoard.PieceE.EmpoweredKnight]                        = 400;
+            s_piPiecePoint[(int)ChessBoard.PieceE.EmpoweredBishop]                        = 425;
+            s_piPiecePoint[(int)ChessBoard.PieceE.EmpoweredRook]                          = 600;
             s_piPiecePoint[(int)ChessBoard.PieceE.Tiger]                                  = 350;
             s_piPiecePoint[(int)ChessBoard.PieceE.Elephant]                               = 525;
             s_piPiecePoint[(int)ChessBoard.PieceE.Amazon]                                 = 1150;
@@ -37,6 +40,9 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black)] = -850;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black)] = -700;
             s_piPiecePoint[(int)(ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.Black)] = -400;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.EmpoweredKnight | ChessBoard.PieceE.Black)] = -400;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.EmpoweredBishop | ChessBoard.PieceE.Black)] = -425;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.EmpoweredRook | ChessBoard.PieceE.Black)] = -600;
             s_piPiecePoint[(int)ChessBoard.PieceE.Tiger]                                  = -350;
             s_piPiecePoint[(int)ChessBoard.PieceE.Elephant]                               = -525;
             s_piPiecePoint[(int)(ChessBoard.PieceE.King | ChessBoard.PieceE.Black)]       = -1000000;
@@ -98,6 +104,25 @@ namespace SrcChess2 {
             if (bBlackCastle) {
                 iRetVal -= 10;
             }
+
+            for (int iIndex = 32; iIndex < 64; iIndex++)
+            {
+                if (pBoard[iIndex] == ChessBoard.PieceE.King)
+                {
+                    iRetVal += 1000000;
+                }
+            }
+
+            for (int iIndex = 0; iIndex < 32; iIndex++)
+            {
+                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black))
+                {
+                    iRetVal -= 1000000;
+                }
+            }
+
+
+
             iRetVal += iMoveCountDelta;
             iRetVal += posInfo.m_iAttackedPieces * 2;
             //iRetVal += posInfo.m_iAttackedPos + posInfo.m_iAttackedPieces * 2 + posInfo.m_iPiecesDefending * 2;

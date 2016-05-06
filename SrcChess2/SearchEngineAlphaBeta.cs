@@ -287,7 +287,7 @@ namespace SrcChess2 {
                 resRetVal.iPermCount  = 0;
                 if (searchMode.m_iSearchDepth == 0 || bIterativeDepthFirst) {
                     dtTimeOut           = (bIterativeDepthFirst) ? DateTime.MaxValue : DateTime.Now + TimeSpan.FromSeconds(searchMode.m_iTimeOutInSec);
-                    iDepthLimit         = (bIterativeDepthFirst) ? searchMode.m_iSearchDepth : 999;
+                    iDepthLimit = (bIterativeDepthFirst) ? 6 : 999;//searchMode.m_iSearchDepth : 999;
                     iDepth              = 1;
                     resRetVal.iPts      = FindBestMoveUsingAlphaBetaAtDepth(chessBoard, searchMode, ePlayerColor, moveList, posInfoWhite, posInfoBlack, iTotalMoveCount, iDepth, iAlpha, iBeta, transTable, DateTime.MaxValue, out iPermCountAtLevel, out iBestMoveIndex, out bTimeOut, out arrPoints);
                     if (iBestMoveIndex != -1) {
