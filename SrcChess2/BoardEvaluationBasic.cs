@@ -29,6 +29,10 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.CrazyHorse]                             = 150;
             s_piPiecePoint[(int)ChessBoard.PieceE.AmazonPawn]                             = 150;
             s_piPiecePoint[(int)ChessBoard.PieceE.Gaja]                                   = 550;
+            s_piPiecePoint[(int)ChessBoard.PieceE.Zebra]                                  = 180;
+            s_piPiecePoint[(int)ChessBoard.PieceE.Camel]                                  = 200;
+            s_piPiecePoint[(int)ChessBoard.PieceE.Giraffe]                                = 500; //???
+            s_piPiecePoint[(int)ChessBoard.PieceE.Unicorn]                                = 400; //???
 
 
             s_piPiecePoint[(int)ChessBoard.PieceE.King]                                   = 1000000;
@@ -52,6 +56,10 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.CrazyHorse | ChessBoard.PieceE.Black)] = -150;
             s_piPiecePoint[(int)(ChessBoard.PieceE.AmazonPawn | ChessBoard.PieceE.Black)] = -150;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Gaja | ChessBoard.PieceE.Black)]       = -550;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Zebra | ChessBoard.PieceE.Black)]      = -180;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Camel | ChessBoard.PieceE.Black)]      = -200;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Giraffe | ChessBoard.PieceE.Black)]    = -500;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.Black)]    = -500;
 
 
         }
@@ -104,7 +112,7 @@ namespace SrcChess2 {
             if (bBlackCastle) {
                 iRetVal -= 10;
             }
-
+            /*
             for (int iIndex = 32; iIndex < 64; iIndex++)
             {
                 if (pBoard[iIndex] == ChessBoard.PieceE.King)
@@ -119,7 +127,7 @@ namespace SrcChess2 {
                 {
                     iRetVal -= 1000000;
                 }
-            }
+            }*/
 
 
 

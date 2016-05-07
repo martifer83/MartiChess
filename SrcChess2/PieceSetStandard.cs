@@ -96,6 +96,24 @@ namespace SrcChess2 {
                 case ChessPiece.Black_EmpoweredRook:
                     strRetVal = "black empoweredrook";
                     break;
+                case ChessPiece.Black_Zebra:
+                    strRetVal = "black zebra";
+                    break;
+                case ChessPiece.Black_Camel:
+                    strRetVal = "black camel";
+                    break;
+                case ChessPiece.Black_Unicorn:
+                    strRetVal = "black unicorn";
+                    break;
+
+                /*case ChessPiece.Black_Lion:
+                    strRetVal = "black lion";
+                    break;
+
+                case ChessPiece.Black_Giraffe:
+                    strRetVal = "black giraffe";
+                    break;
+                    */
 
                 case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
@@ -145,19 +163,34 @@ namespace SrcChess2 {
             case ChessPiece.White_AmazonPawn:
                 strRetVal = "white amazonpawn";
                 break;
-                case ChessPiece.White_Gaja:
-                    strRetVal = "white gaja";
+            case ChessPiece.White_Gaja:
+                strRetVal = "white gaja";
+                break;
+            case ChessPiece.White_EmpoweredKnight:
+                strRetVal = "white empoweredknight";
+                break;
+            case ChessPiece.White_EmpoweredBishop:
+                strRetVal = "white empoweredbishop";
+                break;
+            case ChessPiece.White_EmpoweredRook:
+                strRetVal = "white empoweredrook";
+                break;
+                case ChessPiece.White_Zebra:
+                    strRetVal = "white zebra";
                     break;
-                case ChessPiece.White_EmpoweredKnight:
-                    strRetVal = "white empoweredknight";
+                case ChessPiece.White_Camel:
+                    strRetVal = "white camel";
                     break;
-                case ChessPiece.White_EmpoweredBishop:
-                    strRetVal = "white empoweredbishop";
+                case ChessPiece.White_Unicorn:
+                    strRetVal = "white unicorn";
                     break;
-                case ChessPiece.White_EmpoweredRook:
-                    strRetVal = "white empoweredrook";
+                /*case ChessPiece.White_Lion:
+                    strRetVal = "white lion";
                     break;
-
+                case ChessPiece.White_Giraffe:
+                    strRetVal = "white giraffe";
+                    break;
+                    */
                 default:
                 strRetVal   = null;
                 break;
