@@ -103,13 +103,20 @@ namespace SrcChess2 {
             Black_Unicorn = 46,
             White_Unicorn = 47,
 
-            //Black_Lion = 44,
-            //White_Lion = 45,
+            Black_Lion = 44,
+            White_Lion = 45,
+
+            Black_Buffalo = 48,
+            White_Buffalo = 49,
+
+            Black_Nemesis= 50,
+            White_Nemesis = 51,
+
 
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
 
-            
+
 
 
         };
@@ -196,6 +203,15 @@ namespace SrcChess2 {
                 case ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.White:
                     eRetVal = ChessPiece.White_Unicorn;
                     break;
+                case ChessBoard.PieceE.Lion | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Lion;
+                    break;
+                case ChessBoard.PieceE.Buffalo | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Buffalo;
+                    break;
+                case ChessBoard.PieceE.Nemesis | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Nemesis;
+                    break;
 
 
 
@@ -276,6 +292,15 @@ namespace SrcChess2 {
                 break;
             case ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Unicorn;
+                break;
+            case ChessBoard.PieceE.Lion | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Lion;
+                break;
+            case ChessBoard.PieceE.Buffalo | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Buffalo;
+                break;
+            case ChessBoard.PieceE.Nemesis | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Nemesis;
                 break;
 
                 default:

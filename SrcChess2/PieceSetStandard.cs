@@ -106,14 +106,20 @@ namespace SrcChess2 {
                     strRetVal = "black unicorn";
                     break;
 
-                /*case ChessPiece.Black_Lion:
+                case ChessPiece.Black_Lion:
                     strRetVal = "black lion";
                     break;
-
+                    /*
                 case ChessPiece.Black_Giraffe:
                     strRetVal = "black giraffe";
                     break;
                     */
+                case ChessPiece.Black_Buffalo:
+                    strRetVal = "black buffalo";
+                    break;
+                case ChessPiece.Black_Nemesis:
+                    strRetVal = "black nemesis";
+                    break;
 
                 case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
@@ -184,13 +190,19 @@ namespace SrcChess2 {
                 case ChessPiece.White_Unicorn:
                     strRetVal = "white unicorn";
                     break;
-                /*case ChessPiece.White_Lion:
+                case ChessPiece.White_Lion:
                     strRetVal = "white lion";
                     break;
-                case ChessPiece.White_Giraffe:
-                    strRetVal = "white giraffe";
+                /* case ChessPiece.White_Giraffe:
+                     strRetVal = "white giraffe";
+                     break;
+                     */
+                case ChessPiece.White_Buffalo:
+                    strRetVal = "white buffalo";
                     break;
-                    */
+                case ChessPiece.White_Nemesis:
+                    strRetVal = "white nemesis";
+                    break;
                 default:
                 strRetVal   = null;
                 break;
