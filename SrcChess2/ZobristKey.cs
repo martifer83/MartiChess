@@ -20,14 +20,15 @@ namespace SrcChess2 {
             long    lPart4;
             
             rnd            = new Random(0);
-            s_pi64RndTable = new Int64[64 * 32];  //
-            for (int i = 0; i < 64 * 32; i++) {
+            s_pi64RndTable = new Int64[64 * 64];  //
+            for (int i = 0; i < 64 * 64; i++) {
                 lPart1            = (long)rnd.Next(65536);
                 lPart2            = (long)rnd.Next(65536);
                 lPart3            = (long)rnd.Next(65536);
                 lPart4            = (long)rnd.Next(65536);
                 s_pi64RndTable[i] = (lPart1 << 48) | (lPart2 << 32) | (lPart3 << 16) | lPart4;
             }
+            int debug = 0;
         }
 
         /// <summary>

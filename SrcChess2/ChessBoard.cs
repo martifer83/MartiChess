@@ -72,9 +72,9 @@ namespace SrcChess2 {
             /// <summary>King</summary>
             King = 6,
             /// <summary>Mask to find the piece</summary>
-            PieceMask = 31,
+            PieceMask = 63,
             /// <summary>Piece is black</summary>
-            Black = 32,
+            Black = 64,
             /// <summary>White piece</summary>
             White = 0,
 
@@ -128,6 +128,10 @@ namespace SrcChess2 {
             
             // nemesis
             Nemesis = 30,
+
+            Reaper = 31,
+
+            Ghost = 32,
 
 
 
@@ -305,6 +309,11 @@ namespace SrcChess2 {
 
         static private int[][][] s_pppiCaseMoveNemesis;
 
+        static private int[][] s_ppiCaseMoveBlackReaper;
+        static private int[][] s_ppiCaseMoveWhiteReaper;
+
+        static private int[][] s_ppiCaseMoveGhost;
+
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
         /// 55 54 53 52 51 50 49 48
@@ -409,6 +418,10 @@ namespace SrcChess2 {
 
             s_pppiCaseMoveNemesis = new int[64][][];
 
+            s_ppiCaseMoveWhiteReaper = new int[64][];
+            s_ppiCaseMoveBlackReaper = new int[64][];
+            s_ppiCaseMoveGhost = new int[64][];
+
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
                 s_pppiCaseMoveDiagLine[iPos] = arrMove.ToArray();
@@ -429,14 +442,15 @@ namespace SrcChess2 {
                 // added
                 // chancellor
                 FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false);
-                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
+                //FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
+                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, true, 1);
 
                 s_pppiCaseMoveLineKnight[iPos] = arrMove.ToArray();
 
                 // archbishop
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, true, false);
-                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
-
+               // FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
+                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, true, 1);
                 s_pppiCaseMoveDiagKnight[iPos] = arrMove.ToArray();
 
                 // Tiger
@@ -511,8 +525,50 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
                 s_pppiCaseMoveNemesis[iPos] = arrMove.ToArray();
 
+                // 
+                FillMoves2(iPos, arrMove, true, true);
+                s_ppiCaseMoveWhiteReaper[iPos] = arrMove[0];
 
+                FillMoves2(iPos, arrMove, true, false);
+                s_ppiCaseMoveWhiteReaper[iPos] = arrMove[0];
+
+                FillMoves2(iPos, arrMove, false, false);
+                s_ppiCaseMoveGhost[iPos] = arrMove[0];
+                
             }
+        }
+
+        static private void FillMoves2(int iStartPos, List<int[]> arrMove, bool isRep, bool isWhite)
+        {
+
+            List<int> arrMoveOnLine;
+        
+            arrMove.Clear();
+            arrMoveOnLine = new List<int>(8);
+
+            // default
+            int startIndex = 0;
+            int endIndex = 64;
+
+            if (isRep && isWhite)
+            {
+                startIndex = 0;
+                endIndex = 56;
+            }
+            if (isRep && !isWhite)
+            {
+                startIndex = 8;
+                endIndex = 64;
+            }
+
+            for (int iIndex = startIndex; iIndex < endIndex; iIndex += 1)
+            {
+                if (iIndex != iStartPos)
+                {
+                    arrMoveOnLine.Add(iIndex);
+                }
+            }
+            arrMove.Add(arrMoveOnLine.ToArray());
         }
 
         /// <summary>
@@ -523,7 +579,7 @@ namespace SrcChess2 {
         /// <param name="arrDelta">     List of delta</param>
         /// <param name="bRepeat">      true to repeat, false to do it once</param>
         /// 
-            static private void FillMoves(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray)
+        static private void FillMoves(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray)
             {
                 FillMoves(iStartPos, arrMove, arrDelta, bRepeat, concatArray, -1);
             }
@@ -599,7 +655,7 @@ namespace SrcChess2 {
         private ChessBoard(SearchEngineAlphaBeta searchEngineAlphaBeta, SearchEngineMinMax searchEngineMinMax) {
             m_pBoard = new PieceE[64];
             m_book = new Book();
-            m_piPiecesCount = new int[64]; // important set to 32
+            m_piPiecesCount = new int[128]; // important set to 32
             m_rnd = new Random((int)DateTime.Now.Ticks);
             m_rndRep = new Random(0);
             m_stackPossibleEnPassantAt = new Stack<int>(256);
@@ -617,8 +673,8 @@ namespace SrcChess2 {
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
             //ResetBoardTestEmpowered();
-            ResetBoardGeneric(TeamAnimals(), TeamAmazon(), true, true);
-            //ResetBoardTestKing();
+           // ResetBoardGeneric(TeamCapablanca(), TeamAmazon(), true, true);
+            ResetBoardTestKing();
             //ResetBoard();
         }
 
@@ -2229,8 +2285,27 @@ namespace SrcChess2 {
             bRetVal = (m_pBoard[iEndPos] == PieceE.None);
             eOldPiece = m_pBoard[iEndPos];
 
-            // Nemesis  // Ghost
-            if (bRetVal )  // && Nemesis or ghost
+            PieceE ePiece = m_pBoard[iStartPos];
+
+            switch (ePiece & PieceE.PieceMask)
+            {
+                case PieceE.Reaper:
+
+                    break;
+                case PieceE.Ghost:
+
+                    break;
+                case PieceE.Elephant:
+
+                    break;
+                default:  // remaining pieces.
+
+                    break;
+            }
+
+
+                    // Nemesis  // Ghost
+                    if (bRetVal )  // && Nemesis or ghost
             {
                 AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                 return (bRetVal);
@@ -3357,7 +3432,7 @@ namespace SrcChess2 {
 
         }
 
-        public PieceE[] TeamM()
+        public PieceE[] TeamCapablanca()
         {
 
             PieceE[] teamC = new PieceE[8];
@@ -3365,7 +3440,7 @@ namespace SrcChess2 {
             teamC[1] = PieceE.Knight;
             teamC[2] = PieceE.Bishop;
             teamC[3] = PieceE.King;
-            teamC[4] = PieceE.EmpoweredQueen;
+            teamC[4] = PieceE.Ferz;
             teamC[5] = PieceE.Archbishop;
             teamC[6] = PieceE.Knight;
             teamC[7] = PieceE.Rook;
@@ -3447,14 +3522,14 @@ namespace SrcChess2 {
         {
 
             PieceE[] team = new PieceE[8];
-            team[0] = PieceE.Buffalo;
-            team[1] = PieceE.Zebra;
-            team[2] = PieceE.Bishop;
+            team[0] = PieceE.Zebra;
+            team[1] = PieceE.Knight;
+            team[2] = PieceE.Camel;
             team[3] = PieceE.King;
-            team[4] = PieceE.Queen;
-            team[5] = PieceE.Bishop;
-            team[6] = PieceE.Zebra;
-            team[7] = PieceE.Buffalo;
+            team[4] = PieceE.Buffalo;
+            team[5] = PieceE.Camel;
+            team[6] = PieceE.Knight;
+            team[7] = PieceE.Zebra;
 
             return team;
 

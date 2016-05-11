@@ -120,6 +120,12 @@ namespace SrcChess2 {
                 case ChessPiece.Black_Nemesis:
                     strRetVal = "black nemesis";
                     break;
+                case ChessPiece.White_Reaper:
+                    strRetVal = "white reaper";
+                    break;
+                case ChessPiece.White_Ghost:
+                    strRetVal = "white ghost";
+                    break;
 
                 case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
@@ -202,6 +208,12 @@ namespace SrcChess2 {
                     break;
                 case ChessPiece.White_Nemesis:
                     strRetVal = "white nemesis";
+                    break;
+                case ChessPiece.Black_Reaper:
+                    strRetVal = "black reaper";
+                    break;
+                case ChessPiece.Black_Ghost:
+                    strRetVal = "black ghost";
                     break;
                 default:
                 strRetVal   = null;

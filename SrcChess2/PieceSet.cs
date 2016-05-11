@@ -112,6 +112,12 @@ namespace SrcChess2 {
             Black_Nemesis= 50,
             White_Nemesis = 51,
 
+            Black_Reaper = 52,
+            White_Reaper = 53,
+
+            Black_Ghost = 54,
+            White_Ghost = 55,
+
 
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
@@ -212,6 +218,12 @@ namespace SrcChess2 {
                 case ChessBoard.PieceE.Nemesis | ChessBoard.PieceE.White:
                     eRetVal = ChessPiece.White_Nemesis;
                     break;
+                case ChessBoard.PieceE.Reaper | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Reaper;
+                    break;
+                case ChessBoard.PieceE.Ghost | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Ghost;
+                    break;
 
 
 
@@ -301,6 +313,12 @@ namespace SrcChess2 {
                 break;
             case ChessBoard.PieceE.Nemesis | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Nemesis;
+                break;
+            case ChessBoard.PieceE.Reaper | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Reaper;
+                break;
+            case ChessBoard.PieceE.Ghost | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Ghost;
                 break;
 
                 default:
