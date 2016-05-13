@@ -9,7 +9,7 @@ namespace SrcChess2 {
         /// Static constructor
         /// </summary>
         static BoardEvaluationBasic() {
-            s_piPiecePoint                                                                = new int[64];  // changed
+            s_piPiecePoint                                                                = new int[128];  // changed
             s_piPiecePoint[(int)ChessBoard.PieceE.Pawn]                                   = 100;
             s_piPiecePoint[(int)ChessBoard.PieceE.Rook]                                   = 500;
             s_piPiecePoint[(int)ChessBoard.PieceE.Knight]                                 = 300;

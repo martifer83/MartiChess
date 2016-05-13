@@ -314,6 +314,21 @@ namespace SrcChess2 {
 
         static private int[][] s_ppiCaseMoveGhost;
 
+
+        // Shoghi 
+        static private int[][] s_ppiCaseMoveWhiteGoldGeneral;
+        static private int[][] s_ppiCaseMoveBlackGoldGeneral;
+
+        static private int[][] s_ppiCaseMoveBlackShogiHorse;
+        static private int[][] s_ppiCaseMoveWhiteShogiHorse;
+
+        static private int[][] s_ppiCaseMoveWhiteSilverGeneral;
+        static private int[][] s_ppiCaseMoveBlackSilverGeneral;
+
+        static private int[][][] s_pppiCaseMoveWhiteLancer;
+        static private int[][][] s_pppiCaseMoveBlackLancer;
+
+
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
         /// 55 54 53 52 51 50 49 48
@@ -421,6 +436,19 @@ namespace SrcChess2 {
             s_ppiCaseMoveWhiteReaper = new int[64][];
             s_ppiCaseMoveBlackReaper = new int[64][];
             s_ppiCaseMoveGhost = new int[64][];
+
+            s_ppiCaseMoveWhiteGoldGeneral = new int[64][];
+            s_ppiCaseMoveBlackGoldGeneral = new int[64][];
+
+            s_ppiCaseMoveWhiteSilverGeneral = new int[64][];
+            s_ppiCaseMoveBlackSilverGeneral = new int[64][];
+
+            s_ppiCaseMoveBlackShogiHorse = new int[64][];
+            s_ppiCaseMoveWhiteShogiHorse = new int[64][];
+
+            s_pppiCaseMoveBlackLancer = new int[64][][];
+            s_pppiCaseMoveWhiteLancer = new int[64][][];
+
 
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
@@ -530,11 +558,43 @@ namespace SrcChess2 {
                 s_ppiCaseMoveWhiteReaper[iPos] = arrMove[0];
 
                 FillMoves2(iPos, arrMove, true, false);
-                s_ppiCaseMoveWhiteReaper[iPos] = arrMove[0];
+                s_ppiCaseMoveBlackReaper[iPos] = arrMove[0];
 
                 FillMoves2(iPos, arrMove, false, false);
                 s_ppiCaseMoveGhost[iPos] = arrMove[0];
-                
+
+
+                // Shoghi
+
+                FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1, 0, 1, 1, 0, -1, 0 }, false, false);
+                s_ppiCaseMoveWhiteGoldGeneral[iPos] = arrMove[0];
+
+                FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1, 0, -1, 1, 0, -1, 0 }, false, false);
+                s_ppiCaseMoveBlackGoldGeneral[iPos] = arrMove[0];
+
+
+                FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1, 0, 1 }, false, false);
+                s_ppiCaseMoveWhiteSilverGeneral[iPos] = arrMove[0];
+
+                FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1, 0, -1 }, false, false);
+                s_ppiCaseMoveBlackSilverGeneral[iPos] = arrMove[0];
+
+
+                FillMoves(iPos, arrMove, new int[] { 1, 2, -1, 2 }, false, false);
+                s_ppiCaseMoveWhiteShogiHorse[iPos] = arrMove[0];
+
+                FillMoves(iPos, arrMove, new int[] { 1, -2, -1, -2 }, false, false);
+                s_ppiCaseMoveBlackShogiHorse[iPos] = arrMove[0];
+
+                FillMoves(iPos, arrMove, new int[] { 0, 1 }, true, false);
+                s_pppiCaseMoveWhiteLancer[iPos] = arrMove.ToArray();
+
+                FillMoves(iPos, arrMove, new int[] { 0, -1 }, true, false);
+                s_pppiCaseMoveBlackLancer[iPos] = arrMove.ToArray();
+
+
+
+
             }
         }
 
@@ -673,8 +733,8 @@ namespace SrcChess2 {
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
             //ResetBoardTestEmpowered();
-           // ResetBoardGeneric(TeamCapablanca(), TeamAmazon(), true, true);
-            ResetBoardTestKing();
+            ResetBoardGeneric(TeamC(), TeamAmazon(), true, true);
+            //ResetBoardTestKing();
             //ResetBoard();
         }
 
@@ -2283,51 +2343,94 @@ namespace SrcChess2 {
             
 
             bRetVal = (m_pBoard[iEndPos] == PieceE.None);
+
             eOldPiece = m_pBoard[iEndPos];
 
+            bool bIsNotGhost = (eOldPiece & PieceE.PieceMask) != PieceE.Ghost;
+            bool bIsNotNemesis = (eOldPiece & PieceE.PieceMask) != PieceE.Nemesis;
+
             PieceE ePiece = m_pBoard[iStartPos];
+
+
+
 
             switch (ePiece & PieceE.PieceMask)
             {
                 case PieceE.Reaper:
 
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.King)  // && Nemesis or ghost
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                        return (bRetVal);
+                    }
+
+
                     break;
                 case PieceE.Ghost:
 
+                    if (bRetVal)
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                        return (bRetVal);
+                    }
                     break;
+
+                case PieceE.Nemesis:
+
+                    if (bRetVal)
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                        return (bRetVal);
+                    }
+
+                    break;
+
                 case PieceE.Elephant:
+
+
+                    // Todo  Check if nemesis or ghost
+                    AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                    return (bRetVal);
 
                     break;
                 default:  // remaining pieces.
 
+                    // Nemesis  // Ghost
+                   /* if (bRetVal)  // && Nemesis or ghost
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                        return (bRetVal);
+                    }/*
+                  
+
+                    // Sirlin Elephant
+                   /* if ((m_pBoard[iStartPos] & PieceE.PieceMask) == PieceE.Elephant)
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                        return (bRetVal);
+                    }*/
+
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black))&& (eOldPiece & PieceE.PieceMask) != PieceE.Ghost)
+                    {
+                        // todo add Tigr move
+
+                        // todo add Elephant move
+
+                        AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+
+
+
+
+
                     break;
             }
 
 
-                    // Nemesis  // Ghost
-                    if (bRetVal )  // && Nemesis or ghost
-            {
-                AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
-                return (bRetVal);
-            }
-            // TODO concat else if
-
-            // Sirlin Elephant
-            if ((m_pBoard[iStartPos] & PieceE.PieceMask) == PieceE.Elephant)
-            {
-                AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
-                return (bRetVal);
-            }
-
-            if (bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) {
-                // todo add Tigr move
-
-                // todo add Elephant move
-
-                AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
-            } else {
-                m_posInfo.m_iPiecesDefending++;
-            }
+           
             return (bRetVal);
         }
 
@@ -2900,6 +3003,12 @@ namespace SrcChess2 {
                             break;
                         case PieceE.Nemesis:
                             EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveNemesis[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.Reaper:
+                            EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveWhiteReaper[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.Ghost:
+                            EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveGhost[iIndex], arrMovePos, ePiece);
                             break;
 
                     }
@@ -3530,6 +3639,23 @@ namespace SrcChess2 {
             team[5] = PieceE.Camel;
             team[6] = PieceE.Knight;
             team[7] = PieceE.Zebra;
+
+            return team;
+
+        }
+
+        public PieceE[] TeamReaper()
+        {
+
+            PieceE[] team = new PieceE[8];
+            team[0] = PieceE.Ghost;
+            team[1] = PieceE.Knight;
+            team[2] = PieceE.Bishop;
+            team[3] = PieceE.King;
+            team[4] = PieceE.Reaper;
+            team[5] = PieceE.Bishop;
+            team[6] = PieceE.Knight;
+            team[7] = PieceE.Ghost;
 
             return team;
 
