@@ -118,6 +118,17 @@ namespace SrcChess2 {
             Black_Ghost = 54,
             White_Ghost = 55,
 
+            Black_Lancer = 56,
+            White_Lancer = 57,
+
+            Black_ShogiHorse = 58,
+            White_ShogiHorse = 59,
+
+            Black_SilverGeneral = 60,
+            White_SilverGeneral = 61,
+
+            Black_GoldGeneral = 62,
+            White_GoldGeneral = 63,
 
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
@@ -224,6 +235,18 @@ namespace SrcChess2 {
                 case ChessBoard.PieceE.Ghost | ChessBoard.PieceE.White:
                     eRetVal = ChessPiece.White_Ghost;
                     break;
+                case ChessBoard.PieceE.Lancer | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Lancer;
+                    break;
+                case ChessBoard.PieceE.ShogiHorse | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_ShogiHorse;
+                    break;
+                case ChessBoard.PieceE.GoldGeneral | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_GoldGeneral;
+                    break;
+                case ChessBoard.PieceE.SilverGeneral | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_SilverGeneral;
+                    break;
 
 
 
@@ -320,7 +343,18 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.Ghost | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Ghost;
                 break;
-
+            case ChessBoard.PieceE.Lancer | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Lancer;
+                break;
+            case ChessBoard.PieceE.ShogiHorse | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_ShogiHorse;
+                break;
+            case ChessBoard.PieceE.GoldGeneral | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_GoldGeneral;
+                break;
+            case ChessBoard.PieceE.SilverGeneral | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_SilverGeneral;
+                break;
                 default:
                 eRetVal = ChessPiece.None;
                 break;
