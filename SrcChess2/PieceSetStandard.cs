@@ -136,7 +136,7 @@ namespace SrcChess2 {
                     strRetVal = "white goldgeneral";
                     break;
                 case ChessPiece.White_SilverGeneral:
-                    strRetVal = "white silvereneral";
+                    strRetVal = "white silvergeneral";
                     break;
 
 
@@ -240,7 +240,7 @@ namespace SrcChess2 {
                     strRetVal = "black goldgeneral";
                     break;
                 case ChessPiece.Black_SilverGeneral:
-                    strRetVal = "black silvereneral";
+                    strRetVal = "black silvergeneral";
                     break;
                 default:
                 strRetVal   = null;

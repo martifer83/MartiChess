@@ -207,7 +207,9 @@ namespace SrcChess2 {
             /// <summary>Check</summary>
             Check,                      // 
             /// <summary>Checkmate</summary>
-            Mate
+            Mate,
+            /// <summary>Midline invasion</summary>
+            Invasion
         }
 
         /// <summary>Type of possible move</summary>
@@ -746,7 +748,7 @@ namespace SrcChess2 {
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
             //ResetBoardTestEmpowered();
-            ResetBoardGeneric(TeamChaturanga(), TeamChaturanga(), true, true);
+            ResetBoardGeneric(TeamClassic(), TeamEmpowered(), true, true, false, false); 
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -1993,6 +1995,11 @@ namespace SrcChess2 {
             PieceE eEnemyUnicorn;
             PieceE eEnemyBuffalo;
             PieceE eEnemyNemesis;
+            PieceE eEnemyShogiHorse;
+            PieceE eEnemyLancer;
+            PieceE eEnemyGoldGeneral;
+            PieceE eEnemySilverGeneral;
+
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen = PieceE.Queen | eColor;
@@ -2021,6 +2028,11 @@ namespace SrcChess2 {
             eEnemyUnicorn = PieceE.Unicorn | eColor;
             eEnemyBuffalo = PieceE.Buffalo | eColor;
             eEnemyNemesis = PieceE.Nemesis | eColor;
+            eEnemyLancer = PieceE.Lancer | eColor;
+            eEnemyShogiHorse = PieceE.ShogiHorse | eColor;
+            eEnemyGoldGeneral = PieceE.GoldGeneral| eColor;
+            eEnemySilverGeneral = PieceE.SilverGeneral | eColor;
+           // eEnemyNemesis = PieceE.Neme | eColor;
 
 
             iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant
@@ -2044,7 +2056,18 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveLion[iPos], eEnemyLion);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveUnicorn[iPos], eEnemyUnicorn, eEnemyUnicorn);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBuffalo[iPos], eEnemyBuffalo);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBlackShogiHorse[iPos], eEnemyShogiHorse);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseMoveWhiteGoldGeneral[iPos] : s_ppiCaseMoveBlackGoldGeneral[iPos], eEnemyGoldGeneral);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseMoveWhiteSilverGeneral[iPos] : s_ppiCaseMoveBlackSilverGeneral[iPos], eEnemySilverGeneral);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_pppiCaseMoveWhiteLancer[iPos] : s_pppiCaseMoveBlackLancer[iPos], eEnemyLancer, eEnemyLancer);
+
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyEmpoweredBishop, eEnemyEmpoweredBishop);  // bug pos 72 playing withElephant
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyEmpoweredRook, eEnemyEmpoweredRook);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyEmpoweredKnight);
+
             // TODO: nemesis
+
+
 
 
 
@@ -2917,14 +2940,14 @@ namespace SrcChess2 {
 
                    
 
-                    if (ePiece == PieceE.EmpoweredBishop)
+                    if ((ePiece & PieceE.PieceMask) == PieceE.EmpoweredBishop)
                     {
 
                         int[] arr = CheckAdjacent(iIndex, 8);
                         ePiece = BishopAdjacent(arr, (int)ePlayerColor); // review
                     }
 
-                    if (ePiece == PieceE.EmpoweredRook)
+                    if ((ePiece & PieceE.PieceMask) == PieceE.EmpoweredRook)
                     {
 
                         int[] arr = CheckAdjacent(iIndex, 8);
@@ -3023,6 +3046,19 @@ namespace SrcChess2 {
                         case PieceE.Ghost:
                             EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveGhost[iIndex], arrMovePos, ePiece);
                             break;
+                        case PieceE.GoldGeneral:
+                            EnumFromArray(ePlayerColor, iIndex, ePlayerColor == 0 ? s_ppiCaseMoveWhiteGoldGeneral[iIndex] : s_ppiCaseMoveBlackGoldGeneral[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.SilverGeneral:
+                            EnumFromArray(ePlayerColor, iIndex, ePlayerColor == 0 ? s_ppiCaseMoveWhiteSilverGeneral[iIndex] : s_ppiCaseMoveBlackSilverGeneral[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.ShogiHorse:
+                            EnumFromArray(ePlayerColor, iIndex, ePlayerColor == 0 ? s_ppiCaseMoveWhiteShogiHorse[iIndex] : s_ppiCaseMoveBlackShogiHorse[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.Lancer:
+                            EnumFromArray(ePlayerColor, iIndex, ePlayerColor == 0 ? s_pppiCaseMoveWhiteLancer[iIndex] : s_pppiCaseMoveBlackLancer[iIndex], arrMovePos, ePiece);
+                            break;
+
 
                     }
                 }
@@ -3278,7 +3314,7 @@ namespace SrcChess2 {
         /// <summary>
         /// Reset the board to the initial configuration
         /// </summary>
-        public void ResetBoardGeneric(PieceE[] teamW, PieceE[] teamB, Boolean normalPawnT1, Boolean normalPawnT2)
+        public void ResetBoardGeneric(PieceE[] teamW, PieceE[] teamB, Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2)
         {
             PieceE pawnT1, pawnT2;
 
@@ -3299,10 +3335,28 @@ namespace SrcChess2 {
             {
                 m_pBoard[iIndex] = PieceE.None;
             }
+
+
+            int blackPawnLineUp = 48;
+            int whitePawnLineUp = 8;
+
+            if (teamShogi1)
+            {
+
+                whitePawnLineUp = 16;
+                m_pBoard[9] = PieceE.Rook | PieceE.White;
+                m_pBoard[14] = PieceE.Bishop | PieceE.White;
+                m_pBoard[11] = PieceE.GoldGeneral | PieceE.White;
+                m_pBoard[12] = PieceE.SilverGeneral | PieceE.White;
+
+            } 
+            if (teamShogi2)
+                blackPawnLineUp = 40;
+
             for (int iIndex = 0; iIndex < 8; iIndex++)
             {
-                m_pBoard[8 + iIndex] = pawnT1 | PieceE.White;
-                m_pBoard[48 + iIndex] = pawnT2 | PieceE.Black;
+                m_pBoard[whitePawnLineUp + iIndex] = pawnT1 | PieceE.White;
+                m_pBoard[blackPawnLineUp + iIndex] = pawnT2 | PieceE.Black;
             }
             m_pBoard[0] = teamW[0] | PieceE.White;
             m_pBoard[7 * 8] = teamB[0] | PieceE.Black;
@@ -3705,7 +3759,7 @@ namespace SrcChess2 {
             team[6] = PieceE.ShogiHorse;
             team[7] = PieceE.Lancer;
 
-            //team[9] = PieceE.Rook;
+          //  team[9] = PieceE.Rook;
 
             //team[14] = PieceE.Bishop;
 
@@ -3766,7 +3820,7 @@ namespace SrcChess2 {
                 arr[0] = -1;
             }
 
-            if (p % dim != dim)
+            if (p % dim != dim-1)
             {
                 l = p + 1;
                 //Console.WriteLine(l);
@@ -3820,7 +3874,7 @@ namespace SrcChess2 {
                 if (arr[i] != -1)
                 {
                     if (m_pBoard[arr[i]] == ( color !=1 ? PieceE.EmpoweredBishop :PieceE.EmpoweredBishop|PieceE.Black))
-                    biFound = true;
+                        biFound = true;
                     if (m_pBoard[arr[i]] == (color != 1 ? PieceE.EmpoweredRook : PieceE.EmpoweredRook | PieceE.Black))
                         roFound = true;
                 }

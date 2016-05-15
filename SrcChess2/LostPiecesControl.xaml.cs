@@ -84,7 +84,7 @@ namespace SrcChess2 {
                         ePiece |= ChessBoard.PieceE.Black;
                     }
                     iEated = m_chessBoardCtl.ChessBoard.GetEatedPieceCount(ePiece);
-                    for (int iIndex = 0; iIndex < iEated; iIndex++) {
+                    for (int iIndex = 0; iIndex < iEated; iIndex++) {  /// out of ragne bug
                         arrPieces[iPos++] = ePiece;
                     }
                 }
