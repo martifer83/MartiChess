@@ -40,6 +40,7 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.ShogiHorse]                             = 120; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.GoldGeneral]                            = 300; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.SilverGeneral]                          = 250; //???
+            s_piPiecePoint[(int)ChessBoard.PieceE.Nemesis]                                = 900; //???
 
             s_piPiecePoint[(int)ChessBoard.PieceE.King]                                   = 1000000;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black)]       = -100;
@@ -73,6 +74,7 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.ShogiHorse | ChessBoard.PieceE.Black)]  = -120;
             s_piPiecePoint[(int)(ChessBoard.PieceE.GoldGeneral | ChessBoard.PieceE.Black)]  = -300;
             s_piPiecePoint[(int)(ChessBoard.PieceE.SilverGeneral | ChessBoard.PieceE.Black)] = -250;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Nemesis | ChessBoard.PieceE.Black)] = -900;
 
 
         }

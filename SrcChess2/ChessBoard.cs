@@ -748,7 +748,7 @@ namespace SrcChess2 {
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
             //ResetBoardTestEmpowered();
-            ResetBoardGeneric(TeamClassic(), TeamEmpowered(), true, true, false, false); 
+            ResetBoardGeneric(TeamReaper(), TeamCapablanca(), true, true, false, false); 
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -761,7 +761,6 @@ namespace SrcChess2 {
             m_searchEngineAlphaBeta = new SearchEngineAlphaBeta(trace, m_rnd, m_rndRep);
             m_searchEngineMinMax = new SearchEngineMinMax(trace, m_rnd, m_rndRep);
 
-            int hola = 9;
         }
 
         /// <summary>
@@ -2065,6 +2064,10 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyEmpoweredRook, eEnemyEmpoweredRook);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyEmpoweredKnight);
 
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
+
+
             // TODO: nemesis
 
 
@@ -2394,7 +2397,7 @@ namespace SrcChess2 {
             {
                 case PieceE.Reaper:
 
-                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.King)  // && Nemesis or ghost
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.King && bIsNotNemesis && bIsNotGhost)  // && Nemesis or ghost
                     {
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                         return (bRetVal);
@@ -2429,6 +2432,20 @@ namespace SrcChess2 {
                     return (bRetVal);
 
                     break;
+
+                    // the same as all pieces but can kill nemesis
+                case PieceE.King:
+
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.Ghost)
+                    {
+
+                        AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+
+                    break;
                 default:  // remaining pieces.
 
                     // Nemesis  // Ghost
@@ -2446,12 +2463,9 @@ namespace SrcChess2 {
                         return (bRetVal);
                     }*/
 
-                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black))&& (eOldPiece & PieceE.PieceMask) != PieceE.Ghost)
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black))&& (eOldPiece & PieceE.PieceMask) != PieceE.Ghost && bIsNotNemesis)
                     {
-                        // todo add Tigr move
-
-                        // todo add Elephant move
-
+                   
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                     }
                     else {
@@ -2639,7 +2653,7 @@ namespace SrcChess2 {
             if (iNewPos >= 0 && iNewPos < 64) {
                 iNewColPos = iNewPos & 7;
                 iRowPos = (iNewPos >> 3);
-                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && m_pBoard[iNewPos - 1] != PieceE.Ghost) {
+                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && m_pBoard[iNewPos - 1] != PieceE.Ghost && m_pBoard[iNewPos - 1] != PieceE.Nemesis) {
                     if (((m_pBoard[iNewPos - 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black)) {
                         if (iRowPos == 0 || iRowPos == 7) {
                             AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, arrMovePos);
@@ -2650,7 +2664,7 @@ namespace SrcChess2 {
                         m_posInfo.m_iPiecesDefending++;
                     }
                 }
-                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && m_pBoard[iNewPos + 1] != PieceE.Ghost ) {
+                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && m_pBoard[iNewPos + 1] != PieceE.Ghost && m_pBoard[iNewPos + 1] != PieceE.Nemesis) {
                     if (((m_pBoard[iNewPos + 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black)) {
                         if (iRowPos == 0 || iRowPos == 7) {
                             AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, arrMovePos);
@@ -2663,6 +2677,94 @@ namespace SrcChess2 {
                 }
             }
         }
+
+        private int FindEnemyKingPosition(PlayerColorE ePlayerColor)
+        {
+            int pos = 0;
+            for (byte i = 0; i < 64; i++) {
+                if (m_pBoard[i] ==  (PieceE.King | (ePlayerColor == PlayerColorE.White ? PieceE.White : PieceE.Black)))
+                    return pos;
+            }
+               
+            return pos;
+        }
+
+
+        private void EnumNemesisPawnMove(PlayerColorE ePlayerColor, int iStartPos, List<MovePosS> arrMovePos)
+        {
+            int iDir;
+            int iNewPos;
+            int iNewColPos;
+            int iRowPos;
+            bool bCanMove2Case;
+            
+            iRowPos = (iStartPos >> 3);
+            bCanMove2Case = (ePlayerColor == PlayerColorE.Black) ? (iRowPos == 6) : (iRowPos == 1);
+            iDir = (ePlayerColor == PlayerColorE.Black) ? -8 : 8;
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                if (m_pBoard[iNewPos] == PieceE.None)
+                {
+                    iRowPos = (iNewPos >> 3);
+                    if (iRowPos == 0 || iRowPos == 7)
+                    {
+                        AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                    }
+                    else {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                    }
+                    if (bCanMove2Case && m_pBoard[iNewPos + iDir] == PieceE.None)
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos + iDir, MoveTypeE.Normal, arrMovePos);
+                    }
+                }
+            }
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                iNewColPos = iNewPos & 7;
+                iRowPos = (iNewPos >> 3);
+                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && m_pBoard[iNewPos - 1] != PieceE.Ghost && m_pBoard[iNewPos - 1] != PieceE.Nemesis)
+                {
+                    if (((m_pBoard[iNewPos - 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
+                    {
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, MoveTypeE.Normal, arrMovePos);
+                        }
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+                }
+                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && m_pBoard[iNewPos + 1] != PieceE.Ghost && m_pBoard[iNewPos + 1] != PieceE.Nemesis)
+                {
+                    if (((m_pBoard[iNewPos + 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
+                    {
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, MoveTypeE.Normal, arrMovePos);
+                        }
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+                }
+            }
+
+
+            //case left or right
+
+
+        }
+
 
         /// <summary>
         /// Enumerates the move a specified pawn can do

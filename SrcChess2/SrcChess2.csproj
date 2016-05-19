@@ -792,6 +792,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="PieceSets\Leipzig\Black Nemesis.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PieceSets\Leipzig\Black Pawn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -909,6 +913,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PieceSets\Leipzig\White Lion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PieceSets\Leipzig\White Nemesis.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
