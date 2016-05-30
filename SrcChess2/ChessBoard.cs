@@ -125,7 +125,7 @@ namespace SrcChess2 {
             Unicorn = 28,
 
             Buffalo = 29,
-            
+
             // nemesis
             Nemesis = 30,
             // Reaper
@@ -136,7 +136,7 @@ namespace SrcChess2 {
             Lancer = 33,
             ShogiHorse = 34,
             GoldGeneral = 35,
-            SilverGeneral =36,
+            SilverGeneral = 36,
 
 
 
@@ -489,30 +489,30 @@ namespace SrcChess2 {
 
                 // archbishop
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, true, false);
-               // FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
+                // FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
                 FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, true, 1);
                 s_pppiCaseMoveDiagKnight[iPos] = arrMove.ToArray();
 
                 // Tiger
 
                 //FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1, -2, -2, -2, 2, 2, -2, 2, 2 ,0,0}, false, false);
-                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1}, true, false,2);
+                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, true, false, 2);
                 s_pppiCaseMoveTiger[iPos] = arrMove.ToArray();
 
                 // Elephant
                 //FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1, -2, 0, 2, 0, 0, -2, 0, 2, -2, 0, 3, 0, 0, -3, 0, 3 }, false, false);
-                FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false,3);
+                FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false, 3);
                 s_pppiCaseMoveElephant[iPos] = arrMove.ToArray();
 
                 // Amazon
                 //FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
                 //FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
-                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, true,1);
-                
-              
+                FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, true, 1);
 
-                
+
+
+
 
                 s_pppiCaseMoveDiagLineKnight[iPos] = arrMove.ToArray();
                 if (iPos == 32)
@@ -545,9 +545,9 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1, 0, -1, 2, 2, 2, -2, -2, -2, -2, 2, 0, 2, 0, -2, -2, 0, 2, 0 }, false, false);
                 s_ppiCaseMoveBlackGaja[iPos] = arrMove[0];
 
-                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 ,     2, 2, 2, 1, 2, 0, 2, -1, 2, - 2,    - 2, 2, -2, 1, -2, 0, -2, -1, -2, - 2,       - 1, 2, 0, 2 , 1, 2,    - 1, -2, 0, -2 , 1, -2 }, false, false);
+                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1, 2, 2, 2, 1, 2, 0, 2, -1, 2, -2, -2, 2, -2, 1, -2, 0, -2, -1, -2, -2, -1, 2, 0, 2, 1, 2, -1, -2, 0, -2, 1, -2 }, false, false);
                 s_ppiCaseMoveLion[iPos] = arrMove[0];
-                
+
                 FillMoves(iPos, arrMove, new int[] { 2, 3, 2, -3, 3, -2, 3, 2, -2, 3, -2, -3, -3, -2, -3, 2 }, false, false);
                 s_ppiCaseMoveZebra[iPos] = arrMove[0];
 
@@ -562,7 +562,7 @@ namespace SrcChess2 {
                 s_pppiCaseMoveUnicorn[iPos] = arrMove.ToArray();
 
                 // buffalo
-                FillMoves(iPos, arrMove, new int[] { 1, 3, 1, -3, 3, -1, 3, 1, -1, 3, -1, -3, -3, -1, -3, 1, 2, 3, 2, -3, 3, -2, 3, 2, -2, 3, -2, -3, -3, -2, -3, 2 , 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, false);
+                FillMoves(iPos, arrMove, new int[] { 1, 3, 1, -3, 3, -1, 3, 1, -1, 3, -1, -3, -3, -1, -3, 1, 2, 3, 2, -3, 3, -2, 3, 2, -2, 3, -2, -3, -3, -2, -3, 2, 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, false);
                 s_ppiCaseMoveBuffalo[iPos] = arrMove[0];
 
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
@@ -617,7 +617,7 @@ namespace SrcChess2 {
         {
 
             List<int> arrMoveOnLine;
-        
+
             arrMove.Clear();
             arrMoveOnLine = new List<int>(8);
 
@@ -655,11 +655,11 @@ namespace SrcChess2 {
         /// <param name="bRepeat">      true to repeat, false to do it once</param>
         /// 
         static private void FillMoves(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray)
-            {
-                FillMoves(iStartPos, arrMove, arrDelta, bRepeat, concatArray, -1);
-            }
+        {
+            FillMoves(iStartPos, arrMove, arrDelta, bRepeat, concatArray, -1);
+        }
 
-            static private void FillMoves(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray, int limit) {
+        static private void FillMoves(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray, int limit) {
             int iColPos;
             int iRowPos;
             int iColIndex;
@@ -747,8 +747,9 @@ namespace SrcChess2 {
             //ResetBoardTest2();
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
-            //ResetBoardTestEmpowered();
-            ResetBoardGeneric(TeamReaper(), TeamCapablanca(), true, true, false, false); 
+            ResetBoardTestEmpowered();
+           // ResetBoardTestInvasion();
+            //ResetBoardGeneric(TeamEmpowered(), TeamNemesis(), true, true, false, false);
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -1763,7 +1764,9 @@ namespace SrcChess2 {
 
             ePlayerColor = NextMoveColor;
             moveList = EnumMoveList(ePlayerColor);
-            if (IsCheck(ePlayerColor)) {
+            if (IsMidlineInvasion(ePlayerColor))
+                eRetVal = MoveResultE.Invasion;
+            else if (IsCheck(ePlayerColor)) {
                 eRetVal = (moveList.Count == 0) ? MoveResultE.Mate : MoveResultE.Check;
             } else {
                 if (IsEnoughPieceForCheckMate()) {
@@ -1787,23 +1790,23 @@ namespace SrcChess2 {
         public MoveResultE DoMove(MovePosS movePos) {
             MoveResultE eRetVal;
             // interessant
-            
-           /* if (movePos.Type == MoveTypeE.PieceEaten && (m_pBoard[movePos.StartPos] == (PieceE.Tiger | PieceE.White ) || m_pBoard[movePos.StartPos] == (PieceE.Tiger | PieceE.Black)))
-            {
-                movePos.StartPos = movePos.EndPos;
-            }
 
-            //elph forçar moviment i borrar els dos peces
-            if (movePos.Type == MoveTypeE.PieceEaten && (m_pBoard[movePos.StartPos] == (PieceE.Elephant | PieceE.White) || m_pBoard[movePos.StartPos] == (PieceE.Elephant | PieceE.Black)))
-            {
+            /* if (movePos.Type == MoveTypeE.PieceEaten && (m_pBoard[movePos.StartPos] == (PieceE.Tiger | PieceE.White ) || m_pBoard[movePos.StartPos] == (PieceE.Tiger | PieceE.Black)))
+             {
+                 movePos.StartPos = movePos.EndPos;
+             }
 
-                byte[] arr = MaxPosElephant(movePos.StartPos, movePos.EndPos);
-                movePos.EndPos = arr[2];
-                //movePos.Type = MoveTypeE.Normal;
-                m_pBoard[arr[0]] = PieceE.None;
-                m_pBoard[arr[1]] = PieceE.None;
+             //elph forçar moviment i borrar els dos peces
+             if (movePos.Type == MoveTypeE.PieceEaten && (m_pBoard[movePos.StartPos] == (PieceE.Elephant | PieceE.White) || m_pBoard[movePos.StartPos] == (PieceE.Elephant | PieceE.Black)))
+             {
 
-            }*/
+                 byte[] arr = MaxPosElephant(movePos.StartPos, movePos.EndPos);
+                 movePos.EndPos = arr[2];
+                 //movePos.Type = MoveTypeE.Normal;
+                 m_pBoard[arr[0]] = PieceE.None;
+                 m_pBoard[arr[1]] = PieceE.None;
+
+             }*/
 
 
             switch (DoMoveNoLog(movePos)) {
@@ -1945,10 +1948,43 @@ namespace SrcChess2 {
         private int EnumTheseAttackPos(List<byte> arrAttackPos, int[] piCaseMoveList, PieceE ePiece) {
             int iRetVal = 0;
 
+            if (ePiece == PieceE.EmpoweredKnight)
+                iRetVal = 0; // debug
+
+
             foreach (int iNewPos in piCaseMoveList) {
                 if (m_pBoard[iNewPos] == ePiece) {
                     iRetVal++;
                     if (arrAttackPos != null) {
+                        arrAttackPos.Add((byte)iNewPos);
+                    }
+                }
+            }
+            return (iRetVal);
+        }
+
+        private int EnumTheseAttackPosEmpowered(List<byte> arrAttackPos, int[] piCaseMoveList, PieceE ePiece)
+        {
+            int iRetVal = 0;
+
+            s_pppiCaseMoveDiagKnight;
+
+
+            foreach (int iNewPos in piCaseMoveList)
+            {
+                if (m_pBoard[iNewPos] == ePiece)
+                    
+                {
+                    // check adjacency
+
+                    // determine piece ad arry list
+
+                  //  if(iNewPos is in new array )
+
+
+                    iRetVal++;
+                    if (arrAttackPos != null)
+                    {
                         arrAttackPos.Add((byte)iNewPos);
                     }
                 }
@@ -1998,7 +2034,8 @@ namespace SrcChess2 {
             PieceE eEnemyLancer;
             PieceE eEnemyGoldGeneral;
             PieceE eEnemySilverGeneral;
-
+            if (iPos == 58)
+                iPos = 58;
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen = PieceE.Queen | eColor;
@@ -2029,9 +2066,9 @@ namespace SrcChess2 {
             eEnemyNemesis = PieceE.Nemesis | eColor;
             eEnemyLancer = PieceE.Lancer | eColor;
             eEnemyShogiHorse = PieceE.ShogiHorse | eColor;
-            eEnemyGoldGeneral = PieceE.GoldGeneral| eColor;
+            eEnemyGoldGeneral = PieceE.GoldGeneral | eColor;
             eEnemySilverGeneral = PieceE.SilverGeneral | eColor;
-           // eEnemyNemesis = PieceE.Neme | eColor;
+            // eEnemyNemesis = PieceE.Neme | eColor;
 
 
             iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant
@@ -2042,7 +2079,7 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineKnight[iPos], eEnemyChancellor, eEnemyChancellor);  // review
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagKnight[iPos], eEnemyArchbishop, eEnemyArchbishop);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyEmpoweredQueen);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveTiger[iPos], eEnemyTiger,eEnemyTiger);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveTiger[iPos], eEnemyTiger, eEnemyTiger);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyElephant);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyAmazon, eEnemyAmazon);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
@@ -2063,7 +2100,7 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyEmpoweredBishop, eEnemyEmpoweredBishop);  // bug pos 72 playing withElephant
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyEmpoweredRook, eEnemyEmpoweredRook);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyEmpoweredKnight);
-
+          //  Console.WriteLine("enumThese:" + iPos);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
 
@@ -2072,7 +2109,8 @@ namespace SrcChess2 {
 
 
 
-
+            if (iRetVal == 1  && iPos == 4)
+                iRetVal = 1;
 
             return (iRetVal);
         }
@@ -2086,9 +2124,25 @@ namespace SrcChess2 {
         /// true if in check
         /// </returns>
         private bool IsCheck(PlayerColorE eColor, int iKingPos) {
-            return (EnumAttackPos(eColor, iKingPos, null) != 0);
+           // if (iKingPos == 59)
+             //   iKingPos = 59;
+            bool isCheck_ = (EnumAttackPos(eColor, iKingPos, null) != 0);
+
+            //if (isCheck_ && eColor == PlayerColorE.Black)
+              //  Console.WriteLine("isCheck king pos: " + iKingPos);
+            return isCheck_;
         }
 
+        private bool IsMidlineInvasion(PlayerColorE eColor) { 
+            int kingPos = ((eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos);
+
+            if (m_iWhiteKingPos >= 32 && m_iWhiteKingPos <= 39 )
+                return true;
+            if (m_iBlackKingPos >= 24 && m_iBlackKingPos <= 31)
+                return true;
+
+            return false;
+            }
         /// <summary>
         /// Determine if the specified king is attacked
         /// </summary>
@@ -2097,7 +2151,14 @@ namespace SrcChess2 {
         /// true if in check
         /// </returns>
         public bool IsCheck(PlayerColorE eColor) {
-            return (IsCheck(eColor, (eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos));
+
+            Console.WriteLine("black and white king pos: " +  m_iBlackKingPos +"  "+ m_iWhiteKingPos);
+
+            bool chk = (IsCheck(eColor, (eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos));
+            if (chk)
+                Console.WriteLine("check at:" + ((eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos));
+
+            return chk;
         }
 
         /// <summary>
@@ -2196,7 +2257,7 @@ namespace SrcChess2 {
             for (int i = 0; i < arrPos.Length; i++)
             {
                
-                bIsCheck |= ((m_pBoard[i] & PieceE.PieceMask) == PieceE.King) ? IsCheck(ePlayerColor, arrPos[i]) : IsCheck(ePlayerColor);
+                bIsCheck |= ((m_pBoard[i] & PieceE.PieceMask) == PieceE.King) ? IsCheck(ePlayerColor, arrPos[i]) : IsCheck(ePlayerColor, arrPos[i]);
             }
 
             return bIsCheck;
@@ -3036,8 +3097,8 @@ namespace SrcChess2 {
                     {
 
                         int[] arr = CheckAdjacent(iIndex, 8);
-                        ePiece = KnightAdjacent(arr,(int)ePlayerColor); // review
-                       // ePiece = PieceE.Chancellor;
+                        ePiece = KnightAdjacent(arr,(int)ePlayerColor); 
+                       
                     }
 
                    
@@ -3529,6 +3590,25 @@ namespace SrcChess2 {
                                   0 /*iEnPassant*/);
         }
 
+        public void ResetBoardTestInvasion()
+        {
+
+            m_pBoard[24] = PieceE.King | PieceE.White;
+            m_pBoard[56] = PieceE.Tiger | PieceE.Black;
+
+            m_pBoard[19] = PieceE.Pawn | PieceE.Black;
+           // m_pBoard[42] = PieceE.Queen | PieceE.White;
+            m_pBoard[21] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[30] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[37] = PieceE.King | PieceE.Black;
+
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
+        }
+
+
         public void ResetBoardTestElephant()
         {
 
@@ -3553,19 +3633,23 @@ namespace SrcChess2 {
         public void ResetBoardTestEmpowered()
         {
             m_pBoard[5] = PieceE.King | PieceE.White;
-            m_pBoard[2] = PieceE.EmpoweredBishop | PieceE.White;
-            m_pBoard[3] = PieceE.EmpoweredKnight | PieceE.White;
-            m_pBoard[4] = PieceE.EmpoweredRook | PieceE.White;
+            m_pBoard[2] = PieceE.Queen | PieceE.White;
+            m_pBoard[9] = PieceE.EmpoweredKnight | PieceE.White;
+            m_pBoard[20] = PieceE.EmpoweredRook | PieceE.White;
             m_pBoard[56] = PieceE.Pawn | PieceE.Black;
             m_pBoard[55] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[54] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[63] = PieceE.Rook | PieceE.White;
 
-            m_pBoard[61] = PieceE.EmpoweredKnight | PieceE.Black;
-            m_pBoard[62] = PieceE.EmpoweredRook | PieceE.Black;
+           // m_pBoard[61] = PieceE.EmpoweredKnight | PieceE.Black;
+            //m_pBoard[62] = PieceE.EmpoweredRook | PieceE.Black;
+            m_pBoard[63] = PieceE.Queen | PieceE.Black;
+            m_pBoard[59] = PieceE.King | PieceE.Black;
 
-            m_pBoard[63] = PieceE.King | PieceE.Black;
-
-            m_pBoard[16] = PieceE.Pawn ;
+            m_pBoard[0] = PieceE.Pawn ;
             m_pBoard[24] = PieceE.Pawn ;
+            m_pBoard[7] = PieceE.Queen | PieceE.White;
+            m_pBoard[1] = PieceE.Pawn | PieceE.White;
         }
 
         public void ResetBoardTestElephant2()

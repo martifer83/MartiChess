@@ -127,7 +127,7 @@ namespace SrcChess2 {
             if (bBlackCastle) {
                 iRetVal -= 10;
             }
-            /*
+            
             for (int iIndex = 32; iIndex < 64; iIndex++)
             {
                 if (pBoard[iIndex] == ChessBoard.PieceE.King)
@@ -142,7 +142,21 @@ namespace SrcChess2 {
                 {
                     iRetVal -= 1000000;
                 }
-            }*/
+            }
+
+            if(iWhiteKingPos / 8 == 1)
+                iRetVal += 10;
+            if (iWhiteKingPos / 8 == 2)
+                iRetVal += 20;
+            if (iWhiteKingPos / 8 == 3)
+                iRetVal += 30;
+            if (iBlackKingPos / 8 == 4)
+                iRetVal -= 30;
+            if (iBlackKingPos / 8 == 5)
+                iRetVal -= 20;
+            if (iBlackKingPos / 8 == 6)
+                iRetVal -= 10;
+
 
 
 

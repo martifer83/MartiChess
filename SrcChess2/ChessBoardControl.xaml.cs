@@ -1359,6 +1359,7 @@ namespace SrcChess2 {
             bool    bUseBook;
             
             bUseBook = ((searchMode.m_eOption & SearchEngine.SearchMode.OptionE.UseBook) != 0);
+            bUseBook = false;
             if (bUseBook && FindBookMove(searchMode, out moveBest)) {
                 iPermCount = -1;
                 iCacheHit  = -1;

@@ -642,14 +642,16 @@ namespace SrcChess2 {
                 if (eMessageMode != MessageModeE.Silent) {
                     MessageBox.Show(strOpponent + "checkmate.");
                 }
-            /*case ChessBoard.MoveResultE.Invasion:
+                bRetVal = true;
+                break;
+            case ChessBoard.MoveResultE.Invasion:
                 if (eMessageMode != MessageModeE.Silent)
                 {
                     MessageBox.Show(strOpponent + "lost by midline invasion.");
-                }*/
-                    bRetVal = true;
+                }
+                bRetVal = true;
                 break;
-            default:
+                default:
                 bRetVal = false;
                 break;
             }
