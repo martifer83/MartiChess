@@ -747,9 +747,9 @@ namespace SrcChess2 {
             //ResetBoardTest2();
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
-            ResetBoardTestEmpowered();
+            //ResetBoardTestEmpowered();
            // ResetBoardTestInvasion();
-            //ResetBoardGeneric(TeamEmpowered(), TeamNemesis(), true, true, false, false);
+            ResetBoardGeneric(TeamEmpowered(), TeamReaper(), true, true, false, false);
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -1963,34 +1963,125 @@ namespace SrcChess2 {
             return (iRetVal);
         }
 
-        private int EnumTheseAttackPosEmpowered(List<byte> arrAttackPos, int[] piCaseMoveList, PieceE ePiece)
+        private int EnumTheseAttackPosEmpowered(List<byte> arrAttackPos, int[][] ppiCaseMoveList, PieceE ePiece, PieceE eColor, int originalPos)
         {
             int iRetVal = 0;
 
-            s_pppiCaseMoveDiagKnight;
+            PieceE originalPiece = ePiece;
 
-
-            foreach (int iNewPos in piCaseMoveList)
+            foreach (int[] piCaseMoveList in ppiCaseMoveList)
             {
-                if (m_pBoard[iNewPos] == ePiece)
-                    
+                foreach (int iNewPos in piCaseMoveList)
                 {
-                    // check adjacency
+                    if (m_pBoard[iNewPos] == ePiece)
 
-                    // determine piece ad arry list
-
-                  //  if(iNewPos is in new array )
-
-
-                    iRetVal++;
-                    if (arrAttackPos != null)
                     {
-                        arrAttackPos.Add((byte)iNewPos);
+                        // check adjacency
+                        bool posIsInArray = false;
+
+
+                        int[] arr = CheckAdjacent(iNewPos, 8);
+                        if(ePiece == PieceE.EmpoweredKnight)
+                            ePiece = KnightAdjacent(arr, eColor == PieceE.White ? 0 : 1);
+                        if (ePiece == PieceE.EmpoweredBishop)
+                            ePiece = BishopAdjacent(arr, eColor == PieceE.White ? 0 : 1);
+                        if (ePiece == PieceE.EmpoweredRook)
+                            ePiece = RookAdjacent(arr, eColor == PieceE.White ? 0 : 1);
+
+                        // determine piece ad arry list
+                        if (ePiece == PieceE.Amazon)
+                        {
+
+            
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
+
+                        }else if (ePiece == PieceE.Chancellor)
+                        {
+                            
+                            //posIsInArray = containsInThisArray(s_pppiCaseMoveLineKnight[originalPos], iNewPos);
+                            
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
+
+                        }
+                      
+                        else if (ePiece == PieceE.Queen)
+                        {
+                         //   posIsInArray = containsInThisArray(s_pppiCaseMoveDiagLine[originalPos], iNewPos);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
+
+                        }
+                        else if (ePiece == PieceE.Archbishop)
+                        {
+                            //     posIsInArray = containsInThisArray(s_pppiCaseMoveDiagKnight[originalPos], iNewPos);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
+
+                        }
+
+                        else if (ePiece == PieceE.Knight)
+                        {
+                            //posIsInArray = containsInThisArray(s_ppiCaseMoveKnight[originalPos], iNewPos);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
+                        }
+                        else if (ePiece == PieceE.Rook)
+                        {
+                            //posIsInArray = containsInThisArray(s_pppiCaseMoveLine[originalPos], iNewPos);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
+                        }
+                        else if (ePiece == PieceE.Bishop)
+                        {
+                            //posIsInArray = containsInThisArray(s_pppiCaseMoveDiagonal[originalPos], iNewPos);
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
+                        }
+
+                        
+                        if (iRetVal !=0)
+                        {
+                            //Console.WriteLine("EnumEmpowered: " + ePiece + " check !!!");
+                            //iRetVal++;
+                            if (arrAttackPos != null)
+                            {
+                                arrAttackPos.Add((byte)iNewPos);
+                              //  Console.WriteLine("EnumEmpowered: " + ePiece + " check ");
+                            }
+
+                        }
+
                     }
                 }
             }
             return (iRetVal);
         }
+
+        private bool containsInThisArray(int[][] ppiCaseMoveList, int index)
+        {
+            foreach (int[] piMoveList in ppiCaseMoveList)
+            {
+                foreach (int iNewPos in piMoveList)
+                {
+                    if (iNewPos == index)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        private bool containsInThisArray(int[] piCaseMoveList, int index)
+        {
+            
+            foreach (int iNewPos in piCaseMoveList)
+            {
+                if (iNewPos == index)
+                    return true;
+            }
+            
+            return false;
+        }
+
 
         /// <summary>
         /// Enumerates all position which can attack a given position
@@ -2097,9 +2188,13 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseMoveWhiteSilverGeneral[iPos] : s_ppiCaseMoveBlackSilverGeneral[iPos], eEnemySilverGeneral);
             iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_pppiCaseMoveWhiteLancer[iPos] : s_pppiCaseMoveBlackLancer[iPos], eEnemyLancer, eEnemyLancer);
 
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyEmpoweredBishop, eEnemyEmpoweredBishop);  // bug pos 72 playing withElephant
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyEmpoweredRook, eEnemyEmpoweredRook);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyEmpoweredKnight);
+            iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredKnight, eColor, iPos);
+            iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredBishop, eColor, iPos);
+            iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredRook, eColor, iPos);
+
+            //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyEmpoweredBishop, eEnemyEmpoweredBishop);  // bug pos 72 playing withElephant
+            //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyEmpoweredRook, eEnemyEmpoweredRook);
+            //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyEmpoweredKnight);
           //  Console.WriteLine("enumThese:" + iPos);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
@@ -2124,12 +2219,12 @@ namespace SrcChess2 {
         /// true if in check
         /// </returns>
         private bool IsCheck(PlayerColorE eColor, int iKingPos) {
-           // if (iKingPos == 59)
+           // if (iKingPos == 51)
              //   iKingPos = 59;
             bool isCheck_ = (EnumAttackPos(eColor, iKingPos, null) != 0);
 
-            //if (isCheck_ && eColor == PlayerColorE.Black)
-              //  Console.WriteLine("isCheck king pos: " + iKingPos);
+         //   if (isCheck_ && eColor == PlayerColorE.Black)
+           //     Console.WriteLine("isCheck king pos: " + iKingPos);
             return isCheck_;
         }
 
@@ -2152,11 +2247,11 @@ namespace SrcChess2 {
         /// </returns>
         public bool IsCheck(PlayerColorE eColor) {
 
-            Console.WriteLine("black and white king pos: " +  m_iBlackKingPos +"  "+ m_iWhiteKingPos);
+            //Console.WriteLine("black and white king pos: " +  m_iBlackKingPos +"  "+ m_iWhiteKingPos);
 
             bool chk = (IsCheck(eColor, (eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos));
-            if (chk)
-                Console.WriteLine("check at:" + ((eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos));
+            //if (chk)
+              //  Console.WriteLine("check at:" + ((eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos));
 
             return chk;
         }
@@ -3204,7 +3299,8 @@ namespace SrcChess2 {
                             EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveNemesis[iIndex], arrMovePos, ePiece);
                             break;
                         case PieceE.Reaper:
-                            EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveWhiteReaper[iIndex], arrMovePos, ePiece);
+
+                            EnumFromArray(ePlayerColor, iIndex, ePlayerColor == 0 ? s_ppiCaseMoveWhiteReaper[iIndex] : s_ppiCaseMoveBlackReaper[iIndex], arrMovePos, ePiece);
                             break;
                         case PieceE.Ghost:
                             EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveGhost[iIndex], arrMovePos, ePiece);
@@ -3635,7 +3731,7 @@ namespace SrcChess2 {
             m_pBoard[5] = PieceE.King | PieceE.White;
             m_pBoard[2] = PieceE.Queen | PieceE.White;
             m_pBoard[9] = PieceE.EmpoweredKnight | PieceE.White;
-            m_pBoard[20] = PieceE.EmpoweredRook | PieceE.White;
+            m_pBoard[4] = PieceE.EmpoweredRook | PieceE.White;
             m_pBoard[56] = PieceE.Pawn | PieceE.Black;
             m_pBoard[55] = PieceE.Pawn | PieceE.Black;
             m_pBoard[54] = PieceE.Pawn | PieceE.Black;
