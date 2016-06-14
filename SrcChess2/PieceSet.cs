@@ -130,6 +130,12 @@ namespace SrcChess2 {
             Black_GoldGeneral = 62,
             White_GoldGeneral = 63,
 
+            Black_Snake = 64,
+            White_Snake = 65,
+
+            Black_Hipo = 66,
+            White_Hipo = 67,
+
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
 
@@ -247,6 +253,12 @@ namespace SrcChess2 {
                 case ChessBoard.PieceE.SilverGeneral | ChessBoard.PieceE.White:
                     eRetVal = ChessPiece.White_SilverGeneral;
                     break;
+                case ChessBoard.PieceE.Snake| ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Snake;
+                    break;
+                case ChessBoard.PieceE.Hipo | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Hipo;
+                    break;
 
 
 
@@ -355,6 +367,12 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.SilverGeneral | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_SilverGeneral;
                 break;
+                case ChessBoard.PieceE.Snake | ChessBoard.PieceE.Black:
+                    eRetVal = ChessPiece.Black_Snake;
+                    break;
+                case ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black:
+                    eRetVal = ChessPiece.Black_Hipo;
+                    break;
                 default:
                 eRetVal = ChessPiece.None;
                 break;

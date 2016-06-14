@@ -138,6 +138,8 @@ namespace SrcChess2 {
             GoldGeneral = 35,
             SilverGeneral = 36,
 
+            Snake= 37,
+            Hipo = 38,
 
 
 
@@ -339,6 +341,8 @@ namespace SrcChess2 {
         static private int[][][] s_pppiCaseMoveWhiteLancer;
         static private int[][][] s_pppiCaseMoveBlackLancer;
 
+        static private int[][][] s_pppiCaseMoveSnake;
+        static private int[][][] s_pppiCaseMoveHipo;
 
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
@@ -461,6 +465,8 @@ namespace SrcChess2 {
             s_pppiCaseMoveBlackLancer = new int[64][][];
             s_pppiCaseMoveWhiteLancer = new int[64][][];
 
+            s_pppiCaseMoveSnake = new int[64][][];
+            s_pppiCaseMoveHipo = new int[64][][];
 
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
@@ -607,8 +613,13 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { 0, -1 }, true, false);
                 s_pppiCaseMoveBlackLancer[iPos] = arrMove.ToArray();
 
+                ///
+                FillMoves(iPos, arrMove, new int[] { -1, -1, 1, -1, -1, 1, 1, 1 }, true, false, 2);
+                s_pppiCaseMoveSnake[iPos] = arrMove.ToArray();
 
 
+                FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false, 3);
+                s_pppiCaseMoveHipo[iPos] = arrMove.ToArray();
 
             }
         }
@@ -747,9 +758,9 @@ namespace SrcChess2 {
             //ResetBoardTest2();
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
-            //ResetBoardTestEmpowered();
+            ResetBoardTestEmpowered();
            // ResetBoardTestInvasion();
-            ResetBoardGeneric(TeamEmpowered(), TeamReaper(), true, true, false, false);
+            //ResetBoardGeneric(TeamClassic(), TeamClassic(), true, true, false, false);
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -2125,8 +2136,8 @@ namespace SrcChess2 {
             PieceE eEnemyLancer;
             PieceE eEnemyGoldGeneral;
             PieceE eEnemySilverGeneral;
-            if (iPos == 58)
-                iPos = 58;
+            PieceE eEnemySnake;
+            PieceE eEnemyHipo;
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen = PieceE.Queen | eColor;
@@ -2159,6 +2170,8 @@ namespace SrcChess2 {
             eEnemyShogiHorse = PieceE.ShogiHorse | eColor;
             eEnemyGoldGeneral = PieceE.GoldGeneral | eColor;
             eEnemySilverGeneral = PieceE.SilverGeneral | eColor;
+            eEnemySnake = PieceE.Snake | eColor;
+            eEnemyHipo = PieceE.Hipo | eColor;
             // eEnemyNemesis = PieceE.Neme | eColor;
 
 
@@ -2198,14 +2211,14 @@ namespace SrcChess2 {
           //  Console.WriteLine("enumThese:" + iPos);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
+            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveSnake[iPos], eEnemySnake, eEnemySnake);
+            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveHipo[iPos], eEnemyHipo, eEnemyHipo);
+           
 
 
-            // TODO: nemesis
 
-
-
-            if (iRetVal == 1  && iPos == 4)
-                iRetVal = 1;
+            //if (iRetVal == 1  && iPos == 4)
+              //  iRetVal = 1;
 
             return (iRetVal);
         }
@@ -2223,8 +2236,8 @@ namespace SrcChess2 {
              //   iKingPos = 59;
             bool isCheck_ = (EnumAttackPos(eColor, iKingPos, null) != 0);
 
-         //   if (isCheck_ && eColor == PlayerColorE.Black)
-           //     Console.WriteLine("isCheck king pos: " + iKingPos);
+            if (isCheck_ && eColor == PlayerColorE.Black)
+                Console.WriteLine("isCheck king pos: " + iKingPos);
             return isCheck_;
         }
 
@@ -2834,6 +2847,190 @@ namespace SrcChess2 {
             }
         }
 
+       
+
+        private int isLeftRight(int start, int end)
+        {
+            if (start % 8 > end % 8)
+                return -1;
+            else if (start % 8 == end % 8)
+                return 0;
+            else
+                return 1;
+        }
+
+        private void EnumNemesisPawnMove(PlayerColorE ePlayerColor, int iStartPos, List<MovePosS> arrMovePos)
+        {
+            int iDir;
+            int iNewPos;
+            int iNewColPos;
+            int iRowPos;
+            bool bCanMove2Case;
+
+            iRowPos = (iStartPos >> 3);
+            bCanMove2Case = (ePlayerColor == PlayerColorE.Black) ? (iRowPos == 6) : (iRowPos == 1);
+            iDir = (ePlayerColor == PlayerColorE.Black) ? -8 : 8;
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                if (m_pBoard[iNewPos] == PieceE.None)
+                {
+                    iRowPos = (iNewPos >> 3);
+                    if (iRowPos == 0 || iRowPos == 7)
+                    {
+                        AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                    }
+                    else {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                    }
+                    if (bCanMove2Case && m_pBoard[iNewPos + iDir] == PieceE.None)
+                    {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos + iDir, MoveTypeE.Normal, arrMovePos);
+                    }
+                }
+            }
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                iNewColPos = iNewPos & 7;
+                iRowPos = (iNewPos >> 3);
+                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && m_pBoard[iNewPos - 1] != PieceE.Ghost && m_pBoard[iNewPos - 1] != PieceE.Nemesis)
+                {
+                    if (((m_pBoard[iNewPos - 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
+                    {
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, MoveTypeE.Normal, arrMovePos);
+                        }
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+                }
+                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && m_pBoard[iNewPos + 1] != PieceE.Ghost && m_pBoard[iNewPos + 1] != PieceE.Nemesis)
+                {
+                    if (((m_pBoard[iNewPos + 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
+                    {
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, MoveTypeE.Normal, arrMovePos);
+                        }
+                    }
+                    else {
+                        m_posInfo.m_iPiecesDefending++;
+                    }
+                }
+            }
+
+
+            //kPos
+              //      if (kPos == 1)
+            {
+
+
+
+                //case up left
+
+                iRowPos = (iStartPos >> 3);
+                bCanMove2Case = (ePlayerColor == PlayerColorE.Black) ? (iRowPos == 6) : (iRowPos == 1);
+                iDir = (ePlayerColor == PlayerColorE.Black) ? -9 : 9;
+                iNewPos = iStartPos + iDir;
+                if (iNewPos >= 0 && iNewPos < 64)
+                {
+                    if (m_pBoard[iNewPos] == PieceE.None)
+                    {
+                        iRowPos = (iNewPos >> 3);
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                        }
+
+                    }
+                }
+
+                //case left
+
+                iRowPos = (iStartPos >> 3);
+                bCanMove2Case = (ePlayerColor == PlayerColorE.Black) ? (iRowPos == 6) : (iRowPos == 1);
+                iDir = (ePlayerColor == PlayerColorE.Black) ? -1 : 1;
+                iNewPos = iStartPos + iDir;
+                if (iNewPos >= 0 && iNewPos < 64)
+                {
+                    if (m_pBoard[iNewPos] == PieceE.None)
+                    {
+                        iRowPos = (iNewPos >> 3);
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                        }
+
+                    }
+                }
+
+
+            }
+            //case up right
+
+            iRowPos = (iStartPos >> 3);
+
+            iDir = (ePlayerColor == PlayerColorE.Black) ? -7 : 7;
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                if (m_pBoard[iNewPos] == PieceE.None)
+                {
+                    iRowPos = (iNewPos >> 3);
+                    if (iRowPos == 0 || iRowPos == 7)
+                    {
+                        AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                    }
+                    else {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                    }
+
+                }
+            }
+
+            //case right
+
+            iRowPos = (iStartPos >> 3);
+
+            iDir = (ePlayerColor == PlayerColorE.Black) ? 1 : -1;
+            iNewPos = iStartPos + iDir;
+            if (iNewPos >= 0 && iNewPos < 64)
+            {
+                if (m_pBoard[iNewPos] == PieceE.None)
+                {
+                    iRowPos = (iNewPos >> 3);
+                    if (iRowPos == 0 || iRowPos == 7)
+                    {
+                        AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                    }
+                    else {
+                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                    }
+
+                }
+            }
+
+
+
+        }
+
+
+
         private int FindEnemyKingPosition(PlayerColorE ePlayerColor)
         {
             int pos = 0;
@@ -2846,7 +3043,7 @@ namespace SrcChess2 {
         }
 
 
-        private void EnumNemesisPawnMove(PlayerColorE ePlayerColor, int iStartPos, List<MovePosS> arrMovePos)
+        /*private void EnumNemesisPawnMove(PlayerColorE ePlayerColor, int iStartPos, List<MovePosS> arrMovePos)
         {
             int iDir;
             int iNewPos;
@@ -2919,7 +3116,7 @@ namespace SrcChess2 {
             //case left or right
 
 
-        }
+        }*/
 
 
         /// <summary>
@@ -3317,7 +3514,12 @@ namespace SrcChess2 {
                         case PieceE.Lancer:
                             EnumFromArray(ePlayerColor, iIndex, ePlayerColor == 0 ? s_pppiCaseMoveWhiteLancer[iIndex] : s_pppiCaseMoveBlackLancer[iIndex], arrMovePos, ePiece);
                             break;
-
+                        case PieceE.Snake:
+                            EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveSnake[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.Hipo:
+                            EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveHipo[iIndex], arrMovePos, ePiece);
+                            break;
 
                     }
                 }
@@ -3980,14 +4182,14 @@ namespace SrcChess2 {
         {
 
             PieceE[] team = new PieceE[8];
-            team[0] = PieceE.Zebra;
-            team[1] = PieceE.Knight;
-            team[2] = PieceE.Camel;
+            team[0] = PieceE.Hipo;
+            team[1] = PieceE.Zebra;
+            team[2] = PieceE.Snake;
             team[3] = PieceE.King;
-            team[4] = PieceE.Buffalo;
-            team[5] = PieceE.Camel;
-            team[6] = PieceE.Knight;
-            team[7] = PieceE.Zebra;
+            team[4] = PieceE.Lion;
+            team[5] = PieceE.Snake;
+            team[6] = PieceE.Zebra;
+            team[7] = PieceE.Hipo;
 
             return team;
 
@@ -4134,6 +4336,54 @@ namespace SrcChess2 {
                 arr[3] = -1;
             }
             return arr;
+
+        }
+
+        private bool thisIndexExistInBoard(int index)
+        {
+            if ((index >= 0) && (index <= 63))
+                return true;
+            else
+                return false;
+
+        }
+
+        private bool isAtSnakeRange(int pos, int team)
+        {
+            for(int i = pos-9; i< pos-7; i++)
+            {
+                if (thisIndexExistInBoard(i))
+                {
+                    if (m_pBoard[i] == PieceE.Snake)
+                        return true;
+                }
+            }
+
+            if (thisIndexExistInBoard(pos-1))
+            {
+                if (m_pBoard[pos-1] == PieceE.Snake)
+                    return true;
+            }
+
+            if (thisIndexExistInBoard(pos + 1))
+            {
+                if (m_pBoard[pos + 1] == PieceE.Snake)
+                    return true;
+            }
+
+
+            for (int i = pos +7; i < pos +9; i++)
+            {
+                if (thisIndexExistInBoard(i))
+                {
+                    if (m_pBoard[i] == PieceE.Snake)
+                        return true;
+                }
+            }
+
+            // if nothing found
+            return false;
+
 
         }
 

@@ -138,9 +138,15 @@ namespace SrcChess2 {
                 case ChessPiece.White_SilverGeneral:
                     strRetVal = "white silvergeneral";
                     break;
+                case ChessPiece.White_Snake:
+                    strRetVal = "white snake";
+                    break;
+                case ChessPiece.White_Hipo:
+                    strRetVal = "white hipo";
+                    break;
 
 
-            
+
 
                 case ChessPiece.White_Pawn:
                 strRetVal   = "white pawn";
@@ -241,6 +247,12 @@ namespace SrcChess2 {
                     break;
                 case ChessPiece.Black_SilverGeneral:
                     strRetVal = "black silvergeneral";
+                    break;
+                case ChessPiece.Black_Snake:
+                    strRetVal = "black snake";
+                    break;
+                case ChessPiece.Black_Hipo:
+                    strRetVal = "black hipo";
                     break;
                 default:
                 strRetVal   = null;
