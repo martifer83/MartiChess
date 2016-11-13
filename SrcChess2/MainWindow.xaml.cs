@@ -139,6 +139,14 @@ namespace SrcChess2 {
         /// <summary>Color played by the computer</summary>
         public ChessBoard.PlayerColorE      m_eComputerPlayingColor;
         /// <summary>true if a secondary thread is busy computing a move</summary>
+        /// 
+
+        public int m_teamWhiteArmy;
+
+        public int m_teamBlackArmy;
+
+
+
         private bool                        m_bSecondThreadBusy;
         /// <summary>Search mode</summary>
         private SearchEngine.SearchMode     m_searchMode;

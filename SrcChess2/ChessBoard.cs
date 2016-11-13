@@ -141,6 +141,7 @@ namespace SrcChess2 {
             Snake= 37,
             Hipo = 38,
 
+            Raja = 39,
 
 
 
@@ -344,6 +345,8 @@ namespace SrcChess2 {
         static private int[][][] s_pppiCaseMoveSnake;
         static private int[][][] s_pppiCaseMoveHipo;
 
+        static private int[][] s_ppiCaseMoveRaja; // xaturanga king
+
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
         /// 55 54 53 52 51 50 49 48
@@ -467,6 +470,8 @@ namespace SrcChess2 {
 
             s_pppiCaseMoveSnake = new int[64][][];
             s_pppiCaseMoveHipo = new int[64][][];
+
+            s_ppiCaseMoveRaja = new int[64][];
 
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
@@ -621,6 +626,9 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false, 3);
                 s_pppiCaseMoveHipo[iPos] = arrMove.ToArray();
 
+                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1,          1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, false);
+                s_ppiCaseMoveRaja[iPos] = arrMove[0];
+
             }
         }
 
@@ -758,9 +766,9 @@ namespace SrcChess2 {
             //ResetBoardTest2();
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
-            ResetBoardTestEmpowered();
+            //ResetBoardTestEmpowered();
            // ResetBoardTestInvasion();
-            //ResetBoardGeneric(TeamClassic(), TeamClassic(), true, true, false, false);
+            ResetBoardGeneric(TeamChaturanga(), TeamAmazon(), true, true, false, false);
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -2190,16 +2198,16 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveWazir[iPos], eEnemyWazir);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCrazyHorse[iPos], eEnemyCrazyHorse);
             iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyAmazonPawn);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseMoveWhiteGaja[iPos] : s_ppiCaseMoveBlackGaja[iPos], eEnemyGaja);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteGaja[iPos] : s_ppiCaseMoveBlackGaja[iPos], eEnemyGaja);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveZebra[iPos], eEnemyZebra);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCamel[iPos], eEnemyCamel);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveLion[iPos], eEnemyLion);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveUnicorn[iPos], eEnemyUnicorn, eEnemyUnicorn);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBuffalo[iPos], eEnemyBuffalo);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBlackShogiHorse[iPos], eEnemyShogiHorse);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseMoveWhiteGoldGeneral[iPos] : s_ppiCaseMoveBlackGoldGeneral[iPos], eEnemyGoldGeneral);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseMoveWhiteSilverGeneral[iPos] : s_ppiCaseMoveBlackSilverGeneral[iPos], eEnemySilverGeneral);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_pppiCaseMoveWhiteLancer[iPos] : s_pppiCaseMoveBlackLancer[iPos], eEnemyLancer, eEnemyLancer);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteGoldGeneral[iPos] : s_ppiCaseMoveBlackGoldGeneral[iPos], eEnemyGoldGeneral);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteSilverGeneral[iPos] : s_ppiCaseMoveBlackSilverGeneral[iPos], eEnemySilverGeneral);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_pppiCaseMoveWhiteLancer[iPos] : s_pppiCaseMoveBlackLancer[iPos], eEnemyLancer, eEnemyLancer);
 
             iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredKnight, eColor, iPos);
             iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredBishop, eColor, iPos);
@@ -2211,8 +2219,8 @@ namespace SrcChess2 {
           //  Console.WriteLine("enumThese:" + iPos);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
-            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveSnake[iPos], eEnemySnake, eEnemySnake);
-            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveHipo[iPos], eEnemyHipo, eEnemyHipo);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveSnake[iPos], eEnemySnake, eEnemySnake);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveHipo[iPos], eEnemyHipo, eEnemyHipo);
            
 
 
@@ -2236,8 +2244,8 @@ namespace SrcChess2 {
              //   iKingPos = 59;
             bool isCheck_ = (EnumAttackPos(eColor, iKingPos, null) != 0);
 
-            if (isCheck_ && eColor == PlayerColorE.Black)
-                Console.WriteLine("isCheck king pos: " + iKingPos);
+           // if (isCheck_ && eColor == PlayerColorE.Black)
+             //   Console.WriteLine("isCheck king pos: " + iKingPos);
             return isCheck_;
         }
 
@@ -2527,6 +2535,35 @@ namespace SrcChess2 {
             AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.PawnPromotionToPawn, arrMovePos);
         }
 
+
+
+        /*private void Distancia()
+        {
+            int stx = pos - dis * dim - dis;
+            Console.WriteLine(stx);
+            for (int j = 0; j <= dis * 2; j++)
+            {
+                for (int i = stx; i <= stx + dis * 2; i++)
+                {
+                    int value = i + j * 8;
+                    if (value < 0 || value > dim * dim)
+                    { }
+                    else
+                        Console.WriteLine(i + j * 8);
+                }
+            }
+        }*/
+
+        private int Distance(int pos0, int pos1)
+        {
+            int dx = Math.Abs((pos0 % 8) - (pos1 % 8));
+            int dy = Math.Abs((pos0 / 8) - (pos1 / 8));
+
+            return Math.Max(dx, dy);
+
+        }
+
+
         /// <summary>
         /// Add a move to the move list if the new position is empty or is an enemy
         /// </summary>
@@ -2557,6 +2594,12 @@ namespace SrcChess2 {
             bool bIsNotGhost = (eOldPiece & PieceE.PieceMask) != PieceE.Ghost;
             bool bIsNotNemesis = (eOldPiece & PieceE.PieceMask) != PieceE.Nemesis;
 
+            bool bIsNotImmobilized = !isAtSnakeRange(iStartPos, (int)ePlayerColor); // snake 
+
+            bool bIsNotElephantAt2Distance = (eOldPiece & PieceE.PieceMask) != PieceE.Elephant   && (Distance(iStartPos,iEndPos)<=2);
+
+            CheckAdjacent(iStartPos, 8);
+
             PieceE ePiece = m_pBoard[iStartPos];
 
 
@@ -2566,7 +2609,7 @@ namespace SrcChess2 {
             {
                 case PieceE.Reaper:
 
-                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.King && bIsNotNemesis && bIsNotGhost)  // && Nemesis or ghost
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.King && bIsNotNemesis && bIsNotGhost && bIsNotImmobilized)  // && Nemesis or ghost
                     {
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                         return (bRetVal);
@@ -2615,6 +2658,19 @@ namespace SrcChess2 {
                     }
 
                     break;
+                case PieceE.Hipo:
+
+                   
+                    // no condition
+                     AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
+                    return (bRetVal);
+                    //else {
+                    //    m_posInfo.m_iPiecesDefending++;
+                    //}
+
+                    break;
+
+
                 default:  // remaining pieces.
 
                     // Nemesis  // Ghost
@@ -4526,7 +4582,51 @@ namespace SrcChess2 {
             return arrayPos;
 
         }
-       
+
+        public byte[] MaxPosHipo(byte startPos, byte endPos)
+        {
+            //Console.WriteLine
+            byte dim = 8;
+            byte[] arrayPos = new byte[4];
+
+            if (endPos >= startPos + 8)
+            { // up
+                arrayPos[0] = (byte)(startPos + dim);
+                arrayPos[1] = (byte)(startPos + dim * 2);
+                arrayPos[2] = (byte)(startPos + dim * 3);
+                arrayPos[3] = (byte)(startPos + dim * 4);
+
+            }
+            else if (endPos > startPos)
+            {  // left
+                arrayPos[0] = (byte)(startPos + 1);
+                arrayPos[1] = (byte)(startPos + 2);
+                arrayPos[2] = (byte)(startPos + 3);
+                arrayPos[3] = (byte)(startPos + 4);
+
+            }
+            else if (endPos <= startPos - 8)
+            { // down
+
+                arrayPos[0] = (byte)(startPos - dim);
+                arrayPos[1] = (byte)(startPos - dim * 2);
+                arrayPos[2] = (byte)(startPos - dim * 3);
+                arrayPos[3] = (byte)(startPos - dim * 4);
+
+            }
+            else { // right
+                arrayPos[0] = (byte)(startPos - 1);
+                arrayPos[1] = (byte)(startPos - 2);
+                arrayPos[2] = (byte)(startPos - 3);
+                arrayPos[3] = (byte)(startPos - 4);
+            }
+
+            return arrayPos;
+
+        }
+
+
+
         private int MinLinePos(int pos)
         {
             int dim = 8;

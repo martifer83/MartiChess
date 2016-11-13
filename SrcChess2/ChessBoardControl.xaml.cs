@@ -1572,7 +1572,31 @@ namespace SrcChess2 {
                 }
 
             }
-            else
+            else if (movePos.Type == ChessBoard.MoveTypeE.PieceEaten && (m_board[movePos.EndPos] == (ChessBoard.PieceE.Hipo | ChessBoard.PieceE.White) || m_board[movePos.EndPos] == (ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black)))
+                // Case Hipo
+                {
+
+                byte[] arr = ChessBoard.MaxPosHipo(movePos.StartPos, movePos.EndPos);
+               
+                
+
+                RefreshCell(movePos.StartPos);
+                RefreshCell(arr[0]);
+                RefreshCell(arr[1]);
+                RefreshCell(arr[2]);
+                RefreshCell(arr[3]);
+                if (bFlash)
+                {
+                    FlashCell(arr[0]);
+                    FlashCell(arr[1]);
+                    FlashCell(arr[2]);
+                    FlashCell(arr[3]);
+                    //FlashCell(movePos.EndPos);
+                }
+
+
+            }
+                else
             {
                 RefreshCell(movePos.StartPos);
                 RefreshCell(movePos.EndPos);
@@ -1614,7 +1638,7 @@ namespace SrcChess2 {
                 movePos.StartPos = movePos.EndPos;
             }
 
-            //elph forçar moviment i borrar els dos peces
+            //elph forçar moviment i borrar les dues peces
             if (movePos.Type == ChessBoard.MoveTypeE.PieceEaten && (m_board[movePos.StartPos] == (ChessBoard.PieceE.Elephant | ChessBoard.PieceE.White) || m_board[movePos.StartPos] == (ChessBoard.PieceE.Elephant | ChessBoard.PieceE.Black)))
             {
 
@@ -1627,6 +1651,14 @@ namespace SrcChess2 {
                 ChessBoard.m_pBoard[arr[0]] = ChessBoard.PieceE.None;
                 ChessBoard.m_pBoard[arr[1]] = ChessBoard.PieceE.None;
 
+            }
+            if (movePos.Type == ChessBoard.MoveTypeE.PieceEaten && (m_board[movePos.StartPos] == (ChessBoard.PieceE.Hipo | ChessBoard.PieceE.White) || m_board[movePos.StartPos] == (ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black)))
+            {
+                byte[] arr = ChessBoard.MaxPosHipo(movePos.StartPos, movePos.EndPos);
+                ChessBoard.m_pBoard[arr[0]] = ChessBoard.PieceE.None;
+                ChessBoard.m_pBoard[arr[1]] = ChessBoard.PieceE.None;
+                movePos.EndPos = arr[2];
+                ChessBoard.m_pBoard[arr[3]] = movePos.OriginalPiece;// ChessBoard.PieceE;
             }
 
             if (m_iFlashing == 0) { 

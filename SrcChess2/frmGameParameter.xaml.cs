@@ -50,7 +50,30 @@ namespace SrcChess2 {
         /// </summary>
         private void CheckState() {
             groupBoxComputerPlay.IsEnabled = radioButtonPlayerAgainstComputer.IsChecked.Value;
+       
         }
+
+        private int WhiteArmySelected(){
+            if (radioButtonClassic1.IsChecked.Value)
+                return 0;
+            if (radioButtonChaturanga1.IsChecked.Value)
+                return 1;
+            if (radioButtonCapablanca1.IsChecked.Value)
+                return 2;
+            return 0;
+        }
+
+        private int BlackArmySelected()
+        {
+            if (radioButtonClassic2.IsChecked.Value)
+                return 0;
+            if (radioButtonChaturanga2.IsChecked.Value)
+                return 1;
+            if (radioButtonCapablanca2.IsChecked.Value)
+                return 2;
+            return 0;
+        }
+
 
         /// <summary>
         /// Called to accept the form
@@ -66,6 +89,10 @@ namespace SrcChess2 {
                 Father.PlayingMode = MainWindow.PlayingModeE.ComputerAgainstComputer;
             }
             Father.m_eComputerPlayingColor  = (radioButtonComputerPlayBlack.IsChecked == true) ? ChessBoard.PlayerColorE.Black : ChessBoard.PlayerColorE.White;
+            Father.m_teamWhiteArmy = WhiteArmySelected();
+            Father.m_teamBlackArmy = BlackArmySelected();
+            
+
             DialogResult                    = true;
             Close();
         }
@@ -77,6 +104,16 @@ namespace SrcChess2 {
         /// <param name="e">        Event arguments</param>
         private void radioButtonOpponent_CheckedChanged(object sender, RoutedEventArgs e) {
             CheckState();
+        }
+
+        private void radioButtonTeamWhite_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void radioButtonTeamBlack_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+
         }
 
         /// <summary>

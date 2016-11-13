@@ -2114,8 +2114,9 @@
         <member name="F:SrcChess2.MainWindow.m_eComputerPlayingColor">
             <summary>Color played by the computer</summary>
         </member>
-        <member name="F:SrcChess2.MainWindow.m_bSecondThreadBusy">
+        <member name="F:SrcChess2.MainWindow.m_teamWhiteArmy">
             <summary>true if a secondary thread is busy computing a move</summary>
+            
         </member>
         <member name="F:SrcChess2.MainWindow.m_searchMode">
             <summary>Search mode</summary>
