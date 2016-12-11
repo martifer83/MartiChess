@@ -703,6 +703,13 @@ namespace SrcChess2 {
             SetCmdState();
         }
 
+        private void ResetBoard2()
+        {
+            m_chessCtl.ResetBoard2(m_teamWhiteArmy, m_teamBlackArmy);
+            SetCmdState();
+        }
+
+
         /// <summary>
         /// Determine which menu item is enabled
         /// </summary>
@@ -1267,7 +1274,8 @@ namespace SrcChess2 {
         /// </summary>
         private void NewGame() {
             if (frmGameParameter.AskGameParameter(this)) {
-                ResetBoard();
+                //ResetBoard();
+                ResetBoard2();
                 CheckIfComputerMustPlay();
             }
         }

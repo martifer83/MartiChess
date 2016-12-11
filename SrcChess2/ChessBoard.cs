@@ -768,7 +768,7 @@ namespace SrcChess2 {
             //ResetBoardTestElephant3();
             //ResetBoardTestEmpowered();
            // ResetBoardTestInvasion();
-            ResetBoardGeneric(TeamChaturanga(), TeamAmazon(), true, true, false, false);
+            ResetBoardGeneric(0, 1, true, true, false, false);
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -3828,11 +3828,46 @@ namespace SrcChess2 {
 
         //added functions
 
+        private PieceE[] SetTeam(int index)
+        {
+
+            //classic
+            if (index == 0)
+                return TeamClassic();
+            //chaturanga
+            if (index == 1)
+                return TeamChaturanga();
+            //capablanca
+            if (index == 2)
+                return TeamCapablanca();
+            // nemesis
+            if (index == 3)
+                return TeamNemesis();
+            //Reaper
+            if (index == 4)
+                return TeamReaper();
+            // default
+            return TeamClassic();
+        }
+
+
         /// <summary>
         /// Reset the board to the initial configuration
         /// </summary>
-        public void ResetBoardGeneric(PieceE[] teamW, PieceE[] teamB, Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2)
+        public void ResetBoardGeneric(int indexW, int indexB , Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2)
         {
+
+
+            PieceE[] teamW = SetTeam(indexW);
+            PieceE[] teamB = SetTeam(indexB);
+            Random rnd = new Random();
+            if (true)
+            {
+                rnd.Shuffle(teamW);
+                rnd.Shuffle(teamB);
+                //TODO disable castle
+            }
+
             PieceE pawnT1, pawnT2;
 
 
@@ -4308,7 +4343,9 @@ namespace SrcChess2 {
 
         }
 
+     
 
+        
 
 
 
@@ -4696,4 +4733,5 @@ namespace SrcChess2 {
         protected ChessException(SerializationInfo info, StreamingContext context) : base(info, context) {
         }
     } // Class ChessException
+
 } // Namespace

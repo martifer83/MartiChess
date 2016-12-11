@@ -471,6 +471,23 @@ namespace SrcChess2 {
             m_gameTimer.Enabled = false;
             Refresh(false); // bForceRefresh
         }
+
+       
+
+        public void ResetBoard2(int teamIndexW, int teamIndexB)
+        {
+            m_board.ResetBoardGeneric(teamIndexW, teamIndexB, true, true, false, false);
+            SelectedCell = new IntPoint(-1, -1);
+            if (m_moveListUI != null)
+            {
+                m_moveListUI.Reset(m_board);
+            }
+            OnUpdateCmdState(System.EventArgs.Empty);
+            m_gameTimer.Reset(m_board.NextMoveColor);
+            m_gameTimer.Enabled = false;
+            Refresh(false); // bForceRefresh
+        }
+
         #endregion
 
         #region Properties

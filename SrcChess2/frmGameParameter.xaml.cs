@@ -60,6 +60,15 @@ namespace SrcChess2 {
                 return 1;
             if (radioButtonCapablanca1.IsChecked.Value)
                 return 2;
+            if (radioButtonNemesis1.IsChecked.Value)
+                return 3;
+            if (radioButtonReaper1.IsChecked.Value)
+                return 4;
+            if (radioButtonAnimals1.IsChecked.Value)
+                return 5;
+            if (radioButtonAnimals1.IsChecked.Value)
+                return 6;
+
             return 0;
         }
 
@@ -71,6 +80,14 @@ namespace SrcChess2 {
                 return 1;
             if (radioButtonCapablanca2.IsChecked.Value)
                 return 2;
+            if (radioButtonNemesis2.IsChecked.Value)
+                return 3;
+            if (radioButtonReaper2.IsChecked.Value)
+                return 4;
+            if (radioButtonEmpowered2.IsChecked.Value)
+                return 5;
+            if (radioButtonAnimals2.IsChecked.Value)
+                return 6;
             return 0;
         }
 

@@ -3562,7 +3562,7 @@
             Human form position
             </returns>
         </member>
-        <member name="M:SrcChess2.ChessBoard.ResetBoardGeneric(SrcChess2.ChessBoard.PieceE[],SrcChess2.ChessBoard.PieceE[],System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:SrcChess2.ChessBoard.ResetBoardGeneric(System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Reset the board to the initial configuration
             </summary>
