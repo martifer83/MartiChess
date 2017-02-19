@@ -2018,11 +2018,13 @@ namespace SrcChess2 {
 
                         }else if (ePiece == PieceE.Chancellor)
                         {
-                            
+
                             //posIsInArray = containsInThisArray(s_pppiCaseMoveLineKnight[originalPos], iNewPos);
-                            
-                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
+
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
+
+                           
 
                         }
                       
@@ -2036,7 +2038,8 @@ namespace SrcChess2 {
                         else if (ePiece == PieceE.Archbishop)
                         {
                             //     posIsInArray = containsInThisArray(s_pppiCaseMoveDiagKnight[originalPos], iNewPos);
-                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
+
+                            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
 
                         }
@@ -2183,7 +2186,7 @@ namespace SrcChess2 {
             // eEnemyNemesis = PieceE.Neme | eColor;
 
 
-            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant
+            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant  // crash when playing anial vs animal bandom Fisher
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyQueen, eEnemyRook);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyKing);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyKnight);
@@ -2372,6 +2375,7 @@ namespace SrcChess2 {
             bool bIsCheck = false;
             for (int i = 0; i < arrPos.Length; i++)
             {
+               // if()
                
                 bIsCheck |= ((m_pBoard[i] & PieceE.PieceMask) == PieceE.King) ? IsCheck(ePlayerColor, arrPos[i]) : IsCheck(ePlayerColor, arrPos[i]);
             }
@@ -2422,9 +2426,10 @@ namespace SrcChess2 {
                bIsCheck = ((eNewPiece & PieceE.PieceMask) == PieceE.King) ? IsCheck(ePlayerColor, iEndPos) : IsCheck(ePlayerColor);
             }
             else {
-
+                // team animals white bug below: TODO check
                 byte[] elephantPos = MaxPosElephant((byte)iStartPos, (byte)iEndPos);
                 bIsCheck = isCheckMulti(elephantPos, ePlayerColor); 
+                //bIsCheck = false;
             }
             
            // bIsCheck = false;
@@ -3846,6 +3851,10 @@ namespace SrcChess2 {
             //Reaper
             if (index == 4)
                 return TeamReaper();
+            if (index == 5)
+                return TeamEmpowered();
+            if (index == 6)
+                return TeamAnimals();
             // default
             return TeamClassic();
         }
@@ -3861,7 +3870,7 @@ namespace SrcChess2 {
             PieceE[] teamW = SetTeam(indexW);
             PieceE[] teamB = SetTeam(indexB);
             Random rnd = new Random();
-            if (true)
+            if (false)
             {
                 rnd.Shuffle(teamW);
                 rnd.Shuffle(teamB);
@@ -4483,14 +4492,7 @@ namespace SrcChess2 {
 
         private PieceE KnightAdjacent(int[] arr, int color)
         {
-            if(color != 1)
-            {
-                string hello = "";
-            }
-            else
-            {
-                string hello2 = "";
-            }
+            
             bool biFound = false;
             bool roFound = false;
 

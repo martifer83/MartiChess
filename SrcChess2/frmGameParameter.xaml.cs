@@ -64,7 +64,7 @@ namespace SrcChess2 {
                 return 3;
             if (radioButtonReaper1.IsChecked.Value)
                 return 4;
-            if (radioButtonAnimals1.IsChecked.Value)
+            if (radioButtonEmpowered1.IsChecked.Value)
                 return 5;
             if (radioButtonAnimals1.IsChecked.Value)
                 return 6;
