@@ -767,8 +767,9 @@ namespace SrcChess2 {
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
             //ResetBoardTestEmpowered();
-           // ResetBoardTestInvasion();
-            ResetBoardGeneric(0, 1, true, true, false, false);
+            ResetBoardTestInvasion();
+            //ResetBoardTestCheckMate2();
+            //ResetBoardGeneric(0, 1, true, true, false, false);
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -1058,6 +1059,8 @@ namespace SrcChess2 {
         /// <param name="bInitialBoardStd"> true if its a standard board, false if coming from FEN or design mode</param>
         /// <param name="eMask">            Extra bord information</param>
         /// <param name="iEnPassant">       Position for en passant</param>
+        /// 
+        /// TODO castling com a parametre
         private void ResetInitialBoardInfo(PlayerColorE eNextMoveColor, bool bInitialBoardStd, BoardStateMaskE eMask, int iEnPassant) {
             PieceE ePiece;
             int iEnPassantCol;
@@ -1097,8 +1100,8 @@ namespace SrcChess2 {
             m_iRWhiteRookMoveCount = ((eMask & BoardStateMaskE.WRCastling) == BoardStateMaskE.WRCastling) ? 0 : 1;
             m_iLWhiteRookMoveCount = ((eMask & BoardStateMaskE.WLCastling) == BoardStateMaskE.WLCastling) ? 0 : 1;
             m_iWhiteKingMoveCount = 0;
-            m_bWhiteCastle = false;
-            m_bBlackCastle = false;
+            m_bWhiteCastle = true;
+            m_bBlackCastle = true;
             m_i64ZobristKey = ZobristKey.ComputeBoardZobristKey(m_pBoard);
             m_eNextMoveColor = eNextMoveColor;
             m_bDesignMode = false;
@@ -2023,11 +2026,9 @@ namespace SrcChess2 {
 
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
-
-                           
+  
 
                         }
-                      
                         else if (ePiece == PieceE.Queen)
                         {
                          //   posIsInArray = containsInThisArray(s_pppiCaseMoveDiagLine[originalPos], iNewPos);
@@ -3988,17 +3989,71 @@ namespace SrcChess2 {
                                   0 /*iEnPassant*/);
         }
 
+        public void ResetBoardTestCheckMate()
+        {
+
+            m_pBoard[56] = PieceE.King | PieceE.Black;
+            m_pBoard[48] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[49] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[50] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[0] = PieceE.King | PieceE.White;
+            m_pBoard[7] = PieceE.Queen | PieceE.White;
+
+            //mirar perque depend d'aquesta funcio
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                true /*Standard board*/,
+                                BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                0 /*iEnPassant*/);
+        }
+
+
+
+        public void ResetBoardTestCheckMate2()
+        {
+
+            m_pBoard[56] = PieceE.King | PieceE.Black;
+            m_pBoard[48] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[49] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[50] = PieceE.Pawn | PieceE.Black;
+
+            m_pBoard[7] = PieceE.Queen | PieceE.White;
+
+
+            m_pBoard[11] = PieceE.Queen | PieceE.Black;
+            m_pBoard[8] = PieceE.Pawn | PieceE.White;
+            m_pBoard[9] = PieceE.Pawn | PieceE.White;
+            m_pBoard[10] = PieceE.Pawn | PieceE.White;
+
+            m_pBoard[0] = PieceE.King | PieceE.White;
+
+
+
+
+            
+
+            //mirar perque depend d'aquesta funcio
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                true /*Standard board*/,
+                                BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                0 /*iEnPassant*/);
+        }
+
+
         public void ResetBoardTestInvasion()
         {
 
             m_pBoard[24] = PieceE.King | PieceE.White;
+
+            m_pBoard[33] = PieceE.Pawn | PieceE.White;
+
             m_pBoard[56] = PieceE.Tiger | PieceE.Black;
+
 
             m_pBoard[19] = PieceE.Pawn | PieceE.Black;
            // m_pBoard[42] = PieceE.Queen | PieceE.White;
             m_pBoard[21] = PieceE.Pawn | PieceE.Black;
             m_pBoard[30] = PieceE.Pawn | PieceE.Black;
-            m_pBoard[37] = PieceE.King | PieceE.Black;
+            m_pBoard[39] = PieceE.King | PieceE.Black;
 
             ResetInitialBoardInfo(PlayerColorE.White,
                                   true /*Standard board*/,
@@ -4249,12 +4304,12 @@ namespace SrcChess2 {
 
             PieceE[] team = new PieceE[8];
             team[0] = PieceE.Wazir;
-            team[1] = PieceE.Unicorn;
+            team[1] = PieceE.Knight;// ancient PieceE.Unicorn; 
             team[2] = PieceE.Ferz;
             team[3] = PieceE.King;
             team[4] = PieceE.Amazon;
             team[5] = PieceE.Ferz;
-            team[6] = PieceE.Unicorn;
+            team[6] = PieceE.Knight;
             team[7] = PieceE.Wazir;
 
             return team;
@@ -4352,9 +4407,32 @@ namespace SrcChess2 {
 
         }
 
-     
+        public PieceE[] TeamShogiAdapted()
+        {
 
-        
+            PieceE[] team = new PieceE[8];
+            //team[0] = PieceE.Dragon;
+            team[1] = PieceE.ShogiHorse;
+            //team[2] = PieceE.HorseDragon;
+            team[3] = PieceE.King;
+            team[4] = PieceE.GoldGeneral;
+            team[5] = PieceE.SilverGeneral;
+            team[6] = PieceE.ShogiHorse;
+            team[7] = PieceE.Lancer;
+
+            //  team[9] = PieceE.Rook;
+
+            //team[14] = PieceE.Bishop;
+
+
+            return team;
+
+        }
+
+
+
+
+
 
 
 

@@ -659,9 +659,9 @@ namespace SrcChess2 {
                 }
                 bRetVal = true;
                 break;
-                default:
-                bRetVal = false;
-                break;
+            default:
+            bRetVal = false;
+            break;
             }
             return(bRetVal);
         }
@@ -1031,6 +1031,7 @@ namespace SrcChess2 {
                             iMethod2Win++;
                         }
                     }
+                    //TODO:invasion
                 }
                 iGameIndex++;
             }

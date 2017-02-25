@@ -80,7 +80,19 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.Snake | ChessBoard.PieceE.Black)] = -400;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black)] = -300;
 
-
+            // notes
+            // horse dragon = wazir  bishop 525
+            // Dragon = rook  ferz = 650
+            
+            // todo
+            /**
+             reset boaed info: castl
+             bug epowered moviment i jaque
+            bug animas
+            shogui adapted
+            midline invasion primera iteracio
+    ***/
+             
         }
 
         /// <summary>
@@ -132,19 +144,41 @@ namespace SrcChess2 {
                 iRetVal -= 10;
             }
 
+            bool whiteKingMidelineInvasion = false;
+            bool blackKingMidelineInvasion = false;
+
             for (int iIndex = 32; iIndex < 64; iIndex++)
             {
                 if (pBoard[iIndex] == ChessBoard.PieceE.King)
                 {
-                    iRetVal += 1000000;
+                    whiteKingMidelineInvasion = true;
                 }
             }
 
             for (int iIndex = 0; iIndex < 32; iIndex++)
             {
-                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black))
+                if (pBoard[iIndex] == ChessBoard.PieceE.King)
                 {
-                    iRetVal -= 1000000;
+                    blackKingMidelineInvasion = true;
+                }
+            }
+
+            for (int iIndex = 32; iIndex < 64; iIndex++)
+            {
+                if (pBoard[iIndex] == ChessBoard.PieceE.King && !blackKingMidelineInvasion)
+                {
+                    iRetVal += 100000000;
+                }
+            }
+
+
+           
+
+            for (int iIndex = 0; iIndex < 32; iIndex++)
+            {
+                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black) && !whiteKingMidelineInvasion)
+                {
+                    iRetVal -= 100000000; 
                 }
             }
 
@@ -208,7 +242,7 @@ namespace SrcChess2 {
 
             if (pBoard[i] == ChessBoard.PieceE.Queen)
                 return queen[i];
-            if (pBoard[i] == ChessBoard.PieceE.Bishop)
+            if (pBoard[i] == ChessBoard.PieceE.Bishop || pBoard[i] == ChessBoard.PieceE.Tiger)
                 return bishop[i];
             if (pBoard[i] == ChessBoard.PieceE.Knight)
                 return knight[i];
@@ -223,8 +257,7 @@ namespace SrcChess2 {
 
 
 
-        int r = 9;
-        //int[] queen { -1, -1}
+       
 
         int[] queen = { // also archbishop and chancellor
         -20,-10,-10, -5, -5,-10,-10,-20,

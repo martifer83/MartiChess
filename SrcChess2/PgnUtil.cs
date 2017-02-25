@@ -901,6 +901,21 @@ namespace SrcChess2 {
                     }
                 }
                 break;
+                   
+                // invasion
+            case ChessBoard.MoveResultE.Invasion:
+                strRetVal += "#";
+                if (bIncludeEnding)
+                {
+                    if (chessBoard.NextMoveColor == ChessBoard.PlayerColorE.Black)
+                    {
+                        strRetVal += " 1-0";
+                    }
+                    else {
+                        strRetVal += " 0-1";
+                    }
+                }
+                break;
             case ChessBoard.MoveResultE.ThreeFoldRepeat:
             case ChessBoard.MoveResultE.FiftyRuleRepeat:
             case ChessBoard.MoveResultE.TieNoMove:
