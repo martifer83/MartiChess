@@ -136,6 +136,15 @@ namespace SrcChess2 {
             Black_Hipo = 66,
             White_Hipo = 67,
 
+            Black_Dragon = 68,
+            White_Dragon = 69,
+
+            Black_DragonHorse = 70,
+            White_DragonHorse = 71,
+
+
+
+
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
 
@@ -259,6 +268,12 @@ namespace SrcChess2 {
                 case ChessBoard.PieceE.Hipo | ChessBoard.PieceE.White:
                     eRetVal = ChessPiece.White_Hipo;
                     break;
+                case ChessBoard.PieceE.Dragon | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_Dragon;
+                    break;
+                case ChessBoard.PieceE.DragonHorse | ChessBoard.PieceE.White:
+                    eRetVal = ChessPiece.White_DragonHorse;
+                    break;
 
 
 
@@ -367,12 +382,20 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.SilverGeneral | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_SilverGeneral;
                 break;
-                case ChessBoard.PieceE.Snake | ChessBoard.PieceE.Black:
-                    eRetVal = ChessPiece.Black_Snake;
-                    break;
-                case ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black:
-                    eRetVal = ChessPiece.Black_Hipo;
-                    break;
+            case ChessBoard.PieceE.Snake | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Snake;
+                break;
+            case ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Hipo;
+                break;
+            case ChessBoard.PieceE.DragonHorse | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_DragonHorse;
+                break;
+            case ChessBoard.PieceE.Dragon | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Dragon;
+                break;
+
+
                 default:
                 eRetVal = ChessPiece.None;
                 break;

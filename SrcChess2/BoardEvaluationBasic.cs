@@ -43,6 +43,8 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.Nemesis] = 900; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.Snake] = 400; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.Hipo] = 300; //???
+            s_piPiecePoint[(int)ChessBoard.PieceE.Dragon] = 650;
+            s_piPiecePoint[(int)ChessBoard.PieceE.DragonHorse] = 525;
 
             s_piPiecePoint[(int)ChessBoard.PieceE.King] = 1000000;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black)] = -100;
@@ -79,11 +81,13 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.Nemesis | ChessBoard.PieceE.Black)] = -900;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Snake | ChessBoard.PieceE.Black)] = -400;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black)] = -300;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Dragon | ChessBoard.PieceE.Black)] = -650;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.DragonHorse | ChessBoard.PieceE.Black)] = -525;
 
             // notes
             // horse dragon = wazir  bishop 525
             // Dragon = rook  ferz = 650
-            
+
             // todo
             /**
              reset boaed info: castl
@@ -92,7 +96,7 @@ namespace SrcChess2 {
             shogui adapted
             midline invasion primera iteracio
     ***/
-             
+
         }
 
         /// <summary>
