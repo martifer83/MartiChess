@@ -138,14 +138,14 @@ namespace SrcChess2 {
             GoldGeneral = 35,
             SilverGeneral = 36,
 
-            Snake= 37,
+            Snake = 37,
             Hipo = 38,
 
             Raja = 39,
 
             // shogi
             Dragon = 40,
-            DragonHorse= 41,
+            DragonHorse = 41,
 
 
 
@@ -637,22 +637,22 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false, 3);
                 s_pppiCaseMoveHipo[iPos] = arrMove.ToArray();
 
-                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1,          1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, false);
+                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1, 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, false);
                 s_ppiCaseMoveRaja[iPos] = arrMove[0];
 
                 // shogi
                 // dragon
                 FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false);
                 //FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
-                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, false, false);
+                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, true, 1);
 
-                s_pppiCaseMoveLineKnight[iPos] = arrMove.ToArray();
+                s_pppiCaseMoveDragon[iPos] = arrMove.ToArray();
 
                 // dragonHorse
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, true, false);
                 // FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, true);
-                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, false, false);
-                s_pppiCaseMoveDiagKnight[iPos] = arrMove.ToArray();
+                FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, true, 1);
+                s_pppiCaseMoveDragonHorse[iPos] = arrMove.ToArray();
 
 
 
@@ -2030,7 +2030,7 @@ namespace SrcChess2 {
 
 
                         int[] arr = CheckAdjacent(iNewPos, 8);
-                        if(ePiece == PieceE.EmpoweredKnight)
+                        if (ePiece == PieceE.EmpoweredKnight)
                             ePiece = KnightAdjacent(arr, eColor == PieceE.White ? 0 : 1);
                         if (ePiece == PieceE.EmpoweredBishop)
                             ePiece = BishopAdjacent(arr, eColor == PieceE.White ? 0 : 1);
@@ -2041,24 +2041,24 @@ namespace SrcChess2 {
                         if (ePiece == PieceE.Amazon)
                         {
 
-            
+
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
 
-                        }else if (ePiece == PieceE.Chancellor)
+                        } else if (ePiece == PieceE.Chancellor)
                         {
 
                             //posIsInArray = containsInThisArray(s_pppiCaseMoveLineKnight[originalPos], iNewPos);
 
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
-  
+
 
                         }
                         else if (ePiece == PieceE.Queen)
                         {
-                         //   posIsInArray = containsInThisArray(s_pppiCaseMoveDiagLine[originalPos], iNewPos);
+                            //   posIsInArray = containsInThisArray(s_pppiCaseMoveDiagLine[originalPos], iNewPos);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
 
@@ -2088,15 +2088,15 @@ namespace SrcChess2 {
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
                         }
 
-                        
-                        if (iRetVal !=0)
+
+                        if (iRetVal != 0)
                         {
                             //Console.WriteLine("EnumEmpowered: " + ePiece + " check !!!");
                             //iRetVal++;
                             if (arrAttackPos != null)
                             {
                                 arrAttackPos.Add((byte)iNewPos);
-                              //  Console.WriteLine("EnumEmpowered: " + ePiece + " check ");
+                                //  Console.WriteLine("EnumEmpowered: " + ePiece + " check ");
                             }
 
                         }
@@ -2122,13 +2122,13 @@ namespace SrcChess2 {
 
         private bool containsInThisArray(int[] piCaseMoveList, int index)
         {
-            
+
             foreach (int iNewPos in piCaseMoveList)
             {
                 if (iNewPos == index)
                     return true;
             }
-            
+
             return false;
         }
 
@@ -2218,6 +2218,11 @@ namespace SrcChess2 {
 
             // eEnemyNemesis = PieceE.Neme | eColor;
 
+            // test
+
+            //iRetVal = 0; /// delete
+            //for (int i = 0; i < 100; i++)
+            { 
 
             iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant  // crash when playing anial vs animal bandom Fisher
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyQueen, eEnemyRook);
@@ -2252,15 +2257,15 @@ namespace SrcChess2 {
             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyEmpoweredBishop, eEnemyEmpoweredBishop);  // bug pos 72 playing withElephant
             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyEmpoweredRook, eEnemyEmpoweredRook);
             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyEmpoweredKnight);
-          //  Console.WriteLine("enumThese:" + iPos);
+            //  Console.WriteLine("enumThese:" + iPos);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveSnake[iPos], eEnemySnake, eEnemySnake);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveHipo[iPos], eEnemyHipo, eEnemyHipo);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragon[iPos], eEnemyDragon, eEnemyDragon);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragonHorse[iPos], eEnemyDragonHorse, eEnemyDragonHorse);
-
-
+            
+             } 
 
 
             //if (iRetVal == 1  && iPos == 4)
@@ -3896,6 +3901,14 @@ namespace SrcChess2 {
                 return TeamEmpowered();
             if (index == 6)
                 return TeamAnimals();
+            if (index == 7)
+                return TeamAmazon();
+            if (index == 8)
+                return TeamShogi();
+            if (index == 9)
+                return TeamShogiAdapted();
+
+
             // default
             return TeamClassic();
         }
@@ -3904,14 +3917,14 @@ namespace SrcChess2 {
         /// <summary>
         /// Reset the board to the initial configuration
         /// </summary>
-        public void ResetBoardGeneric(int indexW, int indexB , Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2)
+        public void ResetBoardGeneric(int indexW, int indexB , Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2, bool randomfischer)
         {
 
 
             PieceE[] teamW = SetTeam(indexW);
             PieceE[] teamB = SetTeam(indexB);
             Random rnd = new Random();
-            if (false)
+            if (randomfischer)
             {
                 rnd.Shuffle(teamW);
                 rnd.Shuffle(teamB);

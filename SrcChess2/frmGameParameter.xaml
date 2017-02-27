@@ -1,41 +1,33 @@
 ﻿<Window x:Class="SrcChess2.frmGameParameter"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Game Parameters" Height="652" Width="1000" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
-    <DockPanel HorizontalAlignment="Stretch" Name="dockPanel1" VerticalAlignment="Top" Height="525" Margin="0,0,0,-1">
+        Title="Game Parameters" Height="638.5" Width="943" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <DockPanel HorizontalAlignment="Stretch" Name="dockPanel1" VerticalAlignment="Top" Height="606">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
             <Button Content="Ok" Height="23" Name="butOk" Width="75" Margin="10" Click="butOk_Click" IsDefault="True" />
             <Button Content="Cancel" Height="23" Name="butCancel" Width="75" Margin="10" IsCancel="True" />
         </StackPanel>
-        <UniformGrid Columns="3" Rows="2" RenderTransformOrigin="0.497,0.597">
-            <GroupBox Header="Opponents" Name="groupBox1" Margin="10,10,10,77">
+        <UniformGrid Columns="3" Rows="2" RenderTransformOrigin="0.497,0.597" Margin="0,0,0,5">
+            <GroupBox Header="Opponents" Name="groupBox1" Margin="10,10,10,152" Width="252">
                 <StackPanel Name="stackPanel1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
                     <RadioButton Content="Player Against _Computer" Height="16" Name="radioButtonPlayerAgainstComputer" Margin="5" Checked="radioButtonOpponent_CheckedChanged" Unchecked="radioButtonOpponent_CheckedChanged"/>
                     <RadioButton Content="Player Against _Player" Height="16" Name="radioButtonPlayerAgainstPlayer" Margin="5" Unchecked="radioButtonOpponent_CheckedChanged" Checked="radioButtonOpponent_CheckedChanged" />
                     <RadioButton Content="Computer Against C_omputer" Height="16" Name="radioButtonComputerAgainstComputer" Margin="5" Checked="radioButtonOpponent_CheckedChanged" Unchecked="radioButtonOpponent_CheckedChanged"  />
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Computer Plays" Name="groupBoxComputerPlay" Margin="10,10,10,77">
+            <GroupBox Header="Computer Plays" Name="groupBoxComputerPlay" Margin="10,10,10,152" Width="226">
                 <StackPanel Name="stackPanel2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
                     <RadioButton Content="_White" Height="16" Name="radioButtonComputerPlayWhite" Margin="5" />
                     <RadioButton Content="_Black" Height="16" Name="radioButtonComputerPlayBlack" Margin="5" />
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Team black" x:Name="groupBoxTeamBlack" Margin="10,-61,10,15">
-                <StackPanel x:Name="stackPanel4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
-                    <RadioButton Content="Classic" Height="16" x:Name="radioButtonClassic2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
-                    <RadioButton Content="Chaturanga" Height="16" x:Name="radioButtonChaturanga2" Margin="5" Unchecked="radioButtonTeamBlack_CheckedChanged" Checked="radioButtonTeamBlack_CheckedChanged" />
-                    <RadioButton Content="Capablanca" Height="16" x:Name="radioButtonCapablanca2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
-                    <RadioButton Content="Nemesis" Height="16" x:Name="radioButtonNemesis2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
-                    <RadioButton Content="Reaper" Height="16" x:Name="radioButtonReaper2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
-                    <RadioButton Content="Empowered" Height="16" x:Name="radioButtonEmpowered2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
-                    <RadioButton Content="Animals" Height="16" x:Name="radioButtonAnimals2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
-                    <RadioButton Content="Shogi" Height="16" x:Name="radioButtonShogi2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="False" />
-                    <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="False"/>
-
+            <GroupBox Header="Options" Name="groupBoxOptions" Margin="10,10,10,152" Width="226">
+                <StackPanel Name="stackPanel5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
+                    <CheckBox Content="RandomFisher" Height="16" Name="cbRandomFisher" Margin="5" />
+                    <CheckBox Content="Middline invasion" Height="16" Name="radioButtonComputerPlayBlackww" Margin="5" />
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Team white" x:Name="groupBoxTeamWhite" Margin="10,-61,10,15">
+            <GroupBox Header="Team white" x:Name="groupBoxTeamWhite" Margin="10,-61,10,15" Width="200">
                 <StackPanel x:Name="stackPanel3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
                     <RadioButton Content="Classic" Height="16" x:Name="radioButtonClassic1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" />
                     <RadioButton Content="Chaturanga" Height="16" x:Name="radioButtonChaturanga1" Margin="5" Unchecked="radioButtonTeamWhite_CheckedChanged" Checked="radioButtonTeamWhite_CheckedChanged" />
@@ -46,6 +38,23 @@
                     <RadioButton Content="Animals" Height="16" x:Name="radioButtonAnimals1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" />
                     <RadioButton Content="Shogi" Height="16" x:Name="radioButtonShogi1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="False" />
                     <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="False"/>
+                    <RadioButton Content="Shogi Adapted" Height="16" x:Name="radioButtonShogiA1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="True"/>
+
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Team black" x:Name="groupBoxTeamBlack" Margin="10,-61,10,15"  Width="200">
+                <StackPanel x:Name="stackPanel4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
+                    <RadioButton Content="Classic" Height="16" x:Name="radioButtonClassic2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
+                    <RadioButton Content="Chaturanga" Height="16" x:Name="radioButtonChaturanga2" Margin="5" Unchecked="radioButtonTeamBlack_CheckedChanged" Checked="radioButtonTeamBlack_CheckedChanged" />
+                    <RadioButton Content="Capablanca" Height="16" x:Name="radioButtonCapablanca2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
+                    <RadioButton Content="Nemesis" Height="16" x:Name="radioButtonNemesis2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
+                    <RadioButton Content="Reaper" Height="16" x:Name="radioButtonReaper2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
+                    <RadioButton Content="Empowered" Height="16" x:Name="radioButtonEmpowered2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
+                    <RadioButton Content="Animals" Height="16" x:Name="radioButtonAnimals2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
+                    <RadioButton Content="Shogi" Height="16" x:Name="radioButtonShogi2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="False" />
+                    <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="False"/>
+                    <RadioButton Content="Shogi Adapted" Height="16" x:Name="radioButtonShogiA2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
+
                 </StackPanel>
             </GroupBox>
         </UniformGrid>

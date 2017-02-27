@@ -145,7 +145,7 @@ namespace SrcChess2 {
                     strRetVal = "white hipo";
                     break;
                 case ChessPiece.White_Dragon:
-                    strRetVal = "white drgaon";
+                    strRetVal = "white dragon";
                     break;
                 case ChessPiece.White_DragonHorse:
                     strRetVal = "white dragonhorse";
@@ -264,7 +264,7 @@ namespace SrcChess2 {
                     strRetVal = "black dragon";
                     break;
                 case ChessPiece.Black_DragonHorse:
-                    strRetVal = "black dragonhrse";
+                    strRetVal = "black dragonhorse";
                     break;
                 default:
                 strRetVal   = null;

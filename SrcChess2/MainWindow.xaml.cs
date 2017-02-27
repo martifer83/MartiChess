@@ -145,6 +145,7 @@ namespace SrcChess2 {
 
         public int m_teamBlackArmy;
 
+        public bool m_randomfischer;
 
 
         private bool                        m_bSecondThreadBusy;
@@ -705,7 +706,7 @@ namespace SrcChess2 {
 
         private void ResetBoard2()
         {
-            m_chessCtl.ResetBoard2(m_teamWhiteArmy, m_teamBlackArmy);
+            m_chessCtl.ResetBoard2(m_teamWhiteArmy, m_teamBlackArmy, m_randomfischer);
             SetCmdState();
         }
 

@@ -68,6 +68,8 @@ namespace SrcChess2 {
                 return 5;
             if (radioButtonAnimals1.IsChecked.Value)
                 return 6;
+            if (radioButtonShogiA1.IsChecked.Value)
+                return 9;
 
             return 0;
         }
@@ -88,6 +90,8 @@ namespace SrcChess2 {
                 return 5;
             if (radioButtonAnimals2.IsChecked.Value)
                 return 6;
+            if (radioButtonShogiA2.IsChecked.Value)
+                return 9;
             return 0;
         }
 
@@ -108,7 +112,11 @@ namespace SrcChess2 {
             Father.m_eComputerPlayingColor  = (radioButtonComputerPlayBlack.IsChecked == true) ? ChessBoard.PlayerColorE.Black : ChessBoard.PlayerColorE.White;
             Father.m_teamWhiteArmy = WhiteArmySelected();
             Father.m_teamBlackArmy = BlackArmySelected();
-            
+            if (cbRandomFisher.IsChecked == true)
+                Father.m_randomfischer = true;
+            else
+                Father.m_randomfischer = false;
+
 
             DialogResult                    = true;
             Close();
