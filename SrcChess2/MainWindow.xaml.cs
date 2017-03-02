@@ -147,6 +147,8 @@ namespace SrcChess2 {
 
         public bool m_randomfischer;
 
+        public int m_dificultLevel;
+
 
         private bool                        m_bSecondThreadBusy;
         /// <summary>Search mode</summary>
@@ -706,7 +708,7 @@ namespace SrcChess2 {
 
         private void ResetBoard2()
         {
-            m_chessCtl.ResetBoard2(m_teamWhiteArmy, m_teamBlackArmy, m_randomfischer);
+            m_chessCtl.ResetBoard2(m_teamWhiteArmy, m_teamBlackArmy, m_randomfischer, m_dificultLevel);
             SetCmdState();
         }
 

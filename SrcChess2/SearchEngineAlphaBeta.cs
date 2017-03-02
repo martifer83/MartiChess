@@ -96,12 +96,18 @@ namespace SrcChess2 {
                             iBlackMoveCount         = iMoveCount;
                             abInfo.m_posInfoBlack   = posInfo;
                         }
+                        // check invasion here???
+                        //if(chessBoard.IsMidlineInvasion(ePlayerColor))
+                          //  iRetVal = -1000000 - iDepth;
+
                         if (iMoveCount == 0) {
                             if (chessBoard.IsCheck(ePlayerColor)) {
                                 iRetVal = -1000000 - iDepth;
                             } else {
                                 iRetVal = 0;    // Draw
                             }
+                          
+
                             if (abInfo.m_transTable != null) {
                                 abInfo.m_transTable.RecordEntry(chessBoard.CurrentZobristKey, eBoardExtraInfo, iDepth, iRetVal, TransEntryTypeE.Exact);
                             }
@@ -287,7 +293,7 @@ namespace SrcChess2 {
                 resRetVal.iPermCount  = 0;
                 if (searchMode.m_iSearchDepth == 0 || bIterativeDepthFirst) {
                     dtTimeOut           = (bIterativeDepthFirst) ? DateTime.MaxValue : DateTime.Now + TimeSpan.FromSeconds(searchMode.m_iTimeOutInSec);
-                    iDepthLimit = (bIterativeDepthFirst) ? 4 : 999;////////////////////searchMode.m_iSearchDepth : 999;  // aqui  es ambia la profundtat
+                    iDepthLimit = (bIterativeDepthFirst) ? ChessBoard.m_dificultLevel*2 : 999;////////////////////searchMode.m_iSearchDepth : 999;  // aqui  es ambia la profundtat
                     iDepth              = 1;
                     resRetVal.iPts      = FindBestMoveUsingAlphaBetaAtDepth(chessBoard, searchMode, ePlayerColor, moveList, posInfoWhite, posInfoBlack, iTotalMoveCount, iDepth, iAlpha, iBeta, transTable, DateTime.MaxValue, out iPermCountAtLevel, out iBestMoveIndex, out bTimeOut, out arrPoints);
                     if (iBestMoveIndex != -1) {

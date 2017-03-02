@@ -418,6 +418,8 @@ namespace SrcChess2 {
         /// <summary>Information about pieces attack</summary>
         private PosInfoS m_posInfo;
 
+        public static int m_dificultLevel;
+
         /// <summary>
         /// Class static constructor. 
         /// Builds the list of possible moves for each piece type per position.
@@ -2046,7 +2048,7 @@ namespace SrcChess2 {
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[originalPos], originalPiece);
 
-                        } else if (ePiece == PieceE.Chancellor)
+                        } else if (ePiece == PieceE.Chancellor || ePiece == (PieceE.Chancellor | PieceE.Black))
                         {
 
                             //posIsInArray = containsInThisArray(s_pppiCaseMoveLineKnight[originalPos], iNewPos);
@@ -2056,14 +2058,14 @@ namespace SrcChess2 {
 
 
                         }
-                        else if (ePiece == PieceE.Queen)
+                        else if (ePiece == PieceE.Queen || ePiece == (PieceE.Queen | PieceE.Black))
                         {
                             //   posIsInArray = containsInThisArray(s_pppiCaseMoveDiagLine[originalPos], iNewPos);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[originalPos], originalPiece, originalPiece);
                             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[originalPos], originalPiece, originalPiece);
 
                         }
-                        else if (ePiece == PieceE.Archbishop)
+                        else if (ePiece == PieceE.Archbishop|| ePiece == (PieceE.Archbishop| PieceE.Black))   //color !=1 ? PieceE.EmpoweredBishop :PieceE.EmpoweredBishop|PieceE.Black)
                         {
                             //     posIsInArray = containsInThisArray(s_pppiCaseMoveDiagKnight[originalPos], iNewPos);
 
@@ -2292,7 +2294,7 @@ namespace SrcChess2 {
             return isCheck_;
         }
 
-        private bool IsMidlineInvasion(PlayerColorE eColor) { 
+        public bool IsMidlineInvasion(PlayerColorE eColor) { 
             int kingPos = ((eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos);
 
             if (m_iWhiteKingPos >= 32 && m_iWhiteKingPos <= 39 )
@@ -2319,6 +2321,7 @@ namespace SrcChess2 {
 
             return chk;
         }
+
 
         /// <summary>
         /// Evaluates a board. The number of point is greater than 0 if white is in advantage, less than 0 if black is.
@@ -3127,10 +3130,10 @@ namespace SrcChess2 {
             }
 
 
-
+            
         }
 
-
+        //find enemy pos
 
         private int FindEnemyKingPosition(PlayerColorE ePlayerColor)
         {
@@ -3917,9 +3920,10 @@ namespace SrcChess2 {
         /// <summary>
         /// Reset the board to the initial configuration
         /// </summary>
-        public void ResetBoardGeneric(int indexW, int indexB , Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2, bool randomfischer)
+        public void ResetBoardGeneric(int indexW, int indexB , Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2, bool randomfischer, int dificult)
         {
-
+            // set difficult
+            m_dificultLevel = dificult;
 
             PieceE[] teamW = SetTeam(indexW);
             PieceE[] teamB = SetTeam(indexB);
@@ -4099,7 +4103,7 @@ namespace SrcChess2 {
 
             m_pBoard[33] = PieceE.Pawn | PieceE.White;
 
-            m_pBoard[56] = PieceE.Tiger | PieceE.Black;
+            //m_pBoard[56] = PieceE.Tiger | PieceE.Black;
 
 
             m_pBoard[19] = PieceE.Pawn | PieceE.Black;
@@ -4113,6 +4117,33 @@ namespace SrcChess2 {
                                   BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
                                   0 /*iEnPassant*/);
         }
+
+        public void ResetBoardTestInvasion2()
+        {
+
+            m_pBoard[24] = PieceE.King | PieceE.White;
+
+            m_pBoard[8] = PieceE.Pawn | PieceE.White;
+            m_pBoard[9] = PieceE.Pawn | PieceE.White;
+            m_pBoard[10] = PieceE.Pawn | PieceE.White;
+            m_pBoard[0] = PieceE.Queen | PieceE.White;
+            m_pBoard[1] = PieceE.Bishop | PieceE.White;
+
+            
+
+
+            m_pBoard[55] = PieceE.Pawn | PieceE.Black;
+            // m_pBoard[42] = PieceE.Queen | PieceE.White;
+            m_pBoard[54] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[53] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[39] = PieceE.King | PieceE.Black;
+
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
+        }
+
 
 
         public void ResetBoardTestElephant()
@@ -4661,9 +4692,9 @@ namespace SrcChess2 {
             {
                 if (arr[i] != -1)
                 {
-                    if (m_pBoard[arr[i]] == PieceE.EmpoweredKnight)
+                    if (m_pBoard[arr[i]] == (color != 1 ? PieceE.EmpoweredKnight : PieceE.EmpoweredKnight | PieceE.Black))
                         knFound = true;
-                    if (m_pBoard[arr[i]] == PieceE.EmpoweredRook)
+                    if (m_pBoard[arr[i]] == (color != 1 ? PieceE.EmpoweredRook : PieceE.EmpoweredRook | PieceE.Black))
                         roFound = true;
                 }
             }
@@ -4690,9 +4721,9 @@ namespace SrcChess2 {
             {
                 if (arr[i] != -1)
                 {
-                    if (m_pBoard[arr[i]] == PieceE.EmpoweredBishop)
+                    if (m_pBoard[arr[i]] == (color != 1 ? PieceE.EmpoweredBishop : PieceE.EmpoweredBishop | PieceE.Black))
                         biFound = true;
-                    if (m_pBoard[arr[i]] == PieceE.EmpoweredKnight)
+                    if (m_pBoard[arr[i]] == (color != 1 ? PieceE.EmpoweredKnight : PieceE.EmpoweredKnight | PieceE.Black))
                         knFound = true;
                 }
             }
