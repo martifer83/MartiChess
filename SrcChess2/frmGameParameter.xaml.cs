@@ -95,7 +95,16 @@ namespace SrcChess2 {
             return 0;
         }
 
-
+        private int DificultSelected()
+        {
+            if (radioButtonEasy.IsChecked.Value)
+                return 1;
+            if (radioButtonNormal.IsChecked.Value)
+                return 2;
+            if (radioButtonDificult.IsChecked.Value)
+                return 3;
+            return 2;
+        }
         /// <summary>
         /// Called to accept the form
         /// </summary>
@@ -112,6 +121,8 @@ namespace SrcChess2 {
             Father.m_eComputerPlayingColor  = (radioButtonComputerPlayBlack.IsChecked == true) ? ChessBoard.PlayerColorE.Black : ChessBoard.PlayerColorE.White;
             Father.m_teamWhiteArmy = WhiteArmySelected();
             Father.m_teamBlackArmy = BlackArmySelected();
+            Father.m_dificultLevel = DificultSelected();
+
             if (cbRandomFisher.IsChecked == true)
                 Father.m_randomfischer = true;
             else
