@@ -84,19 +84,9 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.Dragon | ChessBoard.PieceE.Black)] = -650;
             s_piPiecePoint[(int)(ChessBoard.PieceE.DragonHorse | ChessBoard.PieceE.Black)] = -525;
 
-            // notes
-            // horse dragon = wazir  bishop 525
-            // Dragon = rook  ferz = 650
+           
 
-            // todo
-            /**
-             reset boaed info: castl
-             bug epowered moviment i jaque
-            bug animas
-            shogui adapted
-            midline invasion primera iteracio
-    ***/
-
+            
         }
 
         /// <summary>
@@ -155,15 +145,15 @@ namespace SrcChess2 {
             {
                 if (pBoard[iIndex] == ChessBoard.PieceE.King)
                 {
-                    whiteKingMidelineInvasion = true;
+                    //whiteKingMidelineInvasion = true;
                 }
             }
 
             for (int iIndex = 0; iIndex < 32; iIndex++)
             {
-                if (pBoard[iIndex] == ChessBoard.PieceE.King)
+                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black))
                 {
-                    blackKingMidelineInvasion = true;
+                    //blackKingMidelineInvasion = true;
                 }
             }
 
@@ -171,7 +161,7 @@ namespace SrcChess2 {
             {
                 if (pBoard[iIndex] == ChessBoard.PieceE.King && !blackKingMidelineInvasion)
                 {
-                    iRetVal += 100000000;
+                    iRetVal += 1000000;
                 }
             }
 
@@ -182,22 +172,22 @@ namespace SrcChess2 {
             {
                 if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black) && !whiteKingMidelineInvasion)
                 {
-                    iRetVal -= 100000000; 
+                    iRetVal -= 1000000; 
                 }
             }
 
             if (iWhiteKingPos / 8 == 1)
-                iRetVal += 10;
-            if (iWhiteKingPos / 8 == 2)
                 iRetVal += 20;
+            if (iWhiteKingPos / 8 == 2)
+                iRetVal += 40;
             if (iWhiteKingPos / 8 == 3)
-                iRetVal += 30;
+                iRetVal += 60;
             if (iBlackKingPos / 8 == 4)
-                iRetVal -= 30;
+                iRetVal -= 60;
             if (iBlackKingPos / 8 == 5)
-                iRetVal -= 20;
+                iRetVal -= 40;
             if (iBlackKingPos / 8 == 6)
-                iRetVal -= 10;
+                iRetVal -= 20;
 
             int bishopCount = 0;
             for (int iIndex = 0; iIndex < 64; iIndex++)
@@ -226,16 +216,16 @@ namespace SrcChess2 {
         {
 
 
-            if (pBoard[i] == (ChessBoard.PieceE.Queen | ChessBoard.PieceE.Black))
-                return queen[i];
-            if (pBoard[i] == (ChessBoard.PieceE.Bishop | ChessBoard.PieceE.Black))
-                return bishop[i];
+            if (pBoard[i] == (ChessBoard.PieceE.Queen | ChessBoard.PieceE.Black) || (pBoard[i] == (ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black)))
+                return -queen[i];
+            if (pBoard[i] == (ChessBoard.PieceE.Bishop | ChessBoard.PieceE.Black)|| (pBoard[i] ==  (ChessBoard.PieceE.Tiger | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.Gaja | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.Black)))
+                return -bishop[i];
             if (pBoard[i] == (ChessBoard.PieceE.Knight | ChessBoard.PieceE.Black))
-                return knight[i];
+                return -knight[i];
             if (pBoard[i] == (ChessBoard.PieceE.Rook | ChessBoard.PieceE.Black))
-                return rook[i];
+                return -rook[i];
             if (pBoard[i] == (ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black))
-                return pawnMiddline[i];
+                return -pawnMiddline[i];
             return 0;
 
         }
@@ -244,9 +234,9 @@ namespace SrcChess2 {
         {
 
 
-            if (pBoard[i] == ChessBoard.PieceE.Queen)
+            if (pBoard[i] == ChessBoard.PieceE.Queen|| pBoard[i] == ChessBoard.PieceE.Chancellor || pBoard[i] == ChessBoard.PieceE.Archbishop)
                 return queen[i];
-            if (pBoard[i] == ChessBoard.PieceE.Bishop || pBoard[i] == ChessBoard.PieceE.Tiger)
+            if (pBoard[i] == ChessBoard.PieceE.Bishop || pBoard[i] == ChessBoard.PieceE.Tiger || pBoard[i] == ChessBoard.PieceE.Gaja || pBoard[i] == ChessBoard.PieceE.EmpoweredQueen)
                 return bishop[i];
             if (pBoard[i] == ChessBoard.PieceE.Knight)
                 return knight[i];
