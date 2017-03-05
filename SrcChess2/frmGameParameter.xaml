@@ -21,10 +21,16 @@
                     <RadioButton Content="_Black" Height="16" Name="radioButtonComputerPlayBlack" Margin="5" />
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Options" Name="groupBoxOptions" Margin="10,10,10,152" Width="226">
+            <GroupBox Header="Options" Name="groupBoxOptions" Margin="10,10,10,81" Width="226">
                 <StackPanel Name="stackPanel5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
                     <CheckBox Content="RandomFisher" Height="16" Name="cbRandomFisher" Margin="5" />
-                    <CheckBox Content="Middline invasion" Height="16" Name="radioButtonComputerPlayBlackww" Margin="5" />
+                    <CheckBox Content="Middline invasion" Height="16" Name="radioButtonComputerPlayBlackww" Margin="5" IsChecked="True" IsEnabled="False"/>
+                    <RadioButton Content="Easy" Height="16" x:Name="radioButtonEasy" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" />
+                    <RadioButton Content="Normal" Height="16" x:Name="radioButtonNormal" Margin="5" Unchecked="radioButtonTeamWhite_CheckedChanged" Checked="radioButtonTeamWhite_CheckedChanged" />
+                    <RadioButton Content="Hard" Height="16" x:Name="radioButtonDificult" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" />
+
+
+
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Team white" x:Name="groupBoxTeamWhite" Margin="10,-61,10,15" Width="200">

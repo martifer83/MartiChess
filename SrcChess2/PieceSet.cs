@@ -142,6 +142,9 @@ namespace SrcChess2 {
             Black_DragonHorse = 70,
             White_DragonHorse = 71,
 
+            Black_NemesisPawn = 72,
+            White_NemesisPawn = 73,
+
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
 
@@ -267,7 +270,12 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.DragonHorse | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_DragonHorse;
                 break;
-            case ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black:
+            case ChessBoard.PieceE.NemesisPawn | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_NemesisPawn;
+                break;
+
+
+                case ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Pawn;
                 break;
             case ChessBoard.PieceE.Knight | ChessBoard.PieceE.Black:
@@ -383,6 +391,9 @@ namespace SrcChess2 {
                 break;
             case ChessBoard.PieceE.Dragon | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Dragon;
+                break;
+            case ChessBoard.PieceE.NemesisPawn | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_NemesisPawn;
                 break;
 
 

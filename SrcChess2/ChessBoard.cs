@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SrcChess2 {
     /// <summary>Implementation of the chess board without any user interface.</summary>
@@ -146,6 +148,8 @@ namespace SrcChess2 {
             // shogi
             Dragon = 40,
             DragonHorse = 41,
+
+            NemesisPawn = 42,
 
 
 
@@ -354,6 +358,9 @@ namespace SrcChess2 {
         static private int[][][] s_pppiCaseMoveDragon;
         static private int[][][] s_pppiCaseMoveDragonHorse;
 
+        static private int[][] s_ppiCaseWhiteNemesisPawnCanAttackFrom;
+        static private int[][] s_ppiCaseBlackNemesisPawnCanAttackFrom;
+
 
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
@@ -420,6 +427,13 @@ namespace SrcChess2 {
 
         public static int m_dificultLevel;
 
+        public static bool m_whiteCanCastle;
+        public static bool m_blackCanCastle;
+
+        // 
+        public static double m_acumulat=0.0;
+        public static double m_iteracions=0.0;
+
         /// <summary>
         /// Class static constructor. 
         /// Builds the list of possible moves for each piece type per position.
@@ -485,6 +499,9 @@ namespace SrcChess2 {
 
             s_pppiCaseMoveDragon = new int[64][][];
             s_pppiCaseMoveDragonHorse = new int[64][][];
+
+            s_ppiCaseWhiteNemesisPawnCanAttackFrom = new int[64][];
+            s_ppiCaseBlackNemesisPawnCanAttackFrom = new int[64][];
 
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
@@ -656,9 +673,15 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, true, 1);
                 s_pppiCaseMoveDragonHorse[iPos] = arrMove.ToArray();
 
+                // nemesis pawn
+                FillMoves(iPos, arrMove, new int[] { -1, -1, 1, -1 }, false, false);
+                s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos] = arrMove[0];
+                FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1 }, false, false);
+                s_ppiCaseBlackNemesisPawnCanAttackFrom[iPos] = arrMove[0];
 
 
-            }
+
+        }
         }
 
         static private void FillMoves2(int iStartPos, List<int[]> arrMove, bool isRep, bool isWhite)
@@ -1129,8 +1152,8 @@ namespace SrcChess2 {
             m_iRWhiteRookMoveCount = ((eMask & BoardStateMaskE.WRCastling) == BoardStateMaskE.WRCastling) ? 0 : 1;
             m_iLWhiteRookMoveCount = ((eMask & BoardStateMaskE.WLCastling) == BoardStateMaskE.WLCastling) ? 0 : 1;
             m_iWhiteKingMoveCount = 0;
-            m_bWhiteCastle = true;
-            m_bBlackCastle = true;
+            m_bWhiteCastle = true; //m_whiteCanCastle;
+            m_bBlackCastle = true;// m_blackCanCastle;
             m_i64ZobristKey = ZobristKey.ComputeBoardZobristKey(m_pBoard);
             m_eNextMoveColor = eNextMoveColor;
             m_bDesignMode = false;
@@ -1999,11 +2022,10 @@ namespace SrcChess2 {
         private int EnumTheseAttackPos(List<byte> arrAttackPos, int[] piCaseMoveList, PieceE ePiece) {
             int iRetVal = 0;
 
-            if (ePiece == PieceE.EmpoweredKnight)
-                iRetVal = 0; // debug
 
-
-            foreach (int iNewPos in piCaseMoveList) {
+          //  var stopWatch = Stopwatch.StartNew();
+            // todo optimize
+           foreach (int iNewPos in piCaseMoveList) {
                 if (m_pBoard[iNewPos] == ePiece) {
                     iRetVal++;
                     if (arrAttackPos != null) {
@@ -2011,6 +2033,27 @@ namespace SrcChess2 {
                     }
                 }
             }
+           /*
+            Parallel.ForEach(piCaseMoveList,
+                iNewPos =>
+                {
+                    if (m_pBoard[iNewPos] == ePiece)
+                    {
+                        iRetVal++;
+                        if (arrAttackPos != null)
+                        {
+                            arrAttackPos.Add((byte)iNewPos);
+                        }
+                    }
+
+                });
+                */
+
+
+            //Console.WriteLine("EnumEmpowered:  check !!!");
+//            System.Diagnostics.Debug.WriteLine("foreach loop execution time = {0} miliseconds\n", stopWatch.Elapsed.TotalMilliseconds);
+
+
             return (iRetVal);
         }
 
@@ -2181,6 +2224,7 @@ namespace SrcChess2 {
             PieceE eEnemyHipo;
             PieceE eEnemyDragon;
             PieceE eEnemyDragonHorse;
+            PieceE eEnemyNemesisPawn;
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen = PieceE.Queen | eColor;
@@ -2216,9 +2260,10 @@ namespace SrcChess2 {
             eEnemySnake = PieceE.Snake | eColor;
             eEnemyHipo = PieceE.Hipo | eColor;
             eEnemyDragon = PieceE.Dragon | eColor;
-            eEnemyDragonHorse = PieceE.DragonHorse | eColor; ;
+            eEnemyDragonHorse = PieceE.DragonHorse | eColor;
+            eEnemyNemesisPawn = PieceE.NemesisPawn | eColor;
 
-            // eEnemyNemesis = PieceE.Neme | eColor;
+       
 
             // test
 
@@ -2266,8 +2311,9 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveHipo[iPos], eEnemyHipo, eEnemyHipo);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragon[iPos], eEnemyDragon, eEnemyDragon);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragonHorse[iPos], eEnemyDragonHorse, eEnemyDragonHorse);
-            
-             } 
+            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ?  s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos]: s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos], eEnemyNemesisPawn);
+                
+            } 
 
 
             //if (iRetVal == 1  && iPos == 4)
@@ -2971,6 +3017,13 @@ namespace SrcChess2 {
             int iRowPos;
             bool bCanMove2Case;
 
+            int enemyKingPos=0;
+            if (ePlayerColor == PlayerColorE.White)
+                enemyKingPos = FindEnemyKingPosition(PlayerColorE.Black);
+            if (ePlayerColor == PlayerColorE.Black)
+                enemyKingPos = FindEnemyKingPosition(PlayerColorE.White);
+
+
             iRowPos = (iStartPos >> 3);
             bCanMove2Case = (ePlayerColor == PlayerColorE.Black) ? (iRowPos == 6) : (iRowPos == 1);
             iDir = (ePlayerColor == PlayerColorE.Black) ? -8 : 8;
@@ -3033,8 +3086,8 @@ namespace SrcChess2 {
             }
 
 
-            //kPos
-              //      if (kPos == 1)
+
+            if ((ePlayerColor == PlayerColorE.Black) ? (iStartPos % 8 > enemyKingPos % 8) : (iStartPos % 8 < enemyKingPos % 8)) // optimize 
             {
 
 
@@ -3086,49 +3139,50 @@ namespace SrcChess2 {
 
             }
             //case up right
-
-            iRowPos = (iStartPos >> 3);
-
-            iDir = (ePlayerColor == PlayerColorE.Black) ? -7 : 7;
-            iNewPos = iStartPos + iDir;
-            if (iNewPos >= 0 && iNewPos < 64)
+           if ((ePlayerColor == PlayerColorE.Black) ? (iStartPos % 8 < enemyKingPos % 8) : (iStartPos % 8 > enemyKingPos % 8)) // optimize
             {
-                if (m_pBoard[iNewPos] == PieceE.None)
+                iRowPos = (iStartPos >> 3);
+
+                iDir = (ePlayerColor == PlayerColorE.Black) ? -7 : 7;
+                iNewPos = iStartPos + iDir;
+                if (iNewPos >= 0 && iNewPos < 64)
                 {
-                    iRowPos = (iNewPos >> 3);
-                    if (iRowPos == 0 || iRowPos == 7)
+                    if (m_pBoard[iNewPos] == PieceE.None)
                     {
-                        AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
-                    }
-                    else {
-                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
-                    }
+                        iRowPos = (iNewPos >> 3);
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                        }
 
+                    }
                 }
-            }
 
-            //case right
+                //case right
 
-            iRowPos = (iStartPos >> 3);
+                iRowPos = (iStartPos >> 3);
 
-            iDir = (ePlayerColor == PlayerColorE.Black) ? 1 : -1;
-            iNewPos = iStartPos + iDir;
-            if (iNewPos >= 0 && iNewPos < 64)
-            {
-                if (m_pBoard[iNewPos] == PieceE.None)
+                iDir = (ePlayerColor == PlayerColorE.Black) ? 1 : -1;
+                iNewPos = iStartPos + iDir;
+                if (iNewPos >= 0 && iNewPos < 64)
                 {
-                    iRowPos = (iNewPos >> 3);
-                    if (iRowPos == 0 || iRowPos == 7)
+                    if (m_pBoard[iNewPos] == PieceE.None)
                     {
-                        AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
-                    }
-                    else {
-                        AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
-                    }
+                        iRowPos = (iNewPos >> 3);
+                        if (iRowPos == 0 || iRowPos == 7)
+                        {
+                            AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                        }
+                        else {
+                            AddIfNotCheck(ePlayerColor, iStartPos, iNewPos, MoveTypeE.Normal, arrMovePos);
+                        }
 
+                    }
                 }
-            }
-
+            } // end right and right up
 
             
         }
@@ -3140,7 +3194,7 @@ namespace SrcChess2 {
             int pos = 0;
             for (byte i = 0; i < 64; i++) {
                 if (m_pBoard[i] ==  (PieceE.King | (ePlayerColor == PlayerColorE.White ? PieceE.White : PieceE.Black)))
-                    return pos;
+                    return i;
             }
                
             return pos;
@@ -3453,10 +3507,10 @@ namespace SrcChess2 {
         /// <param name="arrMovePos">               List of move</param>
         private void EnumFromArray(PlayerColorE ePlayerColor, int iStartPos, int[] piMoveListForThisCase, List<MovePosS> arrMovePos, PieceE pieceE) {
             foreach (int iNewPos in piMoveListForThisCase) {
-                if (false)//(pieceE == PieceE.Tiger)
-                    AddMoveIfEnemyTiger(ePlayerColor, iStartPos, iNewPos, arrMovePos);
-                else
-                    AddMoveIfEnemyOrEmpty(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                //if (false)//(pieceE == PieceE.Tiger)
+                  //  AddMoveIfEnemyTiger(ePlayerColor, iStartPos, iNewPos, arrMovePos);
+                //else
+                AddMoveIfEnemyOrEmpty(ePlayerColor, iStartPos, iNewPos, arrMovePos);
             }
         }
 
@@ -3478,6 +3532,12 @@ namespace SrcChess2 {
             m_posInfo.m_iPiecesDefending = 0;
             arrMovePos = (bMoveList) ? new List<MovePosS>(256) : null;
             bBlackToMove = (ePlayerColor == PlayerColorE.Black);
+            var stopWatch = Stopwatch.StartNew();
+
+            
+
+           //Parallel.For(0, 64, iIndex => 
+             //  { 
             for (int iIndex = 0; iIndex < 64; iIndex++) {
                 ePiece = m_pBoard[iIndex];
                 int j;
@@ -3517,6 +3577,9 @@ namespace SrcChess2 {
                     switch (ePiece & PieceE.PieceMask) {
                         case PieceE.Pawn:
                             EnumPawnMove(ePlayerColor, iIndex, arrMovePos);
+                            break;
+                        case PieceE.NemesisPawn:
+                            EnumNemesisPawnMove(ePlayerColor, iIndex, arrMovePos);
                             break;
                         case PieceE.Knight:
                             EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveKnight[iIndex], arrMovePos, ePiece);
@@ -3634,6 +3697,16 @@ namespace SrcChess2 {
                     }
                 }
             }
+
+
+            m_acumulat += stopWatch.Elapsed.TotalMilliseconds;
+            m_iteracions += 1;
+
+            double resultat = m_acumulat / m_iteracions;
+
+
+            //System.Diagnostics.Debug.WriteLine("foreach loop mitjana acumulada loop = {0} miliseconds\n", resultat);
+            // 0.12 sense 
             EnumCastleMove(ePlayerColor, arrMovePos);
             EnumEnPassant(ePlayerColor, arrMovePos);
             posInfo = m_posInfo;
@@ -3920,10 +3993,12 @@ namespace SrcChess2 {
         /// <summary>
         /// Reset the board to the initial configuration
         /// </summary>
-        public void ResetBoardGeneric(int indexW, int indexB , Boolean normalPawnT1, Boolean normalPawnT2, Boolean teamShogi1, Boolean teamShogi2, bool randomfischer, int dificult)
+        public void ResetBoardGeneric(int indexW, int indexB, Boolean teamShogi1, Boolean teamShogi2, bool randomfischer, int dificult)
         {
             // set difficult
             m_dificultLevel = dificult;
+            m_whiteCanCastle = (indexW == 0 ? true : false);
+            m_blackCanCastle = (indexB == 0 ? true : false);
 
             PieceE[] teamW = SetTeam(indexW);
             PieceE[] teamB = SetTeam(indexB);
@@ -3938,17 +4013,15 @@ namespace SrcChess2 {
             PieceE pawnT1, pawnT2;
 
 
-            if (normalPawnT1)
+            if (indexW == 3)
+                pawnT1 = PieceE.NemesisPawn;
+            else
                 pawnT1 = PieceE.Pawn;
+
+            if (indexB == 3)
+                pawnT2 = PieceE.NemesisPawn;
             else
-
-                pawnT1 = PieceE.AmazonPawn;
-
-            if (normalPawnT2)
                 pawnT2 = PieceE.Pawn;
-            else
-
-                pawnT2 = PieceE.AmazonPawn;
 
             for (int iIndex = 0; iIndex < 64; iIndex++)
             {
@@ -3994,6 +4067,10 @@ namespace SrcChess2 {
             m_pBoard[7 * 8 + 3] = teamB[3] | PieceE.Black;
             m_pBoard[4] = teamW[4] | PieceE.White;
             m_pBoard[7 * 8 + 4] = teamB[4] | PieceE.Black;
+
+
+
+
             ResetInitialBoardInfo(PlayerColorE.White,
                                   true /*Standard board*/,
                                   BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
@@ -4056,7 +4133,7 @@ namespace SrcChess2 {
             m_pBoard[0] = PieceE.King | PieceE.White;
             m_pBoard[7] = PieceE.Queen | PieceE.White;
 
-            //mirar perque depend d'aquesta funcio
+            
             ResetInitialBoardInfo(PlayerColorE.White,
                                 true /*Standard board*/,
                                 BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
