@@ -178,17 +178,17 @@ namespace SrcChess2 {
                 }
             }
 
-            if (iWhiteKingPos / 8 == 1)
+            if (iWhiteKingPos >>3 == 1)
                 iRetVal += 20;
-            if (iWhiteKingPos / 8 == 2)
+            if (iWhiteKingPos >>3 == 2)
                 iRetVal += 40;
-            if (iWhiteKingPos / 8 == 3)
+            if (iWhiteKingPos >>3 == 3)
                 iRetVal += 60;
-            if (iBlackKingPos / 8 == 4)
+            if (iBlackKingPos >>3 == 4)
                 iRetVal -= 60;
-            if (iBlackKingPos / 8 == 5)
+            if (iBlackKingPos >>3 == 5)
                 iRetVal -= 40;
-            if (iBlackKingPos / 8 == 6)
+            if (iBlackKingPos >>3 == 6)
                 iRetVal -= 20;
 
             int bishopCount = 0;

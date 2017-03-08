@@ -2075,12 +2075,15 @@ namespace SrcChess2 {
 
 
                         int[] arr = CheckAdjacent(iNewPos, 8);
-                        if (ePiece == PieceE.EmpoweredKnight)
+                        if (ePiece == (PieceE.EmpoweredKnight | eColor))
                             ePiece = KnightAdjacent(arr, eColor == PieceE.White ? 0 : 1);
-                        if (ePiece == PieceE.EmpoweredBishop)
+                        if (ePiece == (PieceE.EmpoweredBishop | eColor))
                             ePiece = BishopAdjacent(arr, eColor == PieceE.White ? 0 : 1);
-                        if (ePiece == PieceE.EmpoweredRook)
+                        if (ePiece == (PieceE.EmpoweredRook | eColor))
                             ePiece = RookAdjacent(arr, eColor == PieceE.White ? 0 : 1);
+
+                  
+
 
                         // determine piece ad arry list
                         if (ePiece == PieceE.Amazon)
