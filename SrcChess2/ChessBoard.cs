@@ -2975,7 +2975,8 @@ namespace SrcChess2 {
             if (iNewPos >= 0 && iNewPos < 64) {
                 iNewColPos = iNewPos & 7;
                 iRowPos = (iNewPos >> 3);
-                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && m_pBoard[iNewPos - 1] != PieceE.Ghost && m_pBoard[iNewPos - 1] != PieceE.Nemesis) {
+                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && (m_pBoard[iNewPos - 1] & PieceE.PieceMask) != PieceE.Ghost && (m_pBoard[iNewPos - 1] & PieceE.PieceMask) != PieceE.Nemesis)
+                {
                     if (((m_pBoard[iNewPos - 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black)) {
                         if (iRowPos == 0 || iRowPos == 7) {
                             AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos - 1, arrMovePos);
@@ -2986,7 +2987,8 @@ namespace SrcChess2 {
                         m_posInfo.m_iPiecesDefending++;
                     }
                 }
-                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && m_pBoard[iNewPos + 1] != PieceE.Ghost && m_pBoard[iNewPos + 1] != PieceE.Nemesis) {
+                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && (m_pBoard[iNewPos + 1] & PieceE.PieceMask) != PieceE.Ghost && (m_pBoard[iNewPos + 1] & PieceE.PieceMask) != PieceE.Nemesis)
+                {
                     if (((m_pBoard[iNewPos + 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black)) {
                         if (iRowPos == 0 || iRowPos == 7) {
                             AddPawnPromotionIfNotCheck(ePlayerColor, iStartPos, iNewPos + 1, arrMovePos);
@@ -3054,7 +3056,7 @@ namespace SrcChess2 {
             {
                 iNewColPos = iNewPos & 7;
                 iRowPos = (iNewPos >> 3);
-                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && m_pBoard[iNewPos - 1] != PieceE.Ghost && m_pBoard[iNewPos - 1] != PieceE.Nemesis)
+                if (iNewColPos != 0 && m_pBoard[iNewPos - 1] != PieceE.None && (m_pBoard[iNewPos - 1] & PieceE.PieceMask) != PieceE.Ghost && (m_pBoard[iNewPos - 1] & PieceE.PieceMask) != PieceE.Nemesis)
                 {
                     if (((m_pBoard[iNewPos - 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
                     {
@@ -3070,7 +3072,7 @@ namespace SrcChess2 {
                         m_posInfo.m_iPiecesDefending++;
                     }
                 }
-                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && m_pBoard[iNewPos + 1] != PieceE.Ghost && m_pBoard[iNewPos + 1] != PieceE.Nemesis)
+                if (iNewColPos != 7 && m_pBoard[iNewPos + 1] != PieceE.None && (m_pBoard[iNewPos + 1] & PieceE.PieceMask) != PieceE.Ghost && (m_pBoard[iNewPos + 1] & PieceE.PieceMask) != PieceE.Nemesis)
                 {
                     if (((m_pBoard[iNewPos + 1] & PieceE.Black) == 0) == (ePlayerColor == PlayerColorE.Black))
                     {

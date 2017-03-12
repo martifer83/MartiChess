@@ -237,6 +237,7 @@ namespace SrcChess2 {
             foreach (RoutedUICommand cmd in m_arrCommands) {
                 CommandBindings.Add(new CommandBinding(cmd, onExecutedCmd, onCanExecuteCmd));
             }
+          //  NewGame();
         }
 
         /// <summary>

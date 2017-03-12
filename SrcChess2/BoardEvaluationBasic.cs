@@ -207,6 +207,8 @@ namespace SrcChess2 {
                 iRetVal += 50;
 
 
+            iRetVal += earlyDevelopment(pBoard);
+                        // movility
             iRetVal += iMoveCountDelta;
             iRetVal += posInfo.m_iAttackedPieces * 2;
             //iRetVal += posInfo.m_iAttackedPos + posInfo.m_iAttackedPieces * 2 + posInfo.m_iPiecesDefending * 2;
@@ -216,7 +218,6 @@ namespace SrcChess2 {
 
         public int getPositionalValueForThisSquareBlack(ChessBoard.PieceE[] pBoard, int i)
         {
-
 
             if (pBoard[i] == (ChessBoard.PieceE.Queen | ChessBoard.PieceE.Black) || (pBoard[i] == (ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black)))
                 return -queen[i];
@@ -234,8 +235,7 @@ namespace SrcChess2 {
 
         public int getPositionalValueForThisSquareWhite(ChessBoard.PieceE[] pBoard, int i)
         {
-
-
+            
             if (pBoard[i] == ChessBoard.PieceE.Queen|| pBoard[i] == ChessBoard.PieceE.Chancellor || pBoard[i] == ChessBoard.PieceE.Archbishop)
                 return queen[i];
             if (pBoard[i] == ChessBoard.PieceE.Bishop || pBoard[i] == ChessBoard.PieceE.Tiger || pBoard[i] == ChessBoard.PieceE.Gaja || pBoard[i] == ChessBoard.PieceE.EmpoweredQueen)
@@ -250,7 +250,29 @@ namespace SrcChess2 {
 
         }
 
+        public int earlyDevelopment(ChessBoard.PieceE[] pBoard) {
+            int iRetval = 0;
+            if (pBoard[1] == ChessBoard.PieceE.None)
+                iRetval += 10;
+            if (pBoard[2] == ChessBoard.PieceE.None)
+                iRetval += 10;
+            if (pBoard[5] == ChessBoard.PieceE.None)
+                iRetval += 10;
+            if (pBoard[6] == ChessBoard.PieceE.None)
+                iRetval += 10;
 
+            if (pBoard[57] == ChessBoard.PieceE.None)
+                iRetval -= 10;
+            if (pBoard[58] == ChessBoard.PieceE.None)
+                iRetval -= 10;
+            if (pBoard[61] == ChessBoard.PieceE.None)
+                iRetval -= 10;
+            if (pBoard[62] == ChessBoard.PieceE.None)
+                iRetval -= 10;
+            
+            return iRetval;
+
+        }
 
 
        
@@ -267,27 +289,27 @@ namespace SrcChess2 {
         };
 
         int[] king = { // 
-  -30,-40,-40,-50,-50,-40,-40,-30,
--30,-40,-40,-50,-50,-40,-40,-30,
--30,-40,-40,-50,-50,-40,-40,-30,
--30,-40,-40,-50,-50,-40,-40,-30,
--20,-30,-30,-40,-40,-30,-30,-20,
--10,-20,-20,-20,-20,-20,-20,-10,
- 20, 20,  0,  0,  0,  0, 20, 20,
- 20, 30, 10,  0,  0, 10, 30, 20
-};
+          -30,-40,-40,-50,-50,-40,-40,-30,
+        -30,-40,-40,-50,-50,-40,-40,-30,
+        -30,-40,-40,-50,-50,-40,-40,-30,
+        -30,-40,-40,-50,-50,-40,-40,-30,
+        -20,-30,-30,-40,-40,-30,-30,-20,
+        -10,-20,-20,-20,-20,-20,-20,-10,
+         20, 20,  0,  0,  0,  0, 20, 20,
+         20, 30, 10,  0,  0, 10, 30, 20
+        };
 
        
          int[] knight = { // 
--50,-40,-30,-30,-30,-30,-40,-50,
--40,-20,  0,  0,  0,  0,-20,-40,
--30,  0, 10, 15, 15, 10,  0,-30,
--30,  5, 15, 20, 20, 15,  5,-30,
--30,  0, 15, 20, 20, 15,  0,-30,
--30,  5, 10, 15, 15, 10,  5,-30,
--40,-20,  0,  5,  5,  0,-20,-40,
--50,-40,-30,-30,-30,-30,-40,-50,
-};
+        -50,-40,-30,-30,-30,-30,-40,-50,
+        -40,-20,  0,  0,  0,  0,-20,-40,
+        -30,  0, 10, 15, 15, 10,  0,-30,
+        -30,  5, 15, 20, 20, 15,  5,-30,
+        -30,  0, 15, 20, 20, 15,  0,-30,
+        -30,  5, 10, 15, 15, 10,  5,-30,
+        -40,-20,  0,  5,  5,  0,-20,-40,
+        -50,-40,-30,-30,-30,-30,-40,-50,
+        };
 
          int[] bishop = { // also raja, tiger , elephant?, eQueen?, ferz
 -20,-10,-10,-10,-10,-10,-10,-20,
