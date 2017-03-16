@@ -819,9 +819,9 @@ namespace SrcChess2 {
             //ResetBoardTestAmazon();
             //ResetBoardTestElephant3();
             //ResetBoardTestEmpowered();
-            ResetBoardTestInvasion();
+           ResetBoardTestInvasion();
             //ResetBoardTestCheckMate2();
-            //ResetBoardGeneric(0, 1, true, true, false, false);
+            //ResetBoardGeneric(0, 1, true, true, false, 0);
             //ResetBoardTestKing();
             //ResetBoard();
         }
@@ -1838,8 +1838,12 @@ namespace SrcChess2 {
 
             ePlayerColor = NextMoveColor;
             moveList = EnumMoveList(ePlayerColor);
+            // TODO depending if victory condition is invasion or not
             if (IsMidlineInvasion(ePlayerColor))
-                eRetVal = MoveResultE.Invasion;
+              eRetVal = MoveResultE.Invasion;
+            //if(IsKingOfHill(ePlayerColor))
+
+            
             else if (IsCheck(ePlayerColor)) {
                 eRetVal = (moveList.Count == 0) ? MoveResultE.Mate : MoveResultE.Check;
             } else {
@@ -2343,16 +2347,42 @@ namespace SrcChess2 {
             return isCheck_;
         }
 
-        public bool IsMidlineInvasion(PlayerColorE eColor) { 
-            int kingPos = ((eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos);
-
-            if (m_iWhiteKingPos >= 32 && m_iWhiteKingPos <= 39 )
+        public bool IsMidlineInvasion2(PlayerColorE eColor) { 
+          
+            if (eColor == PlayerColorE.White && m_iWhiteKingPos >= 32 && m_iWhiteKingPos <= 63 )
                 return true;
-            if (m_iBlackKingPos >= 24 && m_iBlackKingPos <= 31)
+            if (eColor == PlayerColorE.Black && m_iBlackKingPos >= 0 && m_iBlackKingPos <= 31)
                 return true;
 
             return false;
             }
+
+
+        public bool IsMidlineInvasion(PlayerColorE eColor)
+        {
+
+            if ( m_iWhiteKingPos >= 32 && m_iWhiteKingPos <= 63)
+                return true;
+            if ( m_iBlackKingPos >= 0 && m_iBlackKingPos <= 31)
+                return true;
+
+            return false;
+        }
+
+        public bool IsKingOfHill(PlayerColorE eColor)
+        {
+            int kingPos = ((eColor == PlayerColorE.Black) ? m_iBlackKingPos : m_iWhiteKingPos);
+
+            if (eColor == PlayerColorE.White && (m_iWhiteKingPos == 27 || m_iWhiteKingPos == 28 || m_iWhiteKingPos == 35 || m_iWhiteKingPos == 36))
+                return true;
+            if (eColor == PlayerColorE.Black && (m_iBlackKingPos == 27 || m_iBlackKingPos == 28 || m_iBlackKingPos == 35 || m_iBlackKingPos == 36))
+                return true;
+
+            return false;
+        }
+
+
+
         /// <summary>
         /// Determine if the specified king is attacked
         /// </summary>
@@ -2398,6 +2428,7 @@ namespace SrcChess2 {
                 posInfoTmp.m_iPiecesDefending = -posInfoBlack.m_iPiecesDefending;
             }
             iRetVal = boardEval.Points(m_pBoard, m_piPiecesCount, posInfoTmp, m_iWhiteKingPos, m_iBlackKingPos, m_bWhiteCastle, m_bBlackCastle, iMoveCountDelta);
+
             return (iRetVal);
         }
 
@@ -4154,7 +4185,8 @@ namespace SrcChess2 {
             m_pBoard[48] = PieceE.Pawn | PieceE.Black;
             m_pBoard[49] = PieceE.Pawn | PieceE.Black;
             m_pBoard[50] = PieceE.Pawn | PieceE.Black;
-
+            m_pBoard[51] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[52] = PieceE.Pawn | PieceE.Black;
             m_pBoard[7] = PieceE.Queen | PieceE.White;
 
 
@@ -4178,7 +4210,7 @@ namespace SrcChess2 {
         }
 
 
-        public void ResetBoardTestInvasion()
+        public void ResetBoardTestInvasion() // el que no va
         {
 
             m_pBoard[24] = PieceE.King | PieceE.White;
@@ -4189,9 +4221,32 @@ namespace SrcChess2 {
 
 
             m_pBoard[19] = PieceE.Pawn | PieceE.Black;
-           // m_pBoard[42] = PieceE.Queen | PieceE.White;
+            // m_pBoard[42] = PieceE.Queen | PieceE.White;
             m_pBoard[21] = PieceE.Pawn | PieceE.Black;
             m_pBoard[30] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[39] = PieceE.King | PieceE.Black;
+
+            ResetInitialBoardInfo(PlayerColorE.Black,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
+        }
+
+
+        public void ResetBoardTestInvasion2()
+        {
+
+            m_pBoard[24] = PieceE.King | PieceE.White;
+
+            m_pBoard[33] = PieceE.Pawn | PieceE.White;
+
+            //m_pBoard[56] = PieceE.Tiger | PieceE.Black;
+
+
+            m_pBoard[35] = PieceE.Pawn | PieceE.Black;
+           // m_pBoard[42] = PieceE.Queen | PieceE.White;
+            m_pBoard[37] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[46] = PieceE.Pawn | PieceE.Black;
             m_pBoard[39] = PieceE.King | PieceE.Black;
 
             ResetInitialBoardInfo(PlayerColorE.White,
@@ -4200,7 +4255,7 @@ namespace SrcChess2 {
                                   0 /*iEnPassant*/);
         }
 
-        public void ResetBoardTestInvasion2()
+        public void ResetBoardTestInvasion3()
         {
 
             m_pBoard[24] = PieceE.King | PieceE.White;

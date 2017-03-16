@@ -88,24 +88,6 @@ namespace SrcChess2 {
                 int board = (int)peBoard[iIndex];
                 int suma = randTable + board;
                 lRetVal ^= s_pi64RndTable[suma];
-                if(suma > 1024)
-                {
-                    int merda = 0;
-                }
-
-
-                if (iIndex == 62)
-                {
-                    int hola = 9;
-                }
-                if (iIndex == 63)
-                {
-                    int hola = 9;
-                }
-                if (iIndex == 64)
-                {
-                    int hola = 9;
-                }
             }
             return(lRetVal);
         }

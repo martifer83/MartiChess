@@ -140,6 +140,7 @@ namespace SrcChess2 {
                 iRetVal -= 10;
             }
 
+
             bool whiteKingMidelineInvasion = false;
             bool blackKingMidelineInvasion = false;
 
@@ -147,7 +148,7 @@ namespace SrcChess2 {
             {
                 if (pBoard[iIndex] == ChessBoard.PieceE.King)
                 {
-                    //whiteKingMidelineInvasion = true;
+                //    whiteKingMidelineInvasion = true;
                 }
             }
 
@@ -155,28 +156,52 @@ namespace SrcChess2 {
             {
                 if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black))
                 {
-                    //blackKingMidelineInvasion = true;
+              //      blackKingMidelineInvasion = true;
                 }
             }
 
-            for (int iIndex = 32; iIndex < 64; iIndex++)
+            /*for (int iIndex = 32; iIndex < 40; iIndex++)
             {
-                if (pBoard[iIndex] == ChessBoard.PieceE.King && !blackKingMidelineInvasion)
+                if (pBoard[iIndex] == ChessBoard.PieceE.King)// && !blackKingMidelineInvasion)
                 {
                     iRetVal += 1000000;
                 }
             }
 
+            for (int iIndex = 40; iIndex < 48; iIndex++)
+            {
+                if (pBoard[iIndex] == ChessBoard.PieceE.King)// && !blackKingMidelineInvasion)
+                {
+                    iRetVal += 2000000;
+                }
+            }*/
 
-           
 
-            for (int iIndex = 0; iIndex < 32; iIndex++)
+           /* if (pBoard[32] == ChessBoard.PieceE.King)// && !blackKingMidelineInvasion)
+            {
+                iRetVal += 1000000;
+            }
+            /*
+
+
+
+
+            /*for (int iIndex = 24; iIndex < 32; iIndex++)
             {
                 if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black) && !whiteKingMidelineInvasion)
                 {
-                    iRetVal -= 1000000; 
+                    iRetVal -= 10000000; 
                 }
             }
+
+            for (int iIndex = 16; iIndex < 24; iIndex++)
+            {
+              
+                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black) && !whiteKingMidelineInvasion)
+                {
+                    iRetVal -= 20000000;
+                }
+            }*/
 
             if (iWhiteKingPos >>3 == 1)
                 iRetVal += 20;
