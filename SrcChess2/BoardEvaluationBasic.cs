@@ -136,72 +136,10 @@ namespace SrcChess2 {
             if (bWhiteCastle) {
                 iRetVal += 10;
             }
-            if (bBlackCastle) {
+            if (bBlackCastle)
+            {
                 iRetVal -= 10;
             }
-
-
-            bool whiteKingMidelineInvasion = false;
-            bool blackKingMidelineInvasion = false;
-
-            for (int iIndex = 32; iIndex < 64; iIndex++)
-            {
-                if (pBoard[iIndex] == ChessBoard.PieceE.King)
-                {
-                //    whiteKingMidelineInvasion = true;
-                }
-            }
-
-            for (int iIndex = 0; iIndex < 32; iIndex++)
-            {
-                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black))
-                {
-              //      blackKingMidelineInvasion = true;
-                }
-            }
-
-            /*for (int iIndex = 32; iIndex < 40; iIndex++)
-            {
-                if (pBoard[iIndex] == ChessBoard.PieceE.King)// && !blackKingMidelineInvasion)
-                {
-                    iRetVal += 1000000;
-                }
-            }
-
-            for (int iIndex = 40; iIndex < 48; iIndex++)
-            {
-                if (pBoard[iIndex] == ChessBoard.PieceE.King)// && !blackKingMidelineInvasion)
-                {
-                    iRetVal += 2000000;
-                }
-            }*/
-
-
-           /* if (pBoard[32] == ChessBoard.PieceE.King)// && !blackKingMidelineInvasion)
-            {
-                iRetVal += 1000000;
-            }
-            /*
-
-
-
-
-            /*for (int iIndex = 24; iIndex < 32; iIndex++)
-            {
-                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black) && !whiteKingMidelineInvasion)
-                {
-                    iRetVal -= 10000000; 
-                }
-            }
-
-            for (int iIndex = 16; iIndex < 24; iIndex++)
-            {
-              
-                if (pBoard[iIndex] == (ChessBoard.PieceE.King | ChessBoard.PieceE.Black) && !whiteKingMidelineInvasion)
-                {
-                    iRetVal -= 20000000;
-                }
-            }*/
 
             if (iWhiteKingPos >>3 == 1)
                 iRetVal += 20;
@@ -258,19 +196,37 @@ namespace SrcChess2 {
 
         }
 
+        /// <summary>Chess board</summary>
+        /// 63 62 61 60 59 58 57 56
+        /// 55 54 53 52 51 50 49 48
+        /// 47 46 45 44 43 42 41 40
+        /// 39 38 37 36 35 34 33 32
+        /// 31 30 29 28 27 26 25 24
+        /// 23 22 21 20 19 18 17 16
+        /// 15 14 13 12 11 10 9  8
+        /// 7  6  5  4  3  2  1  0
+
+
         public int getPositionalValueForThisSquareWhite(ChessBoard.PieceE[] pBoard, int i)
         {
+            int hola = 0;
+           
+           // reverse index
             
             if (pBoard[i] == ChessBoard.PieceE.Queen|| pBoard[i] == ChessBoard.PieceE.Chancellor || pBoard[i] == ChessBoard.PieceE.Archbishop)
-                return queen[i];
+                return queen[63-i];
             if (pBoard[i] == ChessBoard.PieceE.Bishop || pBoard[i] == ChessBoard.PieceE.Tiger || pBoard[i] == ChessBoard.PieceE.Gaja || pBoard[i] == ChessBoard.PieceE.EmpoweredQueen)
-                return bishop[i];
+                return bishop[63 - i];
             if (pBoard[i] == ChessBoard.PieceE.Knight)
-                return knight[i];
+                return knight[63 - i];
             if (pBoard[i] == ChessBoard.PieceE.Rook)
-                return rook[i];
+                return rook[63 - i];
             if (pBoard[i] == ChessBoard.PieceE.Pawn)
-                return pawnMiddline[i];
+            {
+              //  System.Diagnostics.Debug.WriteLine("numero peo blanc analitzat " + i);
+                return pawnMiddline[63 - i];
+            }
+               
             return 0;
 
         }
