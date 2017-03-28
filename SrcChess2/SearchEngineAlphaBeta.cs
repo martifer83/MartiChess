@@ -98,13 +98,15 @@ namespace SrcChess2 {
                         }
 
                         /// TODOconcatenar amb un else if
-                        if (chessBoard.IsMidlineInvasion(ePlayerColor))
+                        if (ChessBoard.m_victoryConditon ==1 && chessBoard.IsMidlineInvasion(ePlayerColor))
                         {
                             iRetVal = -1000000 - iDepth;    // check invasion here???
                         }
-                        else
-                       
-                      if (iMoveCount == 0)
+                        else if  (ChessBoard.m_victoryConditon == 2 && chessBoard.IsKingOfHill(ePlayerColor))
+                            {
+                                iRetVal = -1000000 - iDepth;    // check invasion here???
+                            }
+                        else if (iMoveCount == 0)
                         {
                             if (chessBoard.IsCheck(ePlayerColor))
                             {

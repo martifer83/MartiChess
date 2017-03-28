@@ -128,6 +128,16 @@ namespace SrcChess2 {
             else
                 Father.m_randomfischer = false;
 
+            if (cbMiddlineInvasion.IsChecked == true)
+                Father.m_midlineInvasion = true;
+            else
+                Father.m_midlineInvasion = false;
+
+            if (cbKingOfHill.IsChecked == true)
+                Father.m_kingOfHill = true;
+            else
+                Father.m_kingOfHill = false;
+
 
             DialogResult                    = true;
             Close();
@@ -151,6 +161,28 @@ namespace SrcChess2 {
         {
 
         }
+
+        /// <summary>Midline invasion</summary>
+        private void cbMiddlineInvasion_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if(cbKingOfHill != null)
+            if(cbKingOfHill.IsChecked == true)
+            {
+                cbKingOfHill.IsChecked = false;
+            }
+            
+        }
+
+        private void cbKingOfHill_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if (cbMiddlineInvasion.IsChecked == true)
+            {
+                cbMiddlineInvasion.IsChecked = false;
+            }
+            
+        }
+
+      
 
         /// <summary>
         /// Ask for the game parameter

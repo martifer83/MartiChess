@@ -46,6 +46,9 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.Dragon] = 650;
             s_piPiecePoint[(int)ChessBoard.PieceE.DragonHorse] = 525;
             s_piPiecePoint[(int)ChessBoard.PieceE.AmazonPawn] = 125;
+            s_piPiecePoint[(int)ChessBoard.PieceE.DimensionalKnight] = 400;
+            s_piPiecePoint[(int)ChessBoard.PieceE.DimensionalBishop] = 425;
+            s_piPiecePoint[(int)ChessBoard.PieceE.DimensionalRook] = 600;
 
             s_piPiecePoint[(int)ChessBoard.PieceE.King] = 1000000;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black)] = -100;
@@ -85,7 +88,9 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.Dragon | ChessBoard.PieceE.Black)] = -650;
             s_piPiecePoint[(int)(ChessBoard.PieceE.DragonHorse | ChessBoard.PieceE.Black)] = -525;
             s_piPiecePoint[(int)(ChessBoard.PieceE.AmazonPawn | ChessBoard.PieceE.Black)] = -125;
-
+            s_piPiecePoint[(int)(ChessBoard.PieceE.DimensionalKnight | ChessBoard.PieceE.Black)] = -400;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.DimensionalBishop | ChessBoard.PieceE.Black)] = -425;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.DimensionalRook | ChessBoard.PieceE.Black)] = -600;
 
 
 
@@ -162,15 +167,16 @@ namespace SrcChess2 {
                 if (pBoard[iIndex] == ChessBoard.PieceE.Bishop)
                     bishopCount++;
                 iRetVal += getPositionalValueForThisSquareWhite(pBoard, iIndex);
-                iRetVal -= getPositionalValueForThisSquareBlack(pBoard, iIndex);
+                iRetVal += getPositionalValueForThisSquareBlack(pBoard, iIndex);
 
 
             }
-            if (bishopCount == 2)
-                iRetVal += 50;
+            // UNDO
+          //  if (bishopCount == 2)
+            //    iRetVal += 50;
 
-
-            iRetVal += earlyDevelopment(pBoard);
+            //UNDO
+           // iRetVal += earlyDevelopment(pBoard);
                         // movility
             iRetVal += iMoveCountDelta;
             iRetVal += posInfo.m_iAttackedPieces * 2;
@@ -209,10 +215,8 @@ namespace SrcChess2 {
 
         public int getPositionalValueForThisSquareWhite(ChessBoard.PieceE[] pBoard, int i)
         {
-            int hola = 0;
-           
-           // reverse index
-            
+            // reverse index  [63 - i]
+
             if (pBoard[i] == ChessBoard.PieceE.Queen|| pBoard[i] == ChessBoard.PieceE.Chancellor || pBoard[i] == ChessBoard.PieceE.Archbishop)
                 return queen[63-i];
             if (pBoard[i] == ChessBoard.PieceE.Bishop || pBoard[i] == ChessBoard.PieceE.Tiger || pBoard[i] == ChessBoard.PieceE.Gaja || pBoard[i] == ChessBoard.PieceE.EmpoweredQueen)
@@ -293,26 +297,26 @@ namespace SrcChess2 {
         };
 
          int[] bishop = { // also raja, tiger , elephant?, eQueen?, ferz
--20,-10,-10,-10,-10,-10,-10,-20,
--10,  0,  0,  0,  0,  0,  0,-10,
--10,  0,  5, 10, 10,  5,  0,-10,
--10,  5,  5, 10, 10,  5,  5,-10,
--10,  0, 10, 10, 10, 10,  0,-10,
--10, 10, 10, 10, 10, 10, 10,-10,
--10,  5,  0,  0,  0,  0,  5,-10,
--20,-10,-10,-10,-10,-10,-10,-20,
-};
+        -20,-10,-10,-10,-10,-10,-10,-20,
+        -10,  0,  0,  0,  0,  0,  0,-10,
+        -10,  0,  5, 10, 10,  5,  0,-10,
+        -10,  5,  5, 10, 10,  5,  5,-10,
+        -10,  0, 10, 10, 10, 10,  0,-10,
+        -10, 10, 10, 10, 10, 10, 10,-10,
+        -10,  5,  0,  0,  0,  0,  5,-10,
+        -20,-10,-10,-10,-10,-10,-10,-20,
+        };
 
         int[] pawn = { // 
- 0,  0,  0,  0,  0,  0,  0,  0,
-50, 50, 50, 50, 50, 50, 50, 50,
-10, 10, 20, 30, 30, 20, 10, 10,
- 5,  5, 10, 25, 25, 10,  5,  5,
- 0,  0,  0, 20, 20,  0,  0,  0,
- 5, -5,-10,  0,  0,-10, -5,  5,
- 5, 10, 10,-20,-20, 10, 10,  5,
- 0,  0,  0,  0,  0,  0,  0,  0
-};
+         0,  0,  0,  0,  0,  0,  0,  0,
+        50, 50, 50, 50, 50, 50, 50, 50,
+        10, 10, 20, 30, 30, 20, 10, 10,
+         5,  5, 10, 25, 25, 10,  5,  5,
+         0,  0,  0, 20, 20,  0,  0,  0,
+         5, -5,-10,  0,  0,-10, -5,  5,
+         5, 10, 10,-20,-20, 10, 10,  5,
+         0,  0,  0,  0,  0,  0,  0,  0
+        };
 
 
         int[] pawnMiddline = { // 
