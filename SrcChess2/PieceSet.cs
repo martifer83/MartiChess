@@ -145,6 +145,15 @@ namespace SrcChess2 {
             Black_NemesisPawn = 72,
             White_NemesisPawn = 73,
 
+            Black_DimensionalKnight = 74,
+            White_DimensionalKnight = 75,
+
+            Black_DimensionalBishop = 76,
+            White_DimensionalBishop = 77,
+
+            Black_DimensionalRook = 78,
+            White_DimensionalRook = 79,
+
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
 
@@ -350,7 +359,25 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.EmpoweredRook | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_EmpoweredRook;
                 break;
-            case ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.Black:
+            case ChessBoard.PieceE.DimensionalKnight | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_DimensionalKnight;
+                break;
+            case ChessBoard.PieceE.DimensionalKnight | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_DimensionalKnight;
+                break;
+            case ChessBoard.PieceE.DimensionalBishop | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_DimensionalBishop;
+                break;
+            case ChessBoard.PieceE.DimensionalBishop | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_DimensionalBishop;
+                break;
+            case ChessBoard.PieceE.DimensionalRook | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_DimensionalRook;
+                break;
+            case ChessBoard.PieceE.DimensionalRook | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_DimensionalRook;
+                break;
+                case ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Unicorn;
                 break;
             case ChessBoard.PieceE.Lion | ChessBoard.PieceE.Black:

@@ -474,9 +474,9 @@ namespace SrcChess2 {
 
        
 
-        public void ResetBoard2(int teamIndexW, int teamIndexB, bool randomfischer, int difficult)
+        public void ResetBoard2(int teamIndexW, int teamIndexB, bool randomfischer, int difficult, int victoryCondition)
         {
-            m_board.ResetBoardGeneric(teamIndexW, teamIndexB, false, false, randomfischer, difficult);
+            m_board.ResetBoardGeneric(teamIndexW, teamIndexB, false, false, randomfischer, difficult, victoryCondition);
             SelectedCell = new IntPoint(-1, -1);
             if (m_moveListUI != null)
             {

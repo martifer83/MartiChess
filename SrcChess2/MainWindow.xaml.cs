@@ -147,6 +147,10 @@ namespace SrcChess2 {
 
         public bool m_randomfischer;
 
+        public bool m_midlineInvasion;
+
+        public bool m_kingOfHill;
+
         public int m_dificultLevel;
 
 
@@ -663,7 +667,16 @@ namespace SrcChess2 {
                 }
                 bRetVal = true;
                 break;
-            default:
+
+            case ChessBoard.MoveResultE.KingOfHill:
+                if (eMessageMode != MessageModeE.Silent)
+                {
+                    MessageBox.Show(strOpponent + "lost by king of hill.");
+                }
+                bRetVal = true;
+                break;
+
+                default:
             bRetVal = false;
             break;
             }
@@ -709,7 +722,16 @@ namespace SrcChess2 {
 
         private void ResetBoard2()
         {
-            m_chessCtl.ResetBoard2(m_teamWhiteArmy, m_teamBlackArmy, m_randomfischer, m_dificultLevel);
+            int victoryCondition=0;
+
+            if (m_midlineInvasion)
+                victoryCondition = 1;
+
+            if (m_kingOfHill)
+                victoryCondition = 2;
+
+
+            m_chessCtl.ResetBoard2(m_teamWhiteArmy, m_teamBlackArmy, m_randomfischer, m_dificultLevel, victoryCondition);
             SetCmdState();
         }
 

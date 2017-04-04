@@ -151,6 +151,11 @@ namespace SrcChess2 {
 
             NemesisPawn = 42,
 
+            // 
+
+            DimensionalBishop = 43,
+            DimensionalRook = 44,
+            DimensionalKnight = 45,
 
 
 
@@ -220,7 +225,9 @@ namespace SrcChess2 {
             /// <summary>Checkmate</summary>
             Mate,
             /// <summary>Midline invasion</summary>
-            Invasion
+            Invasion,
+            /// <summary>King of Hill</summary>
+            KingOfHill
         }
 
         /// <summary>Type of possible move</summary>
@@ -361,6 +368,11 @@ namespace SrcChess2 {
         static private int[][] s_ppiCaseWhiteNemesisPawnCanAttackFrom;
         static private int[][] s_ppiCaseBlackNemesisPawnCanAttackFrom;
 
+        static private int[][][] s_pppiCaseMoveDiagonalDim;
+     
+        static private int[][][] s_pppiCaseMoveLineDim;
+   
+        static private int[][] s_ppiCaseMoveKnightDim;
 
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
@@ -426,6 +438,8 @@ namespace SrcChess2 {
         private PosInfoS m_posInfo;
 
         public static int m_dificultLevel;
+
+        public static int m_victoryConditon;
 
         public static bool m_whiteCanCastle;
         public static bool m_blackCanCastle;
@@ -502,6 +516,12 @@ namespace SrcChess2 {
 
             s_ppiCaseWhiteNemesisPawnCanAttackFrom = new int[64][];
             s_ppiCaseBlackNemesisPawnCanAttackFrom = new int[64][];
+
+            s_pppiCaseMoveDiagonalDim = new int[64][][];
+
+            s_pppiCaseMoveLineDim = new int[64][][];
+
+            s_ppiCaseMoveKnightDim = new int[64][];
 
             for (int iPos = 0; iPos < 64; iPos++) {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
@@ -679,9 +699,22 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1 }, false, false);
                 s_ppiCaseBlackNemesisPawnCanAttackFrom[iPos] = arrMove[0];
 
+               
+                FillMovesDim(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, true, false,-1);
+                s_pppiCaseMoveDiagonalDim[iPos] = arrMove.ToArray();
+                if (iPos == 16)
+                    iPos = 16;
+
+                FillMoves(iPos, arrMove, new int[] { -1, 0, 1, 0, 0, -1, 0, 1 }, true, false);
+                s_pppiCaseMoveLineDim[iPos] = arrMove.ToArray();
 
 
-        }
+                FillMovesDim(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, false, false,1);
+                s_ppiCaseMoveKnightDim[iPos] = arrMove[0];
+                if (iPos == 48)
+                    iPos = 48;
+
+            }
         }
 
         static private void FillMoves2(int iStartPos, List<int[]> arrMove, bool isRep, bool isWhite)
@@ -793,6 +826,135 @@ namespace SrcChess2 {
             /// 15 14 13 12 11 10 9  8
             /// 7  6  5  4  3  2  1  0
 
+        }
+
+        static private void FillMovesDim(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray, int limit)
+        {
+            int iColPos;
+            int iRowPos;
+            int iColIndex;
+            int iRowIndex;
+            int iColOfs;
+            int iRowOfs;
+            int iPosOfs;
+            int iNewPos;
+            int limitRep;
+            List<int> arrMoveOnLine;
+            if (!concatArray)
+                arrMove.Clear();
+            arrMoveOnLine = new List<int>(8);
+            iColPos = iStartPos & 7;
+            iRowPos = iStartPos >> 3;
+            for (int iIndex = 0; iIndex < arrDelta.Length; iIndex += 2)
+            {
+                iColOfs = arrDelta[iIndex];
+                iRowOfs = arrDelta[iIndex + 1];
+                iPosOfs = iRowOfs * 8 + iColOfs;
+                iColIndex = iColPos + iColOfs;
+                iRowIndex = iRowPos + iRowOfs;
+                iNewPos = iStartPos + iPosOfs;
+
+                // check first iteration and recalculate iNewPos if its necessary
+                if (iColIndex >= 8)
+                { // cross dimension left
+                    iColIndex = iColIndex % 8;
+                    iPosOfs = dimensionChangeLeft(iRowOfs, iColOfs);
+                }
+                else if (iColIndex < 0)
+                {
+                    iColIndex += 8;
+                    iPosOfs = dimensionChangeRight(iRowOfs, iColOfs);
+                }
+                iNewPos = iStartPos + iPosOfs;
+
+
+
+                // debug
+                if (iStartPos == 16 && bRepeat)
+                    iStartPos = 16;
+
+                if (bRepeat)
+                {
+                    arrMoveOnLine.Clear();
+                    limitRep = limit;
+                    while (iRowIndex >= 0 && iRowIndex < 8 && limitRep != 0)
+                    {
+                        if (iNewPos >= 0 && iNewPos <= 63)
+                            arrMoveOnLine.Add(iNewPos);
+                        limitRep--;
+                        if (bRepeat)
+                        {
+                            iColIndex += iColOfs;
+                            iRowIndex += iRowOfs;
+                            if (iColIndex >= 8) { // cross dimension left
+                                iColIndex = iColIndex % 8;
+                                iPosOfs = dimensionChangeLeft(iRowOfs, iColOfs);
+                            }
+                            else if (iColIndex < 0) {
+                                iColIndex += 8;
+                                iPosOfs = dimensionChangeRight(iRowOfs, iColOfs);
+                            }
+                            else
+                                iPosOfs = iRowOfs * 8 + iColOfs;
+                            iNewPos += iPosOfs;
+                        }
+                        else {
+                            iColIndex = -1;
+                        }
+                    }  // end while
+                    if (arrMoveOnLine.Count != 0)
+                    {
+                        arrMove.Add(arrMoveOnLine.ToArray());
+                    }
+                }
+                else if (iRowIndex >= 0 && iRowIndex < 8)
+                {
+                    if(iColIndex >= 8)
+                    {
+                        iColIndex = iColIndex % 8;
+                        iPosOfs = dimensionChangeLeft(iRowOfs, iColOfs);
+                    } else if(iColIndex < 0)
+                    {
+                        iColIndex += 8;
+                        iPosOfs = dimensionChangeRight(iRowOfs, iColOfs);
+                    }
+                    iNewPos = iStartPos + iPosOfs;
+                    if(iNewPos>=0 && iNewPos <= 63)
+                        arrMoveOnLine.Add(iNewPos);
+                }
+            }
+            if (!bRepeat)
+            {
+                arrMove.Add(arrMoveOnLine.ToArray());
+            }
+
+            // just for debug
+            if (!bRepeat && concatArray && iStartPos == 28)
+            {
+                int debug = 0;
+            }
+            /// <summary>Chess board</summary>
+            /// 63 62 61 60 59 58 57 56
+            /// 55 54 53 52 51 50 49 48
+            /// 47 46 45 44 43 42 41 40
+            /// 39 38 37 36 35 34 33 32
+            /// 31 30 29 28 27 26 25 24
+            /// 23 22 21 20 19 18 17 16
+            /// 15 14 13 12 11 10 9  8
+            /// 7  6  5  4  3  2  1  0
+
+        }
+
+        //1 -1
+
+        static private int dimensionChangeLeft(int offRow, int offCol)
+        {
+            return offCol - 8 + offRow * 8;
+        }
+        // 16   1  -1
+        static private int dimensionChangeRight(int offRow, int offCol)
+        {
+            return offCol + 8 + offRow * 8;
         }
 
         /// <summary>
@@ -1838,12 +2000,12 @@ namespace SrcChess2 {
 
             ePlayerColor = NextMoveColor;
             moveList = EnumMoveList(ePlayerColor);
-            // TODO depending if victory condition is invasion or not
-            if (IsMidlineInvasion(ePlayerColor))
+            // depending if victory condition is invasion or not
+            if (m_victoryConditon == 1 && IsMidlineInvasion(ePlayerColor))
               eRetVal = MoveResultE.Invasion;
-            //if(IsKingOfHill(ePlayerColor))
-
             
+            else if (m_victoryConditon == 2 && IsKingOfHill(ePlayerColor))
+                eRetVal = MoveResultE.KingOfHill;
             else if (IsCheck(ePlayerColor)) {
                 eRetVal = (moveList.Count == 0) ? MoveResultE.Mate : MoveResultE.Check;
             } else {
@@ -2232,6 +2394,9 @@ namespace SrcChess2 {
             PieceE eEnemyDragon;
             PieceE eEnemyDragonHorse;
             PieceE eEnemyNemesisPawn;
+            PieceE eEnemyDimensionalKnight;
+            PieceE eEnemyDimensionalBishop;
+            PieceE eEnemyDimensionalRook;
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen = PieceE.Queen | eColor;
@@ -2270,7 +2435,10 @@ namespace SrcChess2 {
             eEnemyDragonHorse = PieceE.DragonHorse | eColor;
             eEnemyNemesisPawn = PieceE.NemesisPawn | eColor;
 
-       
+            eEnemyDimensionalKnight = PieceE.DimensionalKnight | eColor;
+            eEnemyDimensionalBishop = PieceE.DimensionalBishop | eColor;
+            eEnemyDimensionalRook = PieceE.DimensionalRook | eColor;
+
 
             // test
 
@@ -2319,7 +2487,12 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragon[iPos], eEnemyDragon, eEnemyDragon);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragonHorse[iPos], eEnemyDragonHorse, eEnemyDragonHorse);
             iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ?  s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos]: s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos], eEnemyNemesisPawn);
-                
+
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonalDim[iPos], eEnemyDimensionalBishop, eEnemyDimensionalBishop);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineDim[iPos], eEnemyDimensionalRook, eEnemyDimensionalRook);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnightDim[iPos], eEnemyDimensionalKnight);
+                ///todo
+
             } 
 
 
@@ -3729,6 +3902,17 @@ namespace SrcChess2 {
                         case PieceE.DragonHorse:
                             EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveDragonHorse[iIndex], arrMovePos, ePiece);
                             break;
+                        case PieceE.DimensionalBishop:
+                            EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveDiagonalDim[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.DimensionalKnight:
+                            EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveKnightDim[iIndex], arrMovePos, ePiece);
+                            break;
+                        case PieceE.DimensionalRook:
+                            EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveLineDim[iIndex], arrMovePos, ePiece);
+                            break;
+
+
 
                     }
                 }
@@ -4019,6 +4203,8 @@ namespace SrcChess2 {
                 return TeamShogi();
             if (index == 9)
                 return TeamShogiAdapted();
+            if (index == 10)
+                return TeamDimensional();
 
 
             // default
@@ -4029,10 +4215,11 @@ namespace SrcChess2 {
         /// <summary>
         /// Reset the board to the initial configuration
         /// </summary>
-        public void ResetBoardGeneric(int indexW, int indexB, Boolean teamShogi1, Boolean teamShogi2, bool randomfischer, int dificult)
+        public void ResetBoardGeneric(int indexW, int indexB, Boolean teamShogi1, Boolean teamShogi2, bool randomfischer, int dificult, int victoryCondition)
         {
             // set difficult
             m_dificultLevel = dificult;
+            m_victoryConditon = victoryCondition;
             m_whiteCanCastle = (indexW == 0 ? true : false);
             m_blackCanCastle = (indexB == 0 ? true : false);
 
@@ -4640,6 +4827,28 @@ namespace SrcChess2 {
             team[5] = PieceE.DragonHorse;
             team[6] = PieceE.ShogiHorse;
             team[7] = PieceE.Dragon;
+
+            //  team[9] = PieceE.Rook;
+
+            //team[14] = PieceE.Bishop;
+
+
+            return team;
+
+        }
+
+        public PieceE[] TeamDimensional()
+        {
+
+            PieceE[] team = new PieceE[8];
+            team[0] = PieceE.DimensionalRook;
+            team[1] = PieceE.DimensionalKnight;
+            team[2] = PieceE.DimensionalBishop;
+            team[3] = PieceE.King;
+            team[4] = PieceE.EmpoweredQueen;
+            team[5] = PieceE.DimensionalBishop;
+            team[6] = PieceE.DimensionalKnight;
+            team[7] = PieceE.DimensionalRook;
 
             //  team[9] = PieceE.Rook;
 

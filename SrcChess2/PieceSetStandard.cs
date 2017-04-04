@@ -120,6 +120,16 @@ namespace SrcChess2 {
                 case ChessPiece.Black_Nemesis:
                     strRetVal = "black nemesis";
                     break;
+                case ChessPiece.Black_DimensionalKnight:
+                    strRetVal = "black dimensionalknight";
+                    break;
+                case ChessPiece.Black_DimensionalBishop:
+                    strRetVal = "black dimensionalbishop";
+                    break;
+                case ChessPiece.Black_DimensionalRook:
+                    strRetVal = "black dimensionalrook";
+                    break;
+
                 case ChessPiece.White_Reaper:
                     strRetVal = "white reaper";
                     break;
@@ -216,6 +226,15 @@ namespace SrcChess2 {
                 break;
             case ChessPiece.White_EmpoweredRook:
                 strRetVal = "white empoweredrook";
+                break;
+            case ChessPiece.White_DimensionalKnight:
+                strRetVal = "white dimensionalknight";
+                break;
+            case ChessPiece.White_DimensionalBishop:
+                strRetVal = "white dimensionalbishop";
+                break;
+            case ChessPiece.White_DimensionalRook:
+                strRetVal = "white dimensionalrook";
                 break;
                 case ChessPiece.White_Zebra:
                     strRetVal = "white zebra";

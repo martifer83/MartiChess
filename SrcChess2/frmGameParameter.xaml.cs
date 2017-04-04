@@ -70,6 +70,8 @@ namespace SrcChess2 {
                 return 6;
             if (radioButtonShogiA1.IsChecked.Value)
                 return 9;
+            if (radioButtonDim1.IsChecked.Value)
+                return 10;
 
             return 0;
         }
@@ -92,6 +94,8 @@ namespace SrcChess2 {
                 return 6;
             if (radioButtonShogiA2.IsChecked.Value)
                 return 9;
+            if (radioButtonDim2.IsChecked.Value)
+                return 10;
             return 0;
         }
 
