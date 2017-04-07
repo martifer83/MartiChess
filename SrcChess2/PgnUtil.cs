@@ -865,6 +865,9 @@ namespace SrcChess2 {
                 }
                 strRetVal += GetPGNSquareID(move.EndPos);
                 switch(move.Type & ChessBoard.MoveTypeE.MoveTypeMask) {
+                case ChessBoard.MoveTypeE.PawnPromotionToChancellor:
+                    strRetVal += "=Ch";
+                    break;
                 case ChessBoard.MoveTypeE.PawnPromotionToQueen:
                     strRetVal += "=Q";
                     break;

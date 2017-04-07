@@ -1660,13 +1660,20 @@ namespace SrcChess2 {
             {
 
                 byte[] arr = ChessBoard.MaxPosElephant(movePos.StartPos, movePos.EndPos);
-                movePos.EndPos = arr[2];
-                //movePos.Type = MoveTypeE.Normal;
-                
-               // m_board[arr[0]] = ChessBoard.PieceE.None;
-                 //m_board[arr[1]] = ChessBoard.PieceE.None;
-                ChessBoard.m_pBoard[arr[0]] = ChessBoard.PieceE.None;
-                ChessBoard.m_pBoard[arr[1]] = ChessBoard.PieceE.None;
+                movePos.EndPos = arr[arr.Length-1];  // index out exception, no hauria de ser a que es tracta de eatten
+                                          //movePos.Type = MoveTypeE.Normal;
+
+                if (arr.Length == 3)
+                {
+                    ChessBoard.m_pBoard[arr[0]] = ChessBoard.PieceE.None;
+                    ChessBoard.m_pBoard[arr[1]] = ChessBoard.PieceE.None;
+                }
+                if (arr.Length == 2)
+                {
+                    ChessBoard.m_pBoard[arr[0]] = ChessBoard.PieceE.None;
+                }
+
+
 
             }
             if (movePos.Type == ChessBoard.MoveTypeE.PieceEaten && (m_board[movePos.StartPos] == (ChessBoard.PieceE.Hipo | ChessBoard.PieceE.White) || m_board[movePos.StartPos] == (ChessBoard.PieceE.Hipo | ChessBoard.PieceE.Black)))

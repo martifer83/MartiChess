@@ -176,7 +176,9 @@ namespace SrcChess2 {
             /// <summary>Promotion to knight</summary>
             Knight = 8,
             /// <summary>Promotion to pawn</summary>
-            Pawn = 16
+            Pawn = 16,
+             /// <summary>Promotion to chancellor</summary>
+            Chancellor = 32
         };
 
         /// <summary>Mask for board extra info</summary>
@@ -248,6 +250,8 @@ namespace SrcChess2 {
             PawnPromotionToKnight = 6,
             /// <summary>Pawn which is promoted to a pawn</summary>
             PawnPromotionToPawn = 7,
+            /// <summary>Piece type mask</summary>
+            PawnPromotionToChancellor = 8,
             /// <summary>Piece type mask</summary>
             MoveTypeMask = 15,
             /// <summary>The move eat a piece</summary>
@@ -979,9 +983,9 @@ namespace SrcChess2 {
 
             //ResetBoardTest2();
             //ResetBoardTestAmazon();
-            //ResetBoardTestElephant3();
+            ResetBoardTestElephant2();
             //ResetBoardTestEmpowered();
-           ResetBoardTestInvasion();
+        //   ResetBoardTestInvasion();
             //ResetBoardTestCheckMate2();
             //ResetBoardGeneric(0, 1, true, true, false, 0);
             //ResetBoardTestKing();
@@ -1765,6 +1769,11 @@ namespace SrcChess2 {
                     // PawnPromotionTo???
                     eOldPiece = m_pBoard[movePos.EndPos];   /// pete endpos 249
                     switch (movePos.Type & MoveTypeE.MoveTypeMask) {
+                        case MoveTypeE.PawnPromotionToChancellor:
+                            m_piPiecesCount[(int)ePiece]--;
+                            ePiece = PieceE.Chancellor | (ePiece & PieceE.Black);
+                            m_piPiecesCount[(int)ePiece]++;
+                            break;
                         case MoveTypeE.PawnPromotionToQueen:
                             m_piPiecesCount[(int)ePiece]--;
                             ePiece = PieceE.Queen | (ePiece & PieceE.Black);
@@ -1785,6 +1794,7 @@ namespace SrcChess2 {
                             ePiece = PieceE.Knight | (ePiece & PieceE.Black);
                             m_piPiecesCount[(int)ePiece]++;
                             break;
+                        
                         case MoveTypeE.PawnPromotionToPawn:
                         default:
                             break;
@@ -1893,6 +1903,7 @@ namespace SrcChess2 {
                     // PawnPromotionTo???
                     eOriginalPiece = movePos.OriginalPiece;
                     switch (movePos.Type & MoveTypeE.MoveTypeMask) {
+                        case MoveTypeE.PawnPromotionToChancellor:
                         case MoveTypeE.PawnPromotionToQueen:
                         case MoveTypeE.PawnPromotionToRook:
                         case MoveTypeE.PawnPromotionToBishop:
@@ -2455,7 +2466,7 @@ namespace SrcChess2 {
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagKnight[iPos], eEnemyArchbishop, eEnemyArchbishop);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyEmpoweredQueen);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveTiger[iPos], eEnemyTiger, eEnemyTiger);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyElephant);
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveElephant[iPos], eEnemyElephant, eEnemyElephant);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyAmazon, eEnemyAmazon);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveWazir[iPos], eEnemyWazir);
@@ -2829,6 +2840,7 @@ namespace SrcChess2 {
         /// <param name="iEndPos">          Ending position</param>
         /// <param name="arrMovePos">       List of move</param>
         private void AddPawnPromotionIfNotCheck(PlayerColorE ePlayerColor, int iStartPos, int iEndPos, List<MovePosS> arrMovePos) {
+            AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.PawnPromotionToChancellor, arrMovePos);
             AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.PawnPromotionToQueen, arrMovePos);
             AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.PawnPromotionToRook, arrMovePos);
             AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.PawnPromotionToBishop, arrMovePos);
@@ -4009,6 +4021,9 @@ namespace SrcChess2 {
             foreach (MovePosS move in moveList) {
                 if (move.StartPos == iStartPos && move.EndPos == iEndPos) {
                     switch (move.Type & MoveTypeE.MoveTypeMask) {
+                        case MoveTypeE.PawnPromotionToChancellor:
+                            eRetVal |= ValidPawnPromotionE.Chancellor;
+                            break;
                         case MoveTypeE.PawnPromotionToQueen:
                             eRetVal |= ValidPawnPromotionE.Queen;
                             break;
@@ -4490,6 +4505,27 @@ namespace SrcChess2 {
                                   0 /*iEnPassant*/);
         }
 
+        public void ResetBoardTestElephantKill()
+        {
+
+            m_pBoard[5] = PieceE.King | PieceE.White;
+            m_pBoard[24] = PieceE.Elephant | PieceE.White;
+            m_pBoard[32] = PieceE.Queen | PieceE.Black;
+
+            m_pBoard[8] = PieceE.Pawn | PieceE.Black;
+            // m_pBoard[61] = PieceE.Queen | PieceE.Black;
+            m_pBoard[16] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[0] = PieceE.Pawn | PieceE.Black;
+            //m_pBoard[21] = PieceE.Pawn | PieceE.Black;
+            //m_pBoard[30] = PieceE.Pawn | PieceE.Black;
+            m_pBoard[63] = PieceE.King | PieceE.Black;
+
+            ResetInitialBoardInfo(PlayerColorE.White,
+                                  true /*Standard board*/,
+                                  BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                  0 /*iEnPassant*/);
+        }
+
 
         public void ResetBoardTestEmpowered()
         {
@@ -4519,10 +4555,10 @@ namespace SrcChess2 {
             m_pBoard[5] = PieceE.King | PieceE.White;
             m_pBoard[63] = PieceE.King | PieceE.Black;
 
-            m_pBoard[56] = PieceE.Elephant | PieceE.Black;
+            m_pBoard[24] = PieceE.Elephant | PieceE.White;
             m_pBoard[48] = PieceE.Pawn | PieceE.White;
             m_pBoard[40] = PieceE.Pawn | PieceE.Black;
-            m_pBoard[32] = PieceE.Queen | PieceE.White;
+            m_pBoard[32] = PieceE.Queen | PieceE.Black;
 
 
 
@@ -5088,42 +5124,88 @@ namespace SrcChess2 {
 
 
 
-
+        // endPos nomes serveix per esbrinar la direcció cap on es mou
         public byte[] MaxPosElephant(byte startPos, byte endPos)
         {
             //Console.WriteLine
             byte dim = 8;
-            byte [] arrayPos= new byte[3];
+            byte[] arrayPos;
+
+           
 
             if (endPos >= startPos + 8)
             { // up
-                arrayPos[0] =(byte) (startPos + dim);
-                arrayPos[1] = (byte)(startPos + dim * 2);
-                arrayPos[2] = (byte)(startPos + dim * 3);
+
+                int rowIndex = startPos / 8;
+                int lenght;
+                if (rowIndex <= 4)
+                    lenght = 3;
+                else
+                    lenght = 7 - rowIndex;
+
+                arrayPos = new byte[lenght];
+
+                for (int i = 0; i < lenght; i++)
+                    arrayPos[i] = (byte)(startPos +dim *(i + 1));
+
+               // arrayPos = new byte[3];
+                //arrayPos[0] =(byte) (startPos + dim);
+                //arrayPos[1] = (byte)(startPos + dim * 2);
+                //arrayPos[2] = (byte)(startPos + dim * 3);
 
                
             }
             else if (endPos > startPos)
             {  // left
-                arrayPos[0] = (byte)(startPos +1);
-                arrayPos[1] = (byte)(startPos + 2);
-                arrayPos[2] = (byte)(startPos + 3);
-
                 
+
+                int colIndex = startPos % 8;
+                int lenght;
+                if (colIndex <= 4)
+                    lenght = 3;
+                else
+                    lenght = 7 - colIndex;
+
+                arrayPos = new byte[lenght];
+
+                for (int i = 0; i < lenght; i++)
+                    arrayPos[i] = (byte)(startPos +  i + 1);
+
+
             }
             else if (endPos <= startPos - 8)
             { // down
+                int lenght; // = (startPos - endPos) / 8;
 
-                arrayPos[0] = (byte)(startPos -dim);
-                arrayPos[1] = (byte)(startPos -dim* 2);
-                arrayPos[2] = (byte)(startPos -dim* 3);
+                if (startPos / 8 >= 3)
+                    lenght = 3;
+                else
+                    lenght = startPos / 8;
 
+                arrayPos = new byte[lenght];
+               
+                for (int i = 0; i < lenght; i++)
+                    arrayPos[i] = (byte)(startPos -dim*(i+1));
                
             }
             else { // right
-                arrayPos[0] = (byte)(startPos - 1);
+
+                int lenght;
+                if (startPos % 8 >= 3)
+                    lenght = 3;
+                else
+                    lenght = startPos % 8;
+
+               
+                arrayPos = new byte[lenght];
+
+                for (int i = 0; i < lenght; i++)
+                    arrayPos[i] = (byte)(startPos - (i + 1));
+
+                /**arrayPos = new byte[3];
+                
                 arrayPos[1] = (byte)(startPos - 2);
-                arrayPos[2] = (byte)(startPos - 3);
+                arrayPos[2] = (byte)(startPos - 3);*/
             }
 
             return arrayPos;
