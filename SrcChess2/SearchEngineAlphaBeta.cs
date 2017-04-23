@@ -254,7 +254,7 @@ namespace SrcChess2 {
                 iIndex++;
             }
             //if(iDepth==4)
-                System.Diagnostics.Debug.WriteLine("best move value at depth "+ iDepth +" is "+ iRetVal);
+            //    System.Diagnostics.Debug.WriteLine("best move value at depth "+ iDepth +" is "+ iRetVal);
             iPermCount = abInfo.m_iPermCount;
             return(iRetVal);
         }

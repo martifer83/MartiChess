@@ -983,10 +983,10 @@ namespace SrcChess2 {
 
             //ResetBoardTest2();
             //ResetBoardTestAmazon();
-            ResetBoardTestElephant2();
+            //ResetBoardTestElephant2();
             //ResetBoardTestEmpowered();
         //   ResetBoardTestInvasion();
-            //ResetBoardTestCheckMate2();
+            ResetBoardTestCheckMateElephant();
             //ResetBoardGeneric(0, 1, true, true, false, 0);
             //ResetBoardTestKing();
             //ResetBoard();
@@ -3777,8 +3777,7 @@ namespace SrcChess2 {
                         ePiece = KnightAdjacent(arr,(int)ePlayerColor); 
                        
                     }
-
-                   
+ 
 
                     if ((ePiece & PieceE.PieceMask) == PieceE.EmpoweredBishop)
                     {
@@ -4373,6 +4372,23 @@ namespace SrcChess2 {
 
             
             ResetInitialBoardInfo(PlayerColorE.White,
+                                true /*Standard board*/,
+                                BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
+                                0 /*iEnPassant*/);
+        }
+
+        public void ResetBoardTestCheckMateElephant()
+        {
+
+            m_pBoard[56] = PieceE.King | PieceE.Black;
+            m_pBoard[8] = PieceE.Pawn | PieceE.White;
+            m_pBoard[9] = PieceE.Pawn | PieceE.White;
+            m_pBoard[10] = PieceE.Pawn | PieceE.White;
+            m_pBoard[0] = PieceE.King | PieceE.White;
+            m_pBoard[24] = PieceE.Elephant | PieceE.White;
+            m_pBoard[63] = PieceE.Queen | PieceE.Black;
+
+            ResetInitialBoardInfo(PlayerColorE.Black,
                                 true /*Standard board*/,
                                 BoardStateMaskE.BLCastling | BoardStateMaskE.BRCastling | BoardStateMaskE.WLCastling | BoardStateMaskE.WRCastling,
                                 0 /*iEnPassant*/);
