@@ -2684,7 +2684,7 @@ namespace SrcChess2 {
             {
                // if()
                
-                bIsCheck |= ((m_pBoard[i] & PieceE.PieceMask) == PieceE.King) ? IsCheck(ePlayerColor, arrPos[i]) : IsCheck(ePlayerColor, arrPos[i]);
+                bIsCheck |= ((m_pBoard[i] & PieceE.PieceMask) == PieceE.King) ? IsCheck(ePlayerColor, arrPos[i]) : IsCheck(ePlayerColor); //
             }
 
             return bIsCheck;
