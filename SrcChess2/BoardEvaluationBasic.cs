@@ -188,7 +188,7 @@ namespace SrcChess2 {
         public int getPositionalValueForThisSquareBlack(ChessBoard.PieceE[] pBoard, int i)
         {
 
-            if (pBoard[i] == (ChessBoard.PieceE.Queen | ChessBoard.PieceE.Black) || (pBoard[i] == (ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black)))
+            if (pBoard[i] == (ChessBoard.PieceE.Queen | ChessBoard.PieceE.Black) || (pBoard[i] == (ChessBoard.PieceE.Chancellor | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.Archbishop | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.Nemesis | ChessBoard.PieceE.Black)))
                 return -queen[i];
             if (pBoard[i] == (ChessBoard.PieceE.Bishop | ChessBoard.PieceE.Black)|| (pBoard[i] ==  (ChessBoard.PieceE.Tiger | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.Gaja | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.EmpoweredQueen | ChessBoard.PieceE.Black)))
                 return -bishop[i];
@@ -198,6 +198,10 @@ namespace SrcChess2 {
                 return -rook[i];
             if (pBoard[i] == (ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black))
                 return -pawnMiddline[i];
+            if (pBoard[i] == (ChessBoard.PieceE.Elephant | ChessBoard.PieceE.Black))
+                return -elephant[i];
+            if (pBoard[i] == (ChessBoard.PieceE.EmpoweredBishop | ChessBoard.PieceE.Black) || (pBoard[i] == (ChessBoard.PieceE.EmpoweredKnight | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.EmpoweredRook | ChessBoard.PieceE.Black)))
+                return -empowered[i];
             return 0;
 
         }
@@ -217,7 +221,7 @@ namespace SrcChess2 {
         {
             // reverse index  [63 - i]
 
-            if (pBoard[i] == ChessBoard.PieceE.Queen|| pBoard[i] == ChessBoard.PieceE.Chancellor || pBoard[i] == ChessBoard.PieceE.Archbishop)
+            if (pBoard[i] == ChessBoard.PieceE.Queen|| pBoard[i] == ChessBoard.PieceE.Chancellor || pBoard[i] == ChessBoard.PieceE.Archbishop || pBoard[i] == ChessBoard.PieceE.Nemesis)
                 return queen[63-i];
             if (pBoard[i] == ChessBoard.PieceE.Bishop || pBoard[i] == ChessBoard.PieceE.Tiger || pBoard[i] == ChessBoard.PieceE.Gaja || pBoard[i] == ChessBoard.PieceE.EmpoweredQueen)
                 return bishop[63 - i];
@@ -230,7 +234,11 @@ namespace SrcChess2 {
               //  System.Diagnostics.Debug.WriteLine("numero peo blanc analitzat " + i);
                 return pawnMiddline[63 - i];
             }
-               
+            if (pBoard[i] == ChessBoard.PieceE.Elephant)
+                return elephant[63 - i];
+            if (pBoard[i] == ChessBoard.PieceE.EmpoweredBishop || pBoard[i] == ChessBoard.PieceE.EmpoweredKnight || pBoard[i] == ChessBoard.PieceE.EmpoweredRook)
+                return empowered[63 - i];
+
             return 0;
 
         }
@@ -259,8 +267,17 @@ namespace SrcChess2 {
 
         }
 
+        int[] empowered = { // also archbishop and chancellor
+        -20,-10,-10, -5, -5,-10,-10,-20,
+        -10,  0,  0,  0,  0,  0,  0,-10,
+        -10,  0,  0,  0,  0,  0,  0,-10,
+         -5,  0,  5,  5,  5,  5,  0, -5,
+          0,  0,  5,  5,  5,  5,  0, -5,
+        -10,  5,  5,  5,  5,  5,  0,-10,
+        -10,  0,  5,  5,  5,  5,  0,-10,
+        -20,-10,  0,  5,  5,  0,-10,-20
+        };
 
-       
 
         int[] queen = { // also archbishop and chancellor
         -20,-10,-10, -5, -5,-10,-10,-20,
@@ -320,26 +337,26 @@ namespace SrcChess2 {
 
 
         int[] pawnMiddline = { // 
- 0,  0,  0,  0,  0,  0,  0,  0,
-50, 50, 50, 50, 50, 50, 50, 50,
-10, 10, 20, 30, 30, 20, 10, 10,
- 5,  5, 10, 25, 25, 10,  5,  5,
- 0,  0,  0, 20, 20,  0,  0,  0,
- 5, 20, 20,  0,  0, 20, 20,  5,
- 5, 10, 10,-20,-20, 10, 10,  5,
- 0,  0,  0,  0,  0,  0,  0,  0
-};
+             0,  0,  0,  0,  0,  0,  0,  0,
+            50, 50, 50, 50, 50, 50, 50, 50,
+            10, 10, 20, 30, 30, 20, 10, 10,
+             5,  5, 10, 25, 25, 10,  5,  5,
+             0,  0,  0, 20, 20,  0,  0,  0,
+             5, 20, 20,  0,  0, 20, 20,  5,
+             5, 10, 10,-20,-20, 10, 10,  5,
+             0,  0,  0,  0,  0,  0,  0,  0
+        };
 
          int[] rook = { // 
-  0,  0,  0,  0,  0,  0,  0,  0,
-  5, 10, 10, 10, 10, 10, 10,  5,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
- -5,  0,  0,  0,  0,  0,  0, -5,
-  0,  0,  0,  5,  5,  0,  0,  0
-};
+              0,  0,  0,  0,  0,  0,  0,  0,
+              5, 10, 10, 10, 10, 10, 10,  5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+             -5,  0,  0,  0,  0,  0,  0, -5,
+              0,  0,  0,  5,  5,  0,  0,  0
+        };
 
         int[] kingMiddline = { // 
   -30,-40,-40,-50,-50,-40,-40,-30,

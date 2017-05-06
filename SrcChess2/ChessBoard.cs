@@ -452,6 +452,19 @@ namespace SrcChess2 {
         public static double m_acumulat=0.0;
         public static double m_iteracions=0.0;
 
+        public static bool m_isClassicPlaying;
+        public static bool m_isChaturangaPlaying;
+        public static bool m_isCapablancaPlaying;
+        public static bool m_isAnimalsPlaying;
+        public static bool m_isEmpoweredPlaying;
+        public static bool m_isReaperPlaying;
+        public static bool m_isNemesisPlaying;
+        public static bool m_isAmazonPlaying;
+        public static bool m_isShogiPlaying;
+        public static bool m_isShogiAPlaying;
+        public static bool m_isDimensionalPlaying;
+        public static bool m_isJunglePlaying;
+
         /// <summary>
         /// Class static constructor. 
         /// Builds the list of possible moves for each piece type per position.
@@ -2453,58 +2466,80 @@ namespace SrcChess2 {
 
             // test
 
-            //iRetVal = 0; /// delete
-            //for (int i = 0; i < 100; i++)
-            { 
+            /// TODO: optimitzar
 
-            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant  // crash when playing anial vs animal bandom Fisher
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyQueen, eEnemyRook);
+            iRetVal = 0;
+            //for (int i = 0; i < 100; i++)
+            //{ 
+
+            if (m_isClassicPlaying)
+            {
+                iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant  // crash when playing anial vs animal bandom Fisher
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyQueen, eEnemyRook);
+            }
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyKing);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyKnight);
             iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyPawn);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineKnight[iPos], eEnemyChancellor, eEnemyChancellor);  // review
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagKnight[iPos], eEnemyArchbishop, eEnemyArchbishop);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyEmpoweredQueen);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveTiger[iPos], eEnemyTiger, eEnemyTiger);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveElephant[iPos], eEnemyElephant, eEnemyElephant);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyAmazon, eEnemyAmazon);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveWazir[iPos], eEnemyWazir);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCrazyHorse[iPos], eEnemyCrazyHorse);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyAmazonPawn);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteGaja[iPos] : s_ppiCaseMoveBlackGaja[iPos], eEnemyGaja);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveZebra[iPos], eEnemyZebra);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCamel[iPos], eEnemyCamel);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveLion[iPos], eEnemyLion);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveUnicorn[iPos], eEnemyUnicorn, eEnemyUnicorn);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBuffalo[iPos], eEnemyBuffalo);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBlackShogiHorse[iPos], eEnemyShogiHorse);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteGoldGeneral[iPos] : s_ppiCaseMoveBlackGoldGeneral[iPos], eEnemyGoldGeneral);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteSilverGeneral[iPos] : s_ppiCaseMoveBlackSilverGeneral[iPos], eEnemySilverGeneral);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_pppiCaseMoveWhiteLancer[iPos] : s_pppiCaseMoveBlackLancer[iPos], eEnemyLancer, eEnemyLancer);
-
-            iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredKnight, eColor, iPos);
-            iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredBishop, eColor, iPos);
-            iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredRook, eColor, iPos);
-
+            if (m_isAnimalsPlaying || m_isCapablancaPlaying)
+            {
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineKnight[iPos], eEnemyChancellor, eEnemyChancellor);  // review
+            }
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagKnight[iPos], eEnemyArchbishop, eEnemyArchbishop);
+             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyEmpoweredQueen);
+            if (m_isAnimalsPlaying)
+            {
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveTiger[iPos], eEnemyTiger, eEnemyTiger);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveElephant[iPos], eEnemyElephant, eEnemyElephant);
+            }
+            if (m_isAmazonPlaying)
+            {
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyAmazon, eEnemyAmazon);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveWazir[iPos], eEnemyWazir);
+            }
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCrazyHorse[iPos], eEnemyCrazyHorse);
+             iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyAmazonPawn);
+            if (m_isChaturangaPlaying)
+            {
+                iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteGaja[iPos] : s_ppiCaseMoveBlackGaja[iPos], eEnemyGaja);
+            }
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveZebra[iPos], eEnemyZebra);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCamel[iPos], eEnemyCamel);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveLion[iPos], eEnemyLion);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveUnicorn[iPos], eEnemyUnicorn, eEnemyUnicorn);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBuffalo[iPos], eEnemyBuffalo);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveBlackShogiHorse[iPos], eEnemyShogiHorse);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteGoldGeneral[iPos] : s_ppiCaseMoveBlackGoldGeneral[iPos], eEnemyGoldGeneral);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_ppiCaseMoveWhiteSilverGeneral[iPos] : s_ppiCaseMoveBlackSilverGeneral[iPos], eEnemySilverGeneral);
+             //iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.White) ? s_pppiCaseMoveWhiteLancer[iPos] : s_pppiCaseMoveBlackLancer[iPos], eEnemyLancer, eEnemyLancer);
+              if (m_isEmpoweredPlaying)
+             {
+             iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredKnight, eColor, iPos);
+             iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredBishop, eColor, iPos);
+             iRetVal += EnumTheseAttackPosEmpowered(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyEmpoweredRook, eColor, iPos);
+             }
             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyEmpoweredBishop, eEnemyEmpoweredBishop);  // bug pos 72 playing withElephant
             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyEmpoweredRook, eEnemyEmpoweredRook);
             //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyEmpoweredKnight);
             //  Console.WriteLine("enumThese:" + iPos);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveSnake[iPos], eEnemySnake, eEnemySnake);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveHipo[iPos], eEnemyHipo, eEnemyHipo);
+            if (m_isNemesisPlaying)
+            {
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyNemesis, eEnemyNemesis);  // bug pos 72 playing withElephant
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyNemesis, eEnemyNemesis);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos] : s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos], eEnemyNemesisPawn);
+            }
+            // iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveSnake[iPos], eEnemySnake, eEnemySnake);
+            //iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveHipo[iPos], eEnemyHipo, eEnemyHipo);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragon[iPos], eEnemyDragon, eEnemyDragon);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragonHorse[iPos], eEnemyDragonHorse, eEnemyDragonHorse);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ?  s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos]: s_ppiCaseWhiteNemesisPawnCanAttackFrom[iPos], eEnemyNemesisPawn);
-
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonalDim[iPos], eEnemyDimensionalBishop, eEnemyDimensionalBishop);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineDim[iPos], eEnemyDimensionalRook, eEnemyDimensionalRook);
-            iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnightDim[iPos], eEnemyDimensionalKnight);
-                ///todo
-
-            } 
+             iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDragonHorse[iPos], eEnemyDragonHorse, eEnemyDragonHorse);
+              if (m_isDimensionalPlaying)
+            {
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonalDim[iPos], eEnemyDimensionalBishop, eEnemyDimensionalBishop);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineDim[iPos], eEnemyDimensionalRook, eEnemyDimensionalRook);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnightDim[iPos], eEnemyDimensionalKnight);
+            }
+ 
+            //} 
 
 
             //if (iRetVal == 1  && iPos == 4)
@@ -3922,9 +3957,6 @@ namespace SrcChess2 {
                         case PieceE.DimensionalRook:
                             EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveLineDim[iIndex], arrMovePos, ePiece);
                             break;
-
-
-
                     }
                 }
             }
@@ -4225,6 +4257,50 @@ namespace SrcChess2 {
             return TeamClassic();
         }
 
+        private void SetArmiesPlaying(int indexW, int indexB )
+        {
+
+            m_isClassicPlaying= m_isClassicPlaying = false;
+
+            //classic
+            if (indexW == 0 || indexB == 0)
+                m_isClassicPlaying = true;
+            //chaturanga
+            if (indexW == 1 || indexB == 1)
+                m_isChaturangaPlaying = true;
+            //capablanca
+            if (indexW == 2 || indexB == 2)
+                m_isCapablancaPlaying = true;
+            // nemesis
+            if (indexW == 3 || indexB == 3)
+                m_isNemesisPlaying = true;
+            //Reaper
+            if (indexW == 4 || indexB == 4)
+                m_isReaperPlaying = true;
+            // empowered
+            if (indexW == 5 || indexB == 5)
+                m_isEmpoweredPlaying = true;
+            // animals
+            if (indexW == 6 || indexB == 6)
+                m_isAnimalsPlaying = true;
+            // amazon 
+            if (indexW == 7 || indexB == 7)
+                m_isAmazonPlaying = true;
+            // shogi
+            if (indexW == 8 || indexB == 8)
+                m_isShogiPlaying = true;
+            // shogi adapted
+            if (indexW == 9 || indexB == 9)
+                m_isShogiAPlaying = true;
+            // dimensional
+            if (indexW == 10 || indexB == 10)
+                m_isDimensionalPlaying = true;
+
+
+
+        }
+
+
 
         /// <summary>
         /// Reset the board to the initial configuration
@@ -4236,6 +4312,8 @@ namespace SrcChess2 {
             m_victoryConditon = victoryCondition;
             m_whiteCanCastle = (indexW == 0 ? true : false);
             m_blackCanCastle = (indexB == 0 ? true : false);
+
+            SetArmiesPlaying(indexW, indexB);
 
             PieceE[] teamW = SetTeam(indexW);
             PieceE[] teamB = SetTeam(indexB);

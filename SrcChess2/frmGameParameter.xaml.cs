@@ -68,6 +68,8 @@ namespace SrcChess2 {
                 return 5;
             if (radioButtonAnimals1.IsChecked.Value)
                 return 6;
+            if (radioButtonAmazon1.IsChecked.Value)
+                return 7;
             if (radioButtonShogiA1.IsChecked.Value)
                 return 9;
             if (radioButtonDim1.IsChecked.Value)
@@ -92,6 +94,8 @@ namespace SrcChess2 {
                 return 5;
             if (radioButtonAnimals2.IsChecked.Value)
                 return 6;
+            if (radioButtonAmazon2.IsChecked.Value)
+                return 7;
             if (radioButtonShogiA2.IsChecked.Value)
                 return 9;
             if (radioButtonDim2.IsChecked.Value)

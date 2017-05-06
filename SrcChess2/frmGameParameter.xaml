@@ -44,7 +44,7 @@
                     <RadioButton Content="Empowered" Height="16" x:Name="radioButtonEmpowered1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" />
                     <RadioButton Content="Animals" Height="16" x:Name="radioButtonAnimals1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" />
                     <RadioButton Content="Shogi" Height="16" x:Name="radioButtonShogi1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="False" />
-                    <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="False"/>
+                    <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="True"/>
                     <RadioButton Content="Shogi Adapted" Height="16" x:Name="radioButtonShogiA1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="True"/>
                     <RadioButton Content="Dimensional" Height="16" x:Name="radioButtonDim1" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
 
@@ -60,7 +60,7 @@
                     <RadioButton Content="Empowered" Height="16" x:Name="radioButtonEmpowered2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
                     <RadioButton Content="Animals" Height="16" x:Name="radioButtonAnimals2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" />
                     <RadioButton Content="Shogi" Height="16" x:Name="radioButtonShogi2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="False" />
-                    <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="False"/>
+                    <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
                     <RadioButton Content="Shogi Adapted" Height="16" x:Name="radioButtonShogiA2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
                     <RadioButton Content="Dimensional" Height="16" x:Name="radioButtonDim2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
                 </StackPanel>
