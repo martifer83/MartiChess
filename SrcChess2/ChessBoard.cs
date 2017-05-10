@@ -2421,6 +2421,7 @@ namespace SrcChess2 {
             PieceE eEnemyDimensionalKnight;
             PieceE eEnemyDimensionalBishop;
             PieceE eEnemyDimensionalRook;
+            PieceE eEnemyRaja;
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen = PieceE.Queen | eColor;
@@ -2462,7 +2463,7 @@ namespace SrcChess2 {
             eEnemyDimensionalKnight = PieceE.DimensionalKnight | eColor;
             eEnemyDimensionalBishop = PieceE.DimensionalBishop | eColor;
             eEnemyDimensionalRook = PieceE.DimensionalRook | eColor;
-
+            eEnemyRaja = PieceE.Raja | eColor;
 
             // test
 
@@ -2537,6 +2538,7 @@ namespace SrcChess2 {
                 iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonalDim[iPos], eEnemyDimensionalBishop, eEnemyDimensionalBishop);
                 iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLineDim[iPos], eEnemyDimensionalRook, eEnemyDimensionalRook);
                 iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnightDim[iPos], eEnemyDimensionalKnight);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveRaja[iPos], eEnemyRaja);
             }
  
             //} 
@@ -3957,6 +3959,9 @@ namespace SrcChess2 {
                         case PieceE.DimensionalRook:
                             EnumFromArray(ePlayerColor, iIndex, s_pppiCaseMoveLineDim[iIndex], arrMovePos, ePiece);
                             break;
+                        case PieceE.Raja:
+                            EnumFromArray(ePlayerColor, iIndex, s_ppiCaseMoveRaja[iIndex], arrMovePos, ePiece);
+                            break;
                     }
                 }
             }
@@ -4975,7 +4980,7 @@ namespace SrcChess2 {
             team[1] = PieceE.DimensionalKnight;
             team[2] = PieceE.DimensionalBishop;
             team[3] = PieceE.King;
-            team[4] = PieceE.EmpoweredQueen;
+            team[4] = PieceE.Raja;
             team[5] = PieceE.DimensionalBishop;
             team[6] = PieceE.DimensionalKnight;
             team[7] = PieceE.DimensionalRook;

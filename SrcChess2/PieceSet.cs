@@ -154,6 +154,9 @@ namespace SrcChess2 {
             Black_DimensionalRook = 78,
             White_DimensionalRook = 79,
 
+            Black_Raja = 80,
+            White_Raja = 81,
+
             //Black_Giraffe = 46,
             //White_Giraffe = 47,
 
@@ -368,6 +371,9 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.DimensionalBishop | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_DimensionalBishop;
                 break;
+            case ChessBoard.PieceE.Raja | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Raja;
+                break;
             case ChessBoard.PieceE.DimensionalBishop | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_DimensionalBishop;
                 break;
@@ -377,7 +383,10 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.DimensionalRook | ChessBoard.PieceE.White:
                 eRetVal = ChessPiece.White_DimensionalRook;
                 break;
-                case ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.Black:
+            case ChessBoard.PieceE.Raja | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Raja;
+                break;
+            case ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_Unicorn;
                 break;
             case ChessBoard.PieceE.Lion | ChessBoard.PieceE.Black:

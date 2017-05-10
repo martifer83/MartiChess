@@ -49,6 +49,7 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.DimensionalKnight] = 400;
             s_piPiecePoint[(int)ChessBoard.PieceE.DimensionalBishop] = 425;
             s_piPiecePoint[(int)ChessBoard.PieceE.DimensionalRook] = 600;
+            s_piPiecePoint[(int)ChessBoard.PieceE.Raja] = 600;
 
             s_piPiecePoint[(int)ChessBoard.PieceE.King] = 1000000;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black)] = -100;
@@ -91,10 +92,15 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.DimensionalKnight | ChessBoard.PieceE.Black)] = -400;
             s_piPiecePoint[(int)(ChessBoard.PieceE.DimensionalBishop | ChessBoard.PieceE.Black)] = -425;
             s_piPiecePoint[(int)(ChessBoard.PieceE.DimensionalRook | ChessBoard.PieceE.Black)] = -600;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Raja | ChessBoard.PieceE.Black)] = -600;
 
 
 
         }
+
+
+
+        /// https://chess.stackexchange.com/questions/347/what-is-an-accurate-way-to-evaluate-chess-positionsa
 
         /// <summary>
         /// Name of the evaluation method

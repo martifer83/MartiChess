@@ -129,6 +129,9 @@ namespace SrcChess2 {
                 case ChessPiece.Black_DimensionalRook:
                     strRetVal = "black dimensionalrook";
                     break;
+                case ChessPiece.Black_Raja:
+                    strRetVal = "black raja";
+                    break;
 
                 case ChessPiece.White_Reaper:
                     strRetVal = "white reaper";
@@ -236,6 +239,9 @@ namespace SrcChess2 {
             case ChessPiece.White_DimensionalRook:
                 strRetVal = "white dimensionalrook";
                 break;
+                case ChessPiece.White_Raja:
+                    strRetVal = "white raja";
+                    break;
                 case ChessPiece.White_Zebra:
                     strRetVal = "white zebra";
                     break;
