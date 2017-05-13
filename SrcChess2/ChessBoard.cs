@@ -2262,7 +2262,8 @@ namespace SrcChess2 {
                     {
                         // check adjacency
                         bool posIsInArray = false;
-
+                        // importantissim reiniciar la pea a cada iteracio
+                        ePiece = originalPiece; 
 
                         int[] arr = CheckAdjacent(iNewPos, 8);
                         if (ePiece == (PieceE.EmpoweredKnight | eColor))
