@@ -74,6 +74,8 @@ namespace SrcChess2 {
                 return 9;
             if (radioButtonDim1.IsChecked.Value)
                 return 10;
+            if (radioButtonJungle1.IsChecked.Value)
+                return 11;
 
             return 0;
         }
@@ -100,6 +102,8 @@ namespace SrcChess2 {
                 return 9;
             if (radioButtonDim2.IsChecked.Value)
                 return 10;
+            if (radioButtonJungle2.IsChecked.Value)
+                return 11;
             return 0;
         }
 

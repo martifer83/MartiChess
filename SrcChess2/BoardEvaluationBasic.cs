@@ -208,6 +208,9 @@ namespace SrcChess2 {
                 return -elephant[i];
             if (pBoard[i] == (ChessBoard.PieceE.EmpoweredBishop | ChessBoard.PieceE.Black) || (pBoard[i] == (ChessBoard.PieceE.EmpoweredKnight | ChessBoard.PieceE.Black)) || (pBoard[i] == (ChessBoard.PieceE.EmpoweredRook | ChessBoard.PieceE.Black)))
                 return -empowered[i];
+
+            if (pBoard[i] == (ChessBoard.PieceE.Wazir | ChessBoard.PieceE.Black) || (pBoard[i] == (ChessBoard.PieceE.Ferz | ChessBoard.PieceE.Black)))
+                return -wazir[i];
             return 0;
 
         }
@@ -244,6 +247,8 @@ namespace SrcChess2 {
                 return elephant[63 - i];
             if (pBoard[i] == ChessBoard.PieceE.EmpoweredBishop || pBoard[i] == ChessBoard.PieceE.EmpoweredKnight || pBoard[i] == ChessBoard.PieceE.EmpoweredRook)
                 return empowered[63 - i];
+            if (pBoard[i] == ChessBoard.PieceE.Wazir || pBoard[i] == ChessBoard.PieceE.Ferz )
+                return wazir[63 - i];
 
             return 0;
 
@@ -293,6 +298,17 @@ namespace SrcChess2 {
           0,  0,  5,  5,  5,  5,  0, -5,
         -10,  5,  5,  5,  5,  5,  0,-10,
         -10,  0,  5,  0,  0,  0,  0,-10,
+        -20,-10,-10, -5, -5,-10,-10,-20
+        };
+
+        int[] wazir = { // also archbishop and chancellor
+        -20,-10,-10, -5, -5,-10,-10,-20,
+        -10,  0,  0,  0,  0,  0,  0,-10,
+        -10,  0, 10, 10, 10, 10,  0,-10,
+         -5,  0, 15, 15, 15, 15,  0, -5,
+          0, 10, 15, 15, 15, 15, 10, -5,
+        -10, 10, 15, 15, 15, 15, 10,-10,
+        -10,  5, 10, 10, 10, 10,  5,-10,
         -20,-10,-10, -5, -5,-10,-10,-20
         };
 

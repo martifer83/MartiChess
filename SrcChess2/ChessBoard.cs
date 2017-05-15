@@ -588,13 +588,8 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1 }, true, false);
                 FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, true, 1);
 
-
-
-
-
                 s_pppiCaseMoveDiagLineKnight[iPos] = arrMove.ToArray();
-                if (iPos == 32)
-                    iPos = iPos; // debug
+               
                 // Ferz
                 FillMoves(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, false, false);
                 s_ppiCaseMoveFerz[iPos] = arrMove[0];
@@ -2474,11 +2469,10 @@ namespace SrcChess2 {
             //for (int i = 0; i < 100; i++)
             //{ 
 
-            if (m_isClassicPlaying)
-            {
-                iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant  // crash when playing anial vs animal bandom Fisher
-                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyQueen, eEnemyRook);
-            }
+           
+            iRetVal = EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagonal[iPos], eEnemyQueen, eEnemyBishop);  // bug pos 72 playing withElephant  // crash when playing anial vs animal bandom Fisher
+            iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveLine[iPos], eEnemyQueen, eEnemyRook);
+            
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKing[iPos], eEnemyKing);
             iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveKnight[iPos], eEnemyKnight);
             iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyPawn);
@@ -2495,10 +2489,14 @@ namespace SrcChess2 {
             }
             if (m_isAmazonPlaying)
             {
-                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyAmazon, eEnemyAmazon);
-                iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_pppiCaseMoveDiagLineKnight[iPos], eEnemyAmazon, eEnemyAmazon);   
                 iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveWazir[iPos], eEnemyWazir);
             }
+            if (m_isAmazonPlaying || m_isCapablancaPlaying)
+            {
+                iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveFerz[iPos], eEnemyFerz);
+            }
+
              //iRetVal += EnumTheseAttackPos(arrAttackPos, s_ppiCaseMoveCrazyHorse[iPos], eEnemyCrazyHorse);
              iRetVal += EnumTheseAttackPos(arrAttackPos, (ePlayerColor == PlayerColorE.Black) ? s_ppiCaseWhitePawnCanAttackFrom[iPos] : s_ppiCaseBlackPawnCanAttackFrom[iPos], eEnemyAmazonPawn);
             if (m_isChaturangaPlaying)
@@ -2928,14 +2926,14 @@ namespace SrcChess2 {
             bool shouldbeTrue = false;
 
 
-            if (iStartPos == 17 && iEndPos == 0)
+            /*if (iStartPos == 17 && iEndPos == 0)
             {
                 shouldbeTrue = true;
             }
             if (iStartPos == 17 && iEndPos == 9)
             {
                 int shouldbeFalse = 0;
-            }
+            }*/
             
 
             bRetVal = (m_pBoard[iEndPos] == PieceE.None);
@@ -2960,7 +2958,7 @@ namespace SrcChess2 {
             {
                 case PieceE.Reaper:
 
-                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.King && bIsNotNemesis && bIsNotGhost && bIsNotImmobilized)  // && Nemesis or ghost
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.King && bIsNotNemesis && bIsNotGhost && bIsNotImmobilized)
                     {
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                         return (bRetVal);
@@ -2970,7 +2968,7 @@ namespace SrcChess2 {
                     break;
                 case PieceE.Ghost:
 
-                    if (bRetVal)
+                    if (bRetVal ||(bIsNotImmobilized))
                     {
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                         return (bRetVal);
@@ -2979,7 +2977,7 @@ namespace SrcChess2 {
 
                 case PieceE.Nemesis:
 
-                    if (bRetVal)
+                    if (bRetVal || (bIsNotImmobilized))
                     {
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                         return (bRetVal);
@@ -2990,7 +2988,8 @@ namespace SrcChess2 {
                 case PieceE.Elephant:
 
 
-                    // Todo  Check if nemesis or ghost
+                    // Todo  Check if nemesis or ghost imobilized
+
                     AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                     return (bRetVal);
 
@@ -2999,7 +2998,7 @@ namespace SrcChess2 {
                     // the same as all pieces but can kill nemesis
                 case PieceE.King:
 
-                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.Ghost)
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black)) && (eOldPiece & PieceE.PieceMask) != PieceE.Ghost && bIsNotImmobilized)
                     {
 
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
@@ -3011,7 +3010,8 @@ namespace SrcChess2 {
                     break;
                 case PieceE.Hipo:
 
-                   
+                   //TODO chack immobilized
+
                     // no condition
                      AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
                     return (bRetVal);
@@ -3039,7 +3039,7 @@ namespace SrcChess2 {
                         return (bRetVal);
                     }*/
 
-                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black))&& (eOldPiece & PieceE.PieceMask) != PieceE.Ghost && bIsNotNemesis)
+                    if ((bRetVal || ((eOldPiece & PieceE.Black) != 0) != (ePlayerColor == PlayerColorE.Black))&& (eOldPiece & PieceE.PieceMask) != PieceE.Ghost && bIsNotNemesis && bIsNotImmobilized)
                     {
                    
                         AddIfNotCheck(ePlayerColor, iStartPos, iEndPos, MoveTypeE.Normal, arrMovePos);
@@ -3104,7 +3104,7 @@ namespace SrcChess2 {
             return (bRetVal);
         }
 
-        private bool AddMoveIfEnemyTiger(PlayerColorE ePlayerColor, int iStartPos, int iEndPos, List<MovePosS> arrMovePos)
+        /*private bool AddMoveIfEnemyTiger(PlayerColorE ePlayerColor, int iStartPos, int iEndPos, List<MovePosS> arrMovePos)
         {
             bool bRetVal;
             PieceE eOldPiece;
@@ -3127,18 +3127,7 @@ namespace SrcChess2 {
 
             return (bRetVal);
 
-        }
-
-
-
-
-
-
-
-
-
-
-
+        }*/
 
 
 
@@ -3683,54 +3672,15 @@ namespace SrcChess2 {
         /// <param name="arrMovePos">               List of move</param>
         private void EnumFromArray(PlayerColorE ePlayerColor, int iStartPos, int[][] ppiMoveListForThisCase, List<MovePosS> arrMovePos, PieceE pieceE) {
 
-            int testCounter = 0;
             foreach (int[] piMovePosForThisDiag in ppiMoveListForThisCase) {
                 foreach (int iNewPos in piMovePosForThisDiag) {
-                    if (iStartPos == 17 && iNewPos == 0)
-                    {
-
-                        testCounter++;
-
-                    }
-                    if (iStartPos == 17 && iNewPos == 34)
-                    {
-
-                        testCounter++;
-
-                    }
-                    if (iStartPos == 17 && iNewPos == 32)
-                    {
-
-                        testCounter++;
-
-                    }
-                    if (iStartPos == 17 && iNewPos == 27)
-                    {
-
-                        testCounter++;
-
-                    }
-
-                    if (iStartPos == 17 && iNewPos == 2)
-                    {
-
-                        testCounter++;
-
-                    }
-
-                    if (iStartPos == 17 && iNewPos == 11)
-                    {
-                        testCounter++;
-                    }
-                    if (pieceE.Equals(PieceE.Pawn)) {
-                        int hello = 0;
-                    }
+                    
                     if (false)//(pieceE.Equals(PieceE.Tiger))
                     {
-                        if (!AddMoveIfEnemyTiger(ePlayerColor, iStartPos, iNewPos, arrMovePos))
+                       /* if (!AddMoveIfEnemyTiger(ePlayerColor, iStartPos, iNewPos, arrMovePos))
                         {
                             break;
-                        }
+                        }*/
                     }
                     else {
                         if (!AddMoveIfEnemyOrEmpty(ePlayerColor, iStartPos, iNewPos, arrMovePos))
@@ -3740,11 +3690,6 @@ namespace SrcChess2 {
                     }
                 }
             }
-            if (iStartPos == 17) {
-                int prova = 0;
-            }
-
-
         }
         /// <summary>Chess board</summary>
         /// 63 62 61 60 59 58 57 56
@@ -3766,9 +3711,6 @@ namespace SrcChess2 {
         /// <param name="arrMovePos">               List of move</param>
         private void EnumFromArray(PlayerColorE ePlayerColor, int iStartPos, int[] piMoveListForThisCase, List<MovePosS> arrMovePos, PieceE pieceE) {
             foreach (int iNewPos in piMoveListForThisCase) {
-                //if (false)//(pieceE == PieceE.Tiger)
-                  //  AddMoveIfEnemyTiger(ePlayerColor, iStartPos, iNewPos, arrMovePos);
-                //else
                 AddMoveIfEnemyOrEmpty(ePlayerColor, iStartPos, iNewPos, arrMovePos);
             }
         }
@@ -4257,6 +4199,8 @@ namespace SrcChess2 {
                 return TeamShogiAdapted();
             if (index == 10)
                 return TeamDimensional();
+            if (index == 11)
+                return TeamJungle();
 
 
             // default
@@ -4869,7 +4813,7 @@ namespace SrcChess2 {
             team[2] = PieceE.Gaja;
             team[3] = PieceE.King;
             team[4] = PieceE.EmpoweredQueen;
-            team[5] = PieceE.Gaja;
+            team[5] = PieceE.Buffalo;
             team[6] = PieceE.Knight;
             team[7] = PieceE.Rook;
 
@@ -4893,6 +4837,10 @@ namespace SrcChess2 {
             return team;
 
         }
+
+        //Jungle
+
+            //   camel
 
         public PieceE[] TeamReaper()
         {
@@ -5003,6 +4951,7 @@ namespace SrcChess2 {
 
 
 
+
         // todo refactor
         /* public void CheckAdjacent(int p, int dim)
          {
@@ -5096,24 +5045,31 @@ namespace SrcChess2 {
 
         private bool isAtSnakeRange(int pos, int team)
         {
-            for(int i = pos-9; i< pos-7; i++)
+
+            if (((m_pBoard[pos] & PieceE.Black) == PieceE.Black) && team == 1)  // si els dos son negres
+                return false;
+            if (((m_pBoard[pos] & PieceE.Black) != PieceE.Black) && team == 0)  // si els dos son blancs
+                return false;
+                
+
+            for (int i = pos-9; i< pos-7; i++)
             {
                 if (thisIndexExistInBoard(i))
                 {
-                    if (m_pBoard[i] == PieceE.Snake)
+                    if ((m_pBoard[i] & PieceE.PieceMask )== PieceE.Snake)
                         return true;
                 }
             }
 
             if (thisIndexExistInBoard(pos-1))
             {
-                if (m_pBoard[pos-1] == PieceE.Snake)
-                    return true;
+                if ((m_pBoard[pos -1] & PieceE.PieceMask) == PieceE.Snake)
+                        return true;
             }
 
             if (thisIndexExistInBoard(pos + 1))
             {
-                if (m_pBoard[pos + 1] == PieceE.Snake)
+                if ((m_pBoard[pos + 1] & PieceE.PieceMask) == PieceE.Snake)
                     return true;
             }
 
@@ -5122,7 +5078,7 @@ namespace SrcChess2 {
             {
                 if (thisIndexExistInBoard(i))
                 {
-                    if (m_pBoard[i] == PieceE.Snake)
+                    if ((m_pBoard[i] & PieceE.PieceMask) == PieceE.Snake)
                         return true;
                 }
             }
