@@ -628,7 +628,7 @@ namespace SrcChess2 {
                 s_ppiCaseMoveCamel[iPos] = arrMove[0];
 
                 // todo giraffe
-
+                FillMovesGiraffe
 
                 // unicorn
                 FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, false);
@@ -823,11 +823,7 @@ namespace SrcChess2 {
                 arrMove.Add(arrMoveOnLine.ToArray());
             }
 
-            // just for debug
-            if (!bRepeat && concatArray && iStartPos == 28)
-            {
-                int debug = 0;
-            }
+           
             /// <summary>Chess board</summary>
             /// 63 62 61 60 59 58 57 56
             /// 55 54 53 52 51 50 49 48
@@ -839,6 +835,160 @@ namespace SrcChess2 {
             /// 7  6  5  4  3  2  1  0
 
         }
+
+
+        /// <summary>
+        /// Fill the possible move array using the specified delta
+        /// </summary>
+        /// <param name="iStartPos">    Start position</param>
+        /// <param name="arrMove">      Array of move to fill</param>
+        /// <param name="arrDelta">     List of delta</param>
+
+        /// <param name="bRepeat">      true to repeat, false to do it once</param>
+       /* static private void FillMovesGiraffe(int iStartPos, List<int[]> arrMove, int[] arrDelta, int[] arrStartPos, bool bRepeat)
+        {
+            int iColPos;
+            int iRowPos;
+            int iColIndex;
+            int iRowIndex;
+            int iColOfs;
+            int iRowOfs;
+            int iPosOfs;
+            int iNewPos;
+            int iStartColOfs;
+            int iStartRowOfs; 
+            List<int> arrMoveOnLine;
+            
+            arrMove.Clear();
+            arrMoveOnLine = new List<int>(8);
+            iColPos = iStartPos & 7;
+            iRowPos = iStartPos >> 3;
+
+            for (int iIndex = 0; iIndex < arrStartPos.Length; iIndex += 2)
+            {
+                // for (int iIndex = 0; iIndex < arrDelta.Length; iIndex += 2) {
+                iColOfs = arrDelta[iIndex];
+                iRowOfs = arrDelta[iIndex + 1];
+
+                // inicailament nomes sumem la psicio inicial
+                iStartColOfs = arrStartPos[iIndex];
+                iStartRowOfs = arrStartPos[iIndex + 1];
+                iPosOfs = iStartRowOfs * 8 + iStartColOfs;
+                iColIndex = arrDelta[iIndex] + iColOfs;
+                iRowIndex = arrDelta[iIndex+1] + iRowOfs;
+                iNewPos = iStartPos + iPosOfs;
+                   
+                arrMoveOnLine.Clear();
+                while (iColIndex >= 0 && iColIndex < 8 && iRowIndex >= 0 && iRowIndex < 8)
+                {
+                    arrMoveOnLine.Add(iNewPos);
+                        
+                    iColIndex += iColOfs;
+                    iRowIndex += iRowOfs;
+                    iNewPos += iPosOfs;
+                        
+                }
+                if (arrMoveOnLine.Count != 0)
+                {
+                    arrMove.Add(arrMoveOnLine.ToArray());
+                }
+
+
+                    
+                
+
+            }
+        }*/
+
+
+        /// <summary>
+        /// Fill the possible move array using the specified delta
+        /// </summary>
+        /// <param name="iStartPos">    Start position</param>
+        /// <param name="arrMove">      Array of move to fill</param>
+        /// <param name="arrDelta">     List of delta</param>
+        /// <param name="bRepeat">      true to repeat, false to do it once</param>
+        /*static private void FillMovesG(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray)
+        {
+            int iColPos;
+            int iRowPos;
+            int iColIndex;
+            int iRowIndex;
+            int iColOfs;
+            int iRowOfs;
+            int iPosOfs;
+            int iNewPos;
+            List<int> arrMoveOnLine;
+            if (!concatArray)
+                arrMove.Clear();
+            arrMoveOnLine = new List<int>(8);
+            iColPos = iStartPos & 7;
+            iRowPos = iStartPos >> 3;
+
+            iColPos1 = iColPos + 1;
+            iColPos2 = iColPos - 1;
+            iColPos3 = iColPos - 1;
+            iColPos4 = iColPos + 1;
+
+            iRowPos1 = iColPos + 1;
+            iRowPos2 = iColPos + 1;
+            iRowPos3 = iColPos - 1;
+            iRowPos4 = iColPos - 1;
+
+
+            for (int iIndex = 0; iIndex < arrDelta.Length; iIndex += 2)
+            {
+                iColOfs = arrDelta[iIndex];
+                iRowOfs = arrDelta[iIndex + 1];
+                iPosOfs = iRowOfs * 8 + iColOfs;
+                iColIndex = iColPos + iColOfs;
+                iRowIndex = iRowPos + iRowOfs;
+                iNewPos = iStartPos + iPosOfs;
+                if (bRepeat)
+                {
+                    arrMoveOnLine.Clear();
+                    while (iColIndex >= 0 && iColIndex < 8 && iRowIndex >= 0 && iRowIndex < 8)
+                    {
+                        arrMoveOnLine.Add(iNewPos);
+                        if (bRepeat)
+                        {
+                            iColIndex += iColOfs;
+                            iRowIndex += iRowOfs;
+                            iNewPos += iPosOfs;
+                        }
+                        else {
+                            iColIndex = -1;
+                        }
+                    }
+                    if (arrMoveOnLine.Count != 0)
+                    {
+                        arrMove.Add(arrMoveOnLine.ToArray());
+                    }
+
+
+                }
+                else if (iColIndex >= 0 && iColIndex < 8 && iRowIndex >= 0 && iRowIndex < 8)
+                {
+                    arrMoveOnLine.Add(iNewPos);
+                }
+            }
+            if (!bRepeat)
+            {
+                arrMove.Add(arrMoveOnLine.ToArray());
+            }
+
+
+            /// <summary>Chess board</summary>
+            /// 63 62 61 60 59 58 57 56
+            /// 55 54 53 52 51 50 49 48
+            /// 47 46 45 44 43 42 41 40
+            /// 39 38 37 36 35 34 33 32
+            /// 31 30 29 28 27 26 25 24
+            /// 23 22 21 20 19 18 17 16
+            /// 15 14 13 12 11 10 9  8
+            /// 7  6  5  4  3  2  1  0
+
+        }*/
 
         static private void FillMovesDim(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray, int limit)
         {
@@ -5045,6 +5195,7 @@ namespace SrcChess2 {
 
         private bool isAtSnakeRange(int pos, int team)
         {
+            // TODOBUG
 
             if (((m_pBoard[pos] & PieceE.Black) == PieceE.Black) && team == 1)  // si els dos son negres
                 return false;

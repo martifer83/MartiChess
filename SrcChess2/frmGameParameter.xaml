@@ -46,7 +46,8 @@
                     <RadioButton Content="Shogi" Height="16" x:Name="radioButtonShogi1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="False" Visibility="Collapsed"/>
                     <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="True"/>
                     <RadioButton Content="Shogi Adapted" Height="16" x:Name="radioButtonShogiA1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="True"/>
-                    <RadioButton Content="Dimensional" Height="16" x:Name="radioButtonDim1" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
+                    <RadioButton Content="Dimensional" Height="16" x:Name="radioButtonDim1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="True"/>
+                    <RadioButton Content="Jungle" Height="16" x:Name="radioButtonJungle1" Margin="5" Checked="radioButtonTeamWhite_CheckedChanged" Unchecked="radioButtonTeamWhite_CheckedChanged" IsEnabled="True"/>
 
                 </StackPanel>
             </GroupBox>
@@ -63,6 +64,8 @@
                     <RadioButton Content="Amazon" Height="16" x:Name="radioButtonAmazon2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
                     <RadioButton Content="Shogi Adapted" Height="16" x:Name="radioButtonShogiA2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
                     <RadioButton Content="Dimensional" Height="16" x:Name="radioButtonDim2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
+                    <RadioButton Content="Jungle" Height="16" x:Name="radioButtonJungle2" Margin="5" Checked="radioButtonTeamBlack_CheckedChanged" Unchecked="radioButtonTeamBlack_CheckedChanged" IsEnabled="True"/>
+
                 </StackPanel>
             </GroupBox>
         </UniformGrid>

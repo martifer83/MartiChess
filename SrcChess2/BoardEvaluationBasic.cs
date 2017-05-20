@@ -31,10 +31,10 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.Gaja] = 550;
             s_piPiecePoint[(int)ChessBoard.PieceE.Zebra] = 180;
             s_piPiecePoint[(int)ChessBoard.PieceE.Camel] = 200;
-            s_piPiecePoint[(int)ChessBoard.PieceE.Giraffe] = 500; //???
+            s_piPiecePoint[(int)ChessBoard.PieceE.Giraffe] = 850; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.Unicorn] = 550; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.Lion] = 900; //
-            s_piPiecePoint[(int)ChessBoard.PieceE.Buffalo] = 800; //???
+            s_piPiecePoint[(int)ChessBoard.PieceE.Buffalo] = 725; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.Reaper] = 2000; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.Lancer] = 150; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.ShogiHorse] = 120; //???
@@ -74,10 +74,10 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)(ChessBoard.PieceE.Gaja | ChessBoard.PieceE.Black)] = -550;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Zebra | ChessBoard.PieceE.Black)] = -180;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Camel | ChessBoard.PieceE.Black)] = -200;
-            s_piPiecePoint[(int)(ChessBoard.PieceE.Giraffe | ChessBoard.PieceE.Black)] = -500;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Giraffe | ChessBoard.PieceE.Black)] = -850; // zilions
             s_piPiecePoint[(int)(ChessBoard.PieceE.Unicorn | ChessBoard.PieceE.Black)] = -550;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Lion | ChessBoard.PieceE.Black)] = -900;
-            s_piPiecePoint[(int)(ChessBoard.PieceE.Buffalo | ChessBoard.PieceE.Black)] = -800;
+            s_piPiecePoint[(int)(ChessBoard.PieceE.Buffalo | ChessBoard.PieceE.Black)] = -725;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Reaper | ChessBoard.PieceE.Black)] = -2000;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Lancer | ChessBoard.PieceE.Black)] = -150;
             s_piPiecePoint[(int)(ChessBoard.PieceE.ShogiHorse | ChessBoard.PieceE.Black)] = -120;
