@@ -157,6 +157,13 @@ namespace SrcChess2 {
             DimensionalRook = 44,
             DimensionalKnight = 45,
 
+            // tamerlane
+
+            WarElephant = 46,
+            Picket =47,
+
+            //
+            Rhino =48,
 
 
 
@@ -627,8 +634,13 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { 1, 3, 1, -3, 3, -1, 3, 1, -1, 3, -1, -3, -3, -1, -3, 1 }, false, false);
                 s_ppiCaseMoveCamel[iPos] = arrMove[0];
 
-                // todo giraffe
-                FillMovesGiraffe
+                // Giraffe  1 es amunt  0 avall
+                FillMovesGiraffe(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1 }, new int[] { }, true);
+                s_ppiCaseMoveGiraffe[iPos] = arrMove[0];
+                
+                // buffal
+                FillMovesGiraffe(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1 }, new int[] { }, true);
+
 
                 // unicorn
                 FillMoves(iPos, arrMove, new int[] { 1, 2, 1, -2, 2, -1, 2, 1, -1, 2, -1, -2, -2, -1, -2, 1 }, true, false);
@@ -711,7 +723,7 @@ namespace SrcChess2 {
                 FillMoves(iPos, arrMove, new int[] { -1, 1, 1, 1 }, false, false);
                 s_ppiCaseBlackNemesisPawnCanAttackFrom[iPos] = arrMove[0];
 
-               
+               // dimensional
                 FillMovesDim(iPos, arrMove, new int[] { -1, -1, -1, 1, 1, -1, 1, 1 }, true, false,-1);
                 s_pppiCaseMoveDiagonalDim[iPos] = arrMove.ToArray();
                 if (iPos == 16)
@@ -845,7 +857,7 @@ namespace SrcChess2 {
         /// <param name="arrDelta">     List of delta</param>
 
         /// <param name="bRepeat">      true to repeat, false to do it once</param>
-       /* static private void FillMovesGiraffe(int iStartPos, List<int[]> arrMove, int[] arrDelta, int[] arrStartPos, bool bRepeat)
+        static private void FillMovesGiraffe(int iStartPos, List<int[]> arrMove, int[] arrDelta, int[] arrStartPos, bool bRepeat)
         {
             int iColPos;
             int iRowPos;
@@ -863,6 +875,7 @@ namespace SrcChess2 {
             arrMoveOnLine = new List<int>(8);
             iColPos = iStartPos & 7;
             iRowPos = iStartPos >> 3;
+
 
             for (int iIndex = 0; iIndex < arrStartPos.Length; iIndex += 2)
             {
@@ -898,7 +911,7 @@ namespace SrcChess2 {
                 
 
             }
-        }*/
+        }
 
 
         /// <summary>
@@ -908,7 +921,7 @@ namespace SrcChess2 {
         /// <param name="arrMove">      Array of move to fill</param>
         /// <param name="arrDelta">     List of delta</param>
         /// <param name="bRepeat">      true to repeat, false to do it once</param>
-        /*static private void FillMovesG(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray)
+        static private void FillMovesG(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray)
         {
             int iColPos;
             int iRowPos;
@@ -925,15 +938,7 @@ namespace SrcChess2 {
             iColPos = iStartPos & 7;
             iRowPos = iStartPos >> 3;
 
-            iColPos1 = iColPos + 1;
-            iColPos2 = iColPos - 1;
-            iColPos3 = iColPos - 1;
-            iColPos4 = iColPos + 1;
-
-            iRowPos1 = iColPos + 1;
-            iRowPos2 = iColPos + 1;
-            iRowPos3 = iColPos - 1;
-            iRowPos4 = iColPos - 1;
+           
 
 
             for (int iIndex = 0; iIndex < arrDelta.Length; iIndex += 2)
@@ -988,7 +993,7 @@ namespace SrcChess2 {
             /// 15 14 13 12 11 10 9  8
             /// 7  6  5  4  3  2  1  0
 
-        }*/
+        }
 
         static private void FillMovesDim(int iStartPos, List<int[]> arrMove, int[] arrDelta, bool bRepeat, bool concatArray, int limit)
         {
@@ -2568,6 +2573,10 @@ namespace SrcChess2 {
             PieceE eEnemyDimensionalBishop;
             PieceE eEnemyDimensionalRook;
             PieceE eEnemyRaja;
+            PieceE eEnemyRhino;
+            PieceE eEnemyPicket;
+            PieceE eEnemyWarElephant;
+
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
             eEnemyQueen = PieceE.Queen | eColor;
@@ -2610,6 +2619,9 @@ namespace SrcChess2 {
             eEnemyDimensionalBishop = PieceE.DimensionalBishop | eColor;
             eEnemyDimensionalRook = PieceE.DimensionalRook | eColor;
             eEnemyRaja = PieceE.Raja | eColor;
+            eEnemyRhino = PieceE.Rhino | eColor;
+            eEnemyPicket = PieceE.Picket | eColor;
+            eEnemyWarElephant = PieceE.WarElephant | eColor;
 
             // test
 
@@ -5093,7 +5105,22 @@ namespace SrcChess2 {
 
         }
 
+        public PieceE[] TeamTamerlane()
+        {
 
+            PieceE[] team = new PieceE[8];
+            team[0] = PieceE.Giraffe;
+            team[1] = PieceE.Camel;
+            team[2] = PieceE.Picket;
+            team[3] = PieceE.King;
+            team[4] = PieceE.WarElephant;
+            team[5] = PieceE.Picket;
+            team[6] = PieceE.Camel;
+            team[7] = PieceE.Giraffe;
+
+            return team;
+
+        }
 
 
 
