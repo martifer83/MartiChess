@@ -164,6 +164,7 @@ namespace SrcChess2 {
 
             //
             Rhino =48,
+            Biso = 49,
 
 
 
@@ -636,10 +637,10 @@ namespace SrcChess2 {
 
                 // Giraffe  1 es amunt  0 avall
                 FillMovesGiraffe(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1 }, new int[] { }, true);
-                s_ppiCaseMoveGiraffe[iPos] = arrMove[0];
+                //s_ppiCaseMoveGiraffe[iPos] = arrMove[0];
                 
                 // buffal
-                FillMovesGiraffe(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1 }, new int[] { }, true);
+                //FillMovesGiraffe(iPos, arrMove, new int[] { -1, 1, 1, 1, 1, -1, -1, -1 }, new int[] { }, true);
 
 
                 // unicorn
@@ -2576,6 +2577,7 @@ namespace SrcChess2 {
             PieceE eEnemyRhino;
             PieceE eEnemyPicket;
             PieceE eEnemyWarElephant;
+            PieceE eEnemyBiso;
 
 
             eColor = (ePlayerColor == PlayerColorE.Black) ? PieceE.White : PieceE.Black;
@@ -2622,6 +2624,7 @@ namespace SrcChess2 {
             eEnemyRhino = PieceE.Rhino | eColor;
             eEnemyPicket = PieceE.Picket | eColor;
             eEnemyWarElephant = PieceE.WarElephant | eColor;
+            eEnemyBiso = PieceE.Biso | eColor;
 
             // test
 
@@ -4363,6 +4366,11 @@ namespace SrcChess2 {
                 return TeamDimensional();
             if (index == 11)
                 return TeamJungle();
+            if (index == 12)
+                return TeamTamerlane();
+            if (index == 13)
+                return TeamMarkuk();
+
 
 
             // default
@@ -4471,6 +4479,13 @@ namespace SrcChess2 {
             } 
             if (teamShogi2)
                 blackPawnLineUp = 40;
+            //markuk
+            if (indexW == 13)
+                whitePawnLineUp = 16;
+            if (indexB == 13)
+                blackPawnLineUp = 40;
+
+
 
             for (int iIndex = 0; iIndex < 8; iIndex++)
             {
@@ -4571,9 +4586,11 @@ namespace SrcChess2 {
         {
 
             m_pBoard[56] = PieceE.King | PieceE.Black;
-            m_pBoard[8] = PieceE.Pawn | PieceE.White;
+            m_pBoard[8] = PieceE.Biso | PieceE.White;
+            m_pBoard[10] = PieceE.Snake | PieceE.Black;
+            m_pBoard[10] = PieceE.WarElephant | PieceE.Black;
+            m_pBoard[10] = PieceE.WarElephant | PieceE.White;
             m_pBoard[9] = PieceE.Pawn | PieceE.White;
-            m_pBoard[10] = PieceE.Pawn | PieceE.White;
             m_pBoard[0] = PieceE.King | PieceE.White;
             m_pBoard[24] = PieceE.Elephant | PieceE.White;
             m_pBoard[63] = PieceE.Queen | PieceE.Black;
@@ -4975,7 +4992,7 @@ namespace SrcChess2 {
             team[2] = PieceE.Gaja;
             team[3] = PieceE.King;
             team[4] = PieceE.EmpoweredQueen;
-            team[5] = PieceE.Buffalo;
+            team[5] = PieceE.Gaja;
             team[6] = PieceE.Knight;
             team[7] = PieceE.Rook;
 
@@ -4983,11 +5000,17 @@ namespace SrcChess2 {
 
         }
 
+
+
+        //biso, zeb, ser, rino
+        //5,5    1,8   4    6,5
+
+            // hipo zebra serp lion
         public PieceE[] TeamJungle()
         {
 
             PieceE[] team = new PieceE[8];
-            team[0] = PieceE.Hipo;
+            team[0] = PieceE.Biso;
             team[1] = PieceE.Zebra;
             team[2] = PieceE.Snake;
             team[3] = PieceE.King;
@@ -5117,6 +5140,23 @@ namespace SrcChess2 {
             team[5] = PieceE.Picket;
             team[6] = PieceE.Camel;
             team[7] = PieceE.Giraffe;
+
+            return team;
+
+        }
+
+        public PieceE[] TeamMarkuk()
+        {
+
+            PieceE[] team = new PieceE[8];
+            team[0] = PieceE.Rook;
+            team[1] = PieceE.Knight;
+            team[2] = PieceE.SilverGeneral;
+            team[3] = PieceE.King;
+            team[4] = PieceE.Ferz;
+            team[5] = PieceE.SilverGeneral;
+            team[6] = PieceE.Knight;
+            team[7] = PieceE.Rook;
 
             return team;
 

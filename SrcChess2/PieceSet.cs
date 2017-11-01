@@ -157,8 +157,8 @@ namespace SrcChess2 {
             Black_Raja = 80,
             White_Raja = 81,
 
-            //Black_Giraffe = 46,
-            //White_Giraffe = 47,
+            Black_Biso = 82,
+            White_Biso = 83,
 
         };
 
@@ -431,6 +431,13 @@ namespace SrcChess2 {
             case ChessBoard.PieceE.NemesisPawn | ChessBoard.PieceE.Black:
                 eRetVal = ChessPiece.Black_NemesisPawn;
                 break;
+            case ChessBoard.PieceE.Biso | ChessBoard.PieceE.Black:
+                eRetVal = ChessPiece.Black_Biso;
+                break;
+            case ChessBoard.PieceE.Biso | ChessBoard.PieceE.White:
+                eRetVal = ChessPiece.White_Biso;
+                break;
+
 
 
                 default:

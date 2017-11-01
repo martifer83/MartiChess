@@ -297,6 +297,12 @@ namespace SrcChess2 {
                 case ChessPiece.Black_NemesisPawn:
                     strRetVal = "black nemesispawn";
                     break;
+                case ChessPiece.Black_Biso:
+                    strRetVal = "black biso";
+                    break;
+                case ChessPiece.White_Biso:
+                    strRetVal = "white biso";
+                    break;
                 default:
                 strRetVal   = null;
                 break;

@@ -32,9 +32,9 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.Zebra] = 200;//180;
             s_piPiecePoint[(int)ChessBoard.PieceE.Camel] = 250;//200;
             s_piPiecePoint[(int)ChessBoard.PieceE.Giraffe] = 850; //???
-            s_piPiecePoint[(int)ChessBoard.PieceE.Unicorn] = 550; //???
+            s_piPiecePoint[(int)ChessBoard.PieceE.Unicorn] = 550; //450???
             s_piPiecePoint[(int)ChessBoard.PieceE.Lion] = 900; //
-            s_piPiecePoint[(int)ChessBoard.PieceE.Buffalo] = 725; //???
+            s_piPiecePoint[(int)ChessBoard.PieceE.Buffalo] = 725; //750???
             s_piPiecePoint[(int)ChessBoard.PieceE.Reaper] = 2000; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.Lancer] = 150; //???
             s_piPiecePoint[(int)ChessBoard.PieceE.ShogiHorse] = 120; //???
@@ -52,6 +52,7 @@ namespace SrcChess2 {
             s_piPiecePoint[(int)ChessBoard.PieceE.Raja] = 600;
             s_piPiecePoint[(int)ChessBoard.PieceE.Picket] = 250;
             s_piPiecePoint[(int)ChessBoard.PieceE.WarElephant] = 600;
+            s_piPiecePoint[(int)ChessBoard.PieceE.Biso] = 550; //????
 
             s_piPiecePoint[(int)ChessBoard.PieceE.King] = 1000000;
             s_piPiecePoint[(int)(ChessBoard.PieceE.Pawn | ChessBoard.PieceE.Black)] = -100;
