@@ -307,7 +307,7 @@ namespace SrcChess2 {
                 resRetVal.iPermCount  = 0;
                 if (searchMode.m_iSearchDepth == 0 || bIterativeDepthFirst) {
                     dtTimeOut           = (bIterativeDepthFirst) ? DateTime.MaxValue : DateTime.Now + TimeSpan.FromSeconds(searchMode.m_iTimeOutInSec);
-                    iDepthLimit = (bIterativeDepthFirst) ? 4 : 999;//ChessBoard.m_dificultLevel+2 : 999;////////////////////searchMode.m_iSearchDepth : 999;  // aqui  es ambia la profundtat
+                    iDepthLimit = (bIterativeDepthFirst) ? 4 : 999;//ChessBoard.m_dificultLevel+2 : 999;////////////////////searchMode.m_iSearchDepth : 999;  // aqui  es cambia la profundtat
                     iDepth              = 1;
                     resRetVal.iPts      = FindBestMoveUsingAlphaBetaAtDepth(chessBoard, searchMode, ePlayerColor, moveList, posInfoWhite, posInfoBlack, iTotalMoveCount, iDepth, iAlpha, iBeta, transTable, DateTime.MaxValue, out iPermCountAtLevel, out iBestMoveIndex, out bTimeOut, out arrPoints);
                     if (iBestMoveIndex != -1) {
